@@ -37,7 +37,7 @@ from GroupedPurchaseOrder.views.account import (AuthenticationForm,
 
 # Main page
 urlpatterns = patterns('GroupedPurchaseOrder.views.main',
-                       url(r'^$', 'index', name='index'),
+     url(r'^$', 'index', name='index'),
 )
 
 # Authentication

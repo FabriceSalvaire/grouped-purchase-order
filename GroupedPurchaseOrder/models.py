@@ -27,7 +27,7 @@ import pytz
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.utils.translation import ugettext
+from django.utils.translation import ugettext as _
 
 ####################################################################################################
 
@@ -65,7 +65,7 @@ class Profile(models.Model):
 
         if self.timezone == 'UTC':
             # Fixme: dict?
-            raise ValidationError({'timezone': [ugettext('UTC is not valid timezone')]})
+            raise ValidationError({'timezone': [_('UTC is not valid timezone')]})
 
     ##############################################
 

@@ -57,7 +57,8 @@
   </form>
   <div class="form-signin">
     <p>{% trans "Forgotten your password?" %}</p>
-    <p>{% trans "Request a new one:" %}<br /><a href="{% url 'accounts.password_reset' %}">{% trans "Password reset" %}</a></p>
+    <p>{% trans "Request a new one:" %}<br />
+      <a href="{% url 'accounts.password_reset' %}">{% trans "Password reset" %}</a></p>
   </div>
 </div>
 {% endblock %}
