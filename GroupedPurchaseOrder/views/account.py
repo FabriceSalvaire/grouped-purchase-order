@@ -28,8 +28,7 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.forms import ModelForm
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render_to_response
-from django.template import RequestContext
+from django.shortcuts import get_object_or_404, render
 from django.utils import translation
 from django.utils.translation import ugettext as _
 
@@ -234,16 +233,13 @@ def register(request):
                                                                            args=[new_user.pk,
                                                                                  new_user.profile.hash_id])),
                                  'fullname': new_user.get_full_name()})
-            return render_to_response('GroupedPurchaseOrder/account/register_end.html',
-                                      context_instance=RequestContext(request))
+            return render(request, 'GroupedPurchaseOrder/account/register_end.html')
         else:
             messages.error(request, _("Some information are missing or mistyped"))
     else:
         user_form = UserCreationForm()
 
-    return render_to_response('GroupedPurchaseOrder/account/register.html',
-                              {'user_form': user_form},
-                              context_instance=RequestContext(request))
+    return render(request, 'GroupedPurchaseOrder/account/register.html', {'user_form': user_form})
 
 ####################################################################################################
 
@@ -257,9 +253,7 @@ def register_confirm(request, user_id, user_hash):
     user.is_active = True
     user.save()
 
-    return render_to_response('GroupedPurchaseOrder/account/confirm.html',
-                              {'user': user},
-                              context_instance=RequestContext(request))
+    return render(request, 'GroupedPurchaseOrder/account/confirm.html', {'user': user})
 
 ####################################################################################################
 
@@ -271,9 +265,7 @@ def profile(request):
         messages.error(request, _("You should update your timezone. Without it G.P.O. will not work as expected."))
         return HttpResponseRedirect(reverse('accounts.profile.update'))
 
-    return render_to_response('GroupedPurchaseOrder/account/profile.html',
-                              {},
-                              context_instance=RequestContext(request))
+    return render(request, 'GroupedPurchaseOrder/account/profile.html')
 
 ####################################################################################################
 
@@ -302,9 +294,8 @@ def update(request):
         user_form = UserUpdateForm(instance=request.user)
         profile_form = ProfileUpdateForm(instance=profile)
 
-    return render_to_response('GroupedPurchaseOrder/account/update.html',
-                              {'user_form': user_form, 'profile_form': profile_form},
-                              context_instance=RequestContext(request))
+        return render(request, 'GroupedPurchaseOrder/account/update.html',
+                      {'user_form': user_form, 'profile_form': profile_form})
 
 ####################################################################################################
 
@@ -318,8 +309,7 @@ def password_change_done(request):
 
 def password_reset_done(request):
 
-    return render_to_response('GroupedPurchaseOrder/account/password_reset_done.html',
-                              context_instance=RequestContext(request))
+    return render(request, 'GroupedPurchaseOrder/account/password_reset_done.html')
 
 ####################################################################################################
 
