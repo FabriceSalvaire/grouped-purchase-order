@@ -1,0 +1,34 @@
+{% extends 'GroupedPurchaseOrder/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Main Page" %}{% endblock %}
+
+{% block nav-index %}active{% endblock %}
+
+{% block breadcrumb %}
+  <li class="active">{% trans "Home" %}</li>
+{% endblock %}
+
+{% block body %}
+<div class="jumbotron">
+  <h1>G.P.O.</h1>
+  <p class="lead">{% trans "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam aliquet tellus sit amet faucibus pretium." %}</p>
+  {% if user.is_authenticated %}
+  {% comment %}
+  <a class="btn btn-lg btn-success" href="{% url 'xxx' %}">{% trans "xxx" %}</a>
+  {% endcomment %}
+  {% else %}
+  <a class="btn btn-lg btn-success" href="{% url 'accounts.login' %}">{% trans "Log in" %}</a>
+  {% endif %}
+</div>
+
+<hr />
+
+<div class="row">
+  <div class="col-md-4">
+    <h2>{% trans "Subscribe" %}</h2>
+    <p>{% trans "Create an account on G.P.O." %}</p>
+    <a class="btn btn-default" href="{% url 'accounts.register' %}">{% trans "Register »" %}</a>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'GroupedPurchaseOrder/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Confirm" %}{% endblock %}
+
+{% block nav-login %}active{% endblock %}
+
+{% block head %}
+  <meta http-equiv="refresh" content="5;url={% url 'accounts.login' %}">
+{% endblock %}
+
+{% block breadcrumb %}
+  <li><a href="{% url 'index' %}">{% trans "Home" %}</a></li>
+  <li><a href="{% url 'accounts.profile' %}">{% trans "Account" %}</a></li>
+  <li class="activate">{% trans "Confirm" %}</li>
+{% endblock %}
+
+{% block body %}
+<div class="page-header">
+  <h1>{% trans "Registration confirmed" %}</h1>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <p class="lead">{% trans "Thanks for registering to G.P.O." %}</p>
+    {% url 'accounts.login' as URL %}
+    <p>{% blocktrans %}You will be <a href="{{ URL }}">redirected</a> to the login page in 5 seconds ...{% endblocktrans %}</p>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,183 @@
+{% extends 'GroupedPurchaseOrder/base.html' %}
+{% load i18n static %}
+
+{% block title %}{% trans "Update" %}{% endblock %}
+
+{% block nav-account %}active{% endblock %}
+
+{% block breadcrumb %}
+  <li><a href="{% url 'index' %}">{% trans "Home" %}</a></li>
+  <li><a href="{% url 'accounts.profile' %}">{% trans "Account" %}</a></li>
+  <li class="activate">{% trans "Update" %}</li>
+{% endblock %}
+
+{% block body %}
+<div class="page-header">
+  <h1>{% trans "Update my account" %}</h1>
+</div>
+
+{% if messages %}
+<div class="span12">
+  {% for message in messages %}
+  <div class="alert alert-{{ message.tags|default:'danger' }}">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>{{ message.tags|default:'danger'|capfirst }}:</strong> {{ message }}
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+
+<div class="row">
+  <form class="form-horizontal" tole="form" method="post" action="{% url 'accounts.profile.update' %}">
+  {% csrf_token %}
+  <div class="col-md-6">
+    <h4 class="modal-header">{% trans "Personnal information" %}</h4>
+    <div class="form-group {% if user_form.first_name.errors %} has-error{% endif %}">
+      <label class="col-md-4 control-label" for="id_first_name">{% trans "First name" %}</label>
+      <div class="col-md-8">
+        {{ user_form.first_name }}
+        {% for error in user_form.first_name.errors %}
+        <p class="help-block">{{ error }}</p>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="form-group{% if user_form.last_name.errors %} has-error{% endif %}">
+      <label class="col-md-4 control-label" for="id_last_name">{% trans "Last name" %}</label>
+      <div class="col-md-8">
+        {{ user_form.last_name }}
+        {% for error in user_form.last_name.errors %}
+        <p class="help-block">{{ error }}</p>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="form-group{% if profile_form.phone_number.errors %} has-error{% endif %}">
+      <label class="col-md-4 control-label" for="id_phone_number">{% trans "Phone number" %}</label>
+      <div class="col-md-8">
+        {{ profile_form.phone_number }}
+        {% for error in profile_form.phone_number.errors %}
+        <p class="help-block">{{ error }}</p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <h4 class="modal-header">{% trans "Localization" %}</h4>
+    <div class="form-group{% if profile_form.language.errors %} has-error{% endif %}">
+      <label class="col-md-4 control-label" for="id_language">{% trans "Language" %}</label>
+      <div class="col-md-8">
+        <select class="form-control" id="id_language" name="language">
+          {% for value, text in profile_form.language.field.choices %}
+          <option value="{{ value }}"{% if value == user.profile.language %} selected="selected"{% endif %}>{% trans text %}</option>
+          {% endfor %}
+        </select>
+        {% for error in profile_form.language.errors %}
+        <p class="help-block">{{ error }}</p>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="form-group{% if profile_form.timezone.errors %} has-error{% endif %}">
+      <label class="col-md-4 control-label" for="id_timezone">{% trans "Timezone" %}</label>
+      <div class="col-md-8">
+        {{ profile_form.timezone }}
+        {% for error in profile_form.timezone.errors %}
+        <p class="help-block">{{ error }}</p>
+        {% endfor %}
+        <p>{% blocktrans %}Your browser is in the same timezone as <u id="current_timezone"></u>{% endblocktrans %}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <h4 class="modal-header">{% trans "Advanced settings" %}</h4>
+    <p>{% trans "Some providers, allows to send SMS from G.P.O. to you phone for free. Select your provider in the following list (if available) to receive alerts by SMS." %}</p>
+    <div class="form-group{% if profile_form.provider.errors %} has-error{% endif %}">
+      <label class="col-md-4 control-label" for="id_provider">{% trans "Provider" %}</label>
+      <div class="col-md-8">
+        {{ profile_form.provider }}
+        {% for error in profile_form.provider.errors %}
+        <p class="help-block">{{ error }}</p>
+        {% endfor %}
+      </div>
+    </div>
+    <div id="MobileFreeFr" class="hidden">
+      <p>{% blocktrans %}In order to get the following information, you should activate the option called <i>SMS Notification</i> on <a href="https://mobile.free.fr/moncompte/index.php?page=options">your option page</a>. Then enter the generated user key in the <i>token</i> field.{% endblocktrans %}</p>
+      <div class="form-group" id="form_group_mobile_free_fr_user">
+        <label class="col-md-4 control-label" for="id_mobile_free_fr_user">{% trans "Username" %}</label>
+        <div class="col-md-8">
+           <input class="form-control" id="id_mobile_free_fr_user" maxlength="30" name="username" type="text" />
+        </div>
+      </div>
+      <div class="form-group" id="form_group_mobile_free_fr_token">
+        <label class="col-md-4 control-label" for="id_mobile_free_fr_token">{% trans "Token" %}</label>
+        <div class="col-md-8">
+           <input class="form-control" id="id_mobile_free_fr_token" maxlength="30" name="token" type="text" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{ profile_form.provider_data }}
+  <div class="form-group">
+    <div class="col-md-10 col-md-offset-2">
+      <button class="btn btn-primary" type="submit" id="btn_submit">{% trans "Update" %}</button>
+    </div>
+  </div>
+  </form>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{% get_static_prefix %}GroupedPurchaseOrder/js/jstz-v1.0.5.min.js"></script>
+<script>
+  $(function(){
+    var timezone = jstz.determine();
+    $('#current_timezone').html(timezone.name());
+
+    var MobileFreeFrClick = function() {
+      var user = $('#id_mobile_free_fr_user').val();
+      var token = $('#id_mobile_free_fr_token').val();
+      if(user == '' || token == '') {
+        if(user == '') {
+          $('#form_group_mobile_free_fr_user').addClass('has-error');
+        } else {
+          $('#form_group_mobile_free_fr_user').removeClass('has-error');
+        }
+        if(token == '') {
+          $('#form_group_mobile_free_fr_token').addClass('has-error');
+        } else {
+          $('#form_group_mobile_free_fr_token').removeClass('has-error');
+        }
+
+        return false;
+      }
+      // transform into JSON
+      $('#id_provider_data').val(JSON.stringify({'user': user, 'token': token}));
+
+    };
+
+    // Check the current value
+    if($('#id_provider').val() == 'mobile.free.fr') {
+        var data = JSON.parse($('#id_provider_data').val());
+        $('#id_mobile_free_fr_user').val(data['user']);
+        $('#id_mobile_free_fr_token').val(data['token']);
+
+        $('#MobileFreeFr').removeClass('hidden');
+        $('#btn_submit').click(MobileFreeFrClick);
+    }
+
+    // Handle clicks on the sect
+    $('#id_provider').change(function() {
+      var selected_text = $( "#id_provider option:selected" ).val();
+      if(selected_text == 'mobile.free.fr') {
+        $('#MobileFreeFr').removeClass('hidden');
+        $('#btn_submit').click(MobileFreeFrClick);
+      } else {
+        $('#MobileFreeFr').addClass('hidden');
+        $('#btn_submit').unbind('click', MobileFreeFrClick);
+      }
+    });
+  });
+</script>
+{% endblock %}
