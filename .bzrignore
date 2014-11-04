@@ -1,0 +1,3 @@
+__pycache__
+GroupedPurchaseOrder/migrations/*py
+db.sqlite3
