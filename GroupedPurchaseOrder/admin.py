@@ -21,16 +21,62 @@
 ####################################################################################################
 
 from django.contrib import admin
-from GroupedPurchaseOrder.models import Profile
+from GroupedPurchaseOrder.models import (Profile,
+                                         Supplier,
+                                         Manufacturer,
+                                         Product,
+                                         SupplierProduct,
+                                         Order,
+                                         UserOrder,
+                                         ProductOrder)
 
 ####################################################################################################
 
+@admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'phone_number', 'language', 'timezone')
 
 ####################################################################################################
 
-admin.site.register(Profile, ProfileAdmin)
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    # list_display = ('name')
+    list_filter = ['manufacturer']
+    search_fields = ['part_number', 'name', 'description']
+
+####################################################################################################
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('name', 'status')
+    list_filter = ['status']
+    search_fields = ['name']
+
+####################################################################################################
+
+# class OrderInline(admin.TabularInline):
+#     model = Order
+#     fields = ('status',)
+
+####################################################################################################
+
+@admin.register(Supplier)
+class SupplierAdmin(admin.ModelAdmin):
+    pass
+    # inlines = [
+    #     OrderInline,
+    # ]
+
+####################################################################################################
+
+#admin.site.register(Order)
+#admin.site.register(Product)
+#admin.site.register(Profile)
+admin.site.register(Manufacturer)
+admin.site.register(ProductOrder)
+#admin.site.register(Supplier)
+admin.site.register(SupplierProduct)
+admin.site.register(UserOrder)
 
 ####################################################################################################
 # 
