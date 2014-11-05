@@ -1,0 +1,37 @@
+{% extends 'GroupedPurchaseOrder/base.html' %}
+{% load static l10n i18n %}
+
+{% block title %}{% blocktrans with supplier.name as name %}Supplier «{{ name }}»{% endblocktrans %}{% endblock %}
+
+{% block nav-suppliers %}active{% endblock %}
+
+{% block breadcrumb %}
+  <li><a href="{% url 'index' %}">{% trans "Home" %}</a></li>
+  <li><a href="{% url 'suppliers.index' %}">{% trans "Suppliers" %}</a></li>
+  <li class="active">{{ supplier.name }}</li>
+{% endblock %}
+
+{% block body %}
+<h2>{{ supplier.name }}
+  <small><a href="{% url 'suppliers.update' supplier.pk %}">({% trans "update" %})</a></small></h2>
+
+<div class="row">
+  {% if messages %}
+  <div class="span12">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags|default:'danger' }}">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>{{ message.tags|default:'danger'|capfirst }}:</strong> {{ message }}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="col-md-6">
+    <dl class="dl-horizontal">
+      <dt>{% trans "Description" %}</dt>
+      <dd>{{ supplier.description }}</dd>
+    </dl>
+  </div>
+</div>
+{% endblock %}

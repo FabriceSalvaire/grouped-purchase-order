@@ -14,9 +14,7 @@
   <h1>G.P.O.</h1>
   <p class="lead">{% trans "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam aliquet tellus sit amet faucibus pretium." %}</p>
   {% if user.is_authenticated %}
-  {% comment %}
-  <a class="btn btn-lg btn-success" href="{% url 'xxx' %}">{% trans "xxx" %}</a>
-  {% endcomment %}
+  <a class="btn btn-lg btn-success" href="{% url 'suppliers.index' %}">{% trans "Suppliers" %}</a>
   {% else %}
   <a class="btn btn-lg btn-success" href="{% url 'accounts.login' %}">{% trans "Log in" %}</a>
   {% endif %}

@@ -114,6 +114,29 @@ urlpatterns += patterns('GroupedPurchaseOrder.views.account',
         name='accounts.delete'),
 )
 
+# Supplier
+urlpatterns += patterns('GroupedPurchaseOrder.views.supplier',
+    url(r'^suppliers/$',
+        'index',
+        name='suppliers.index'),
+
+    url(r'^suppliers/create/$',
+        'create',
+        name='suppliers.create'),
+
+    url(r'^suppliers/(?P<supplier_id>\d+)/$',
+        'details',
+        name='suppliers.details'),
+
+    url(r'^suppliers/(?P<supplier_id>\d+)/update/$',
+        'update',
+        name='suppliers.update'),
+
+    url(r'^suppliers/(?P<supplier_id>\d+)/delete/$',
+        'delete',
+        name='suppliers.delete'),
+)
+
 ####################################################################################################
 # 
 # End
