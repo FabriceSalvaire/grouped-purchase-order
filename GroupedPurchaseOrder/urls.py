@@ -21,6 +21,7 @@
 ####################################################################################################
 
 from django.conf.urls import patterns, url
+from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import TemplateView
 
@@ -31,6 +32,8 @@ from GroupedPurchaseOrder.views.account import (AuthenticationForm,
                                                 PasswordChangeForm,
                                                 PasswordResetForm,
                                                 SetPasswordForm)
+
+from GroupedPurchaseOrder.views.supplier import (SupplierListView,)
 
 ####################################################################################################
 
@@ -117,7 +120,7 @@ urlpatterns += patterns('GroupedPurchaseOrder.views.account',
 # Supplier
 urlpatterns += patterns('GroupedPurchaseOrder.views.supplier',
     url(r'^suppliers/$',
-        'index',
+        login_required(SupplierListView.as_view()),
         name='suppliers.index'),
 
     url(r'^suppliers/create/$',

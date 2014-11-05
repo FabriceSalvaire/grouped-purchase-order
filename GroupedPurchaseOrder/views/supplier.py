@@ -23,12 +23,12 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.db.models import Q
 from django.forms import ModelForm
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
+from django.views.generic.list import ListView
 
 ####################################################################################################
 
@@ -64,14 +64,11 @@ class SupplierForm(ModelForm):
 
 ####################################################################################################
 
-@login_required
-def index(request):
+class SupplierListView(ListView):
 
-    suppliers = Supplier.objects.all()
-
-    return render_to_response('GroupedPurchaseOrder/supplier/index.html',
-                              {'suppliers': suppliers},
-                              context_instance=RequestContext(request))
+    model = Supplier
+    template_name = 'GroupedPurchaseOrder/supplier/index.html'
+    context_object_name = 'suppliers'
 
 ####################################################################################################
 
