@@ -22,55 +22,15 @@
       {% csrf_token %}
       <div class="row">
 	<div class="col-md-6">
-          <div class="form-group{% if form.name.errors %} has-error{% endif %}">
-            <label class="col-md-4 control-label" for="{{ form.name.id_for_label }}">{% trans form.name.label %}</label>
-            <div class="col-md-8">
-              {{ form.name }}
-              {% for error in form.name.errors %}<span class="help-block">{{ error }}</span>{% endfor %}
+	  {% for field in form.visible_fields %}
+            <div class="form-group{% if field.errors %} has-error{% endif %}">
+              <label class="col-md-4 control-label" for="{{ field.id_for_label }}">{% trans field.label %}</label>
+              <div class="col-md-8">
+		{{ field }}
+		{% for error in field.errors %}<span class="help-block">{{ error }}</span>{% endfor %}
+              </div>
             </div>
-          </div>
-          <div class="form-group{% if form.url.errors %} has-error{% endif %}">
-            <label class="col-md-4 control-label" for="id_url">{% trans "Url" %}</label>
-            <div class="col-md-8">
-              {{ form.url }}
-              {% for error in form.url.errors %}<p class="help-block">{{ error }}</p>{% endfor %}
-            </div>
-          </div>
-          <div class="form-group{% if form.purchase_therms_url.errors %} has-error{% endif %}">
-            <label class="col-md-4 control-label" for="id_purchase_therms_url">{% trans "Therms of Purchase URL" %}</label>
-            <div class="col-md-8">
-              {{ form.purchase_therms_url }}
-              {% for error in form.purchase_therms_url.errors %}<p class="help-block">{{ error }}</p>{% endfor %}
-            </div>
-	  </div>
-          <div class="form-group{% if form.delivery_therms_url.errors %} has-error{% endif %}">
-            <label class="col-md-4 control-label" for="id_delivery_therms_url">{% trans "Therms of Delivery URL" %}</label>
-            <div class="col-md-8">
-              {{ form.delivery_therms_url }}
-              {% for error in form.delivery_therms_url.errors %}<p class="help-block">{{ error }}</p>{% endfor %}
-            </div>
-          </div>
-          <div class="form-group{% if form.description.errors %} has-error{% endif %}">
-            <label class="col-md-4 control-label" for="id_description">{% trans "Description" %}</label>
-            <div class="col-md-8">
-              {{ form.description }}
-              {% for error in form.description.errors %}<p class="help-block">{{ error }}</p>{% endfor %}
-            </div>
-          </div>
-          <div class="form-group{% if form.minimum_purchase.errors %} has-error{% endif %}">
-            <label class="col-md-4 control-label" for="id_minimum_purchase">{% trans "Minimum purchase" %}</label>
-            <div class="col-md-8">
-              {{ form.minimum_purchase }}
-              {% for error in form.minimum_purchase.errors %}<p class="help-block">{{ error }}</p>{% endfor %}
-            </div>
-          </div>
-	  <div class="form-group{% if form.free_shipment_threshold.errors %} has-error{% endif %}">
-            <label class="col-md-4 control-label" for="id_free_shipment_threshold">{% trans "Free shipment threshold" %}</label>
-            <div class="col-md-8">
-              {{ form.free_shipment_threshold }}
-              {% for error in form.free_shipment_threshold.errors %}<p class="help-block">{{ error }}</p>{% endfor %}
-            </div>
-	  </div>
+	   {% endfor %}
 	</div>
 	<div class="form-group">
 	  <div class="col-md-10 col-md-offset-2">
