@@ -19,24 +19,14 @@
 </div>
 
 <div class="row">
-  {% if messages %}
-  <div class="col-md-12">
-    {% for message in messages %}
-    <div class="alert alert-{{ message.tags|default:'danger' }}">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <strong>{{ message.tags|default:'error'|capfirst }}:</strong> {{ message }}
-    </div>
-    {% endfor %}
-  </div>
-  {% endif %}
-
-  <div class="col-md-12">
+  {% include 'GroupedPurchaseOrder/message.html' %}
+  <div class="col-md-4">
     {% if suppliers %}
       <table class="table table-striped">
         <thead>
           <tr>
             <th>{% trans "Name" %}</th>
-            <th width="8%"></th>
+            <th width="20%"></th>
           </tr>
         </thead>
         <tbody>
@@ -54,7 +44,8 @@
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button type="button" class="close" data-dismiss="modal">
+			  <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <h3 class="modal-title" id="deleteModal{{ supplier.pk }}Label">{% trans "Delete supplier" %}</h3>
                       </div>
                       <div class="modal-body">
