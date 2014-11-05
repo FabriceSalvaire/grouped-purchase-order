@@ -22,10 +22,11 @@
 
 from django.conf.urls import patterns, url
 from django.core.urlresolvers import reverse_lazy
+from django.views.generic import TemplateView
 
 ####################################################################################################
 
-# from GroupedPurchaseOrder import views
+# from GroupedPurchaseOrder.views.main import MainView
 from GroupedPurchaseOrder.views.account import (AuthenticationForm,
                                                 PasswordChangeForm,
                                                 PasswordResetForm,
@@ -36,8 +37,11 @@ from GroupedPurchaseOrder.views.account import (AuthenticationForm,
 # Fixme: name: a.b or a_b ?
 
 # Main page
-urlpatterns = patterns('GroupedPurchaseOrder.views.main',
-     url(r'^$', 'index', name='index'),
+urlpatterns = patterns('',
+   # url(r'^$', MainView.as_view(), name='index'),
+    url(r'^$',
+        TemplateView.as_view(template_name='GroupedPurchaseOrder/main/index.html'),
+        name='index'),
 )
 
 # Authentication

@@ -20,12 +20,12 @@
 
 ####################################################################################################
 
-from django.shortcuts import render
+from django.views.generic import TemplateView
 
 ####################################################################################################
 
-def index(request):
-    return render(request, 'GroupedPurchaseOrder/main/index.html')
+class MainView(TemplateView):
+    template_name = 'GroupedPurchaseOrder/main/index.html'
 
 ####################################################################################################
 # 
