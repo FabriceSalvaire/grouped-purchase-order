@@ -1,5 +1,5 @@
 ####################################################################################################
-# 
+#
 # GroupedPurchaseOrder - A Django Application.
 # Copyright (C) 2014 Fabrice Salvaire
 #
@@ -40,16 +40,15 @@ class SupplierForm(ModelForm):
 
     class Meta:
         model = Supplier
-        fields = (
-            # 'creation_date',
-            'name',
-            'url',
-            'purchase_therms_url',
-            'delivery_therms_url',
-            'description',
-            'minimum_purchase',
-            'free_shipment_threshold',
-        )
+        fields = '__all__'
+        # 'name',
+        # 'url',
+        # 'purchase_therms_url',
+        # 'delivery_therms_url',
+        # 'description',
+        # 'minimum_purchase',
+        # 'free_shipment_threshold',
+        exclude = ('creation_date',)
         # localized_fields = ('', )
 
     ##############################################
@@ -59,8 +58,9 @@ class SupplierForm(ModelForm):
         super(SupplierForm, self).__init__(*args, **kwargs)
 
         self.fields['name'].widget.attrs['autofocus'] = 'autofocus'
-        self.fields['description'].widget.attrs['class'] = 'form-control'
-        self.fields['description'].widget.attrs['placeholder'] = _('Description')
+
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-control'
 
 ####################################################################################################
 

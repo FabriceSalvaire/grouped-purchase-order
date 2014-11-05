@@ -93,8 +93,8 @@ class Supplier(models.Model):
     purchase_therms_url = models.URLField(null=True, blank=True, verbose_name='Therms of purchase')
     delivery_therms_url = models.URLField(null=True, blank=True, verbose_name='Therms of delivery') # shipping_conditions
     description = models.TextField(default='', blank=True)
-    minimum_purchase = CurrencyField(default=0) # HT ?
-    free_shipment_threshold = CurrencyField(default=0) # HT ?
+    minimum_purchase = CurrencyField(default=0, verbose_name='Minimum purchase') # HT ?
+    free_shipment_threshold = CurrencyField(default=0, verbose_name='Free shipment threshold') # HT ?
     # currency = models.CharField(max_length=3, default='€')
 
     ##############################################
