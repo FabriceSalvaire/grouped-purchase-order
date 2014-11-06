@@ -15,6 +15,7 @@
   <p class="lead">{% trans "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam aliquet tellus sit amet faucibus pretium." %}</p>
   {% if user.is_authenticated %}
   <a class="btn btn-lg btn-success" href="{% url 'suppliers.index' %}">{% trans "Suppliers" %}</a>
+  <a class="btn btn-lg btn-success" href="{% url 'orders.index' %}">{% trans "Orders" %}</a>
   {% else %}
   <a class="btn btn-lg btn-success" href="{% url 'accounts.login' %}">{% trans "Log in" %}</a>
   {% endif %}

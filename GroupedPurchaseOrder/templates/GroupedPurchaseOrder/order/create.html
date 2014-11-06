@@ -1,0 +1,44 @@
+{% extends 'GroupedPurchaseOrder/base.html' %}
+{% load static i18n %}
+
+{% block title %}{{ update|yesno:_("Update,New order") }}{% endblock %}
+
+{% block nav-orders %}active{% endblock %}
+
+{% block breadcrumb %}
+  <li><a href="{% url 'index' %}">{% trans "Home" %}</a></li>
+  <li><a href="{% url 'orders.index' %}">{% trans "Orders" %}</a></li>
+  <li class="active">{{ update|yesno:_("Update,Create") }}</li>
+{% endblock %}
+
+{% block body %}
+<h2>{% if update %}{% blocktrans with order.name as name %}Update «{{ name }}»{% endblocktrans %}
+  {% else %}{% trans "New order" %}{% endif %}</h2>
+
+<div class="row">
+  <div class="col-md-12">
+    {% include 'GroupedPurchaseOrder/message.html' %}
+    <form class="form-horizontal" role="form" action="." method="post">
+      {% csrf_token %}
+      <div class="row">
+	<div class="col-md-6">
+	  {% for field in form.visible_fields %}
+            <div class="form-group{% if field.errors %} has-error{% endif %}">
+              <label class="col-md-4 control-label" for="{{ field.id_for_label }}">{% trans field.label %}</label>
+              <div class="col-md-8">
+		{{ field }}
+		{% for error in field.errors %}<span class="help-block">{{ error }}</span>{% endfor %}
+              </div>
+            </div>
+	   {% endfor %}
+	</div>
+	<div class="form-group">
+	  <div class="col-md-10 col-md-offset-2">
+            <button type="submit" class="btn btn-primary">{{ update|yesno:_("Update,Create") }}</button>
+	  </div>
+	</div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

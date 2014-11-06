@@ -1,0 +1,28 @@
+{% extends 'GroupedPurchaseOrder/base.html' %}
+{% load static l10n i18n %}
+
+{% block title %}{% blocktrans with order.name as name %}Order «{{ name }}»{% endblocktrans %}{% endblock %}
+
+{% block nav-orders %}active{% endblock %}
+
+{% block breadcrumb %}
+  <li><a href="{% url 'index' %}">{% trans "Home" %}</a></li>
+  <li><a href="{% url 'orders.index' %}">{% trans "Orders" %}</a></li>
+  <li class="active">{{ order.name }}</li>
+{% endblock %}
+
+{% block body %}
+<h2>{{ order.name }}
+  <small><a href="{% url 'orders.update' order.pk %}">({% trans "update" %})</a></small></h2>
+
+<div class="row">
+  {% include 'GroupedPurchaseOrder/message.html' %}
+
+  <div class="col-md-6">
+    <dl class="dl-horizontal">
+      <dt>{% trans "Description" %}</dt>
+      <dd>{{ order.description }}</dd>
+    </dl>
+  </div>
+</div>
+{% endblock %}

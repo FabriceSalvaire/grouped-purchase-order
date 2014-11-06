@@ -1,0 +1,72 @@
+{% extends 'GroupedPurchaseOrder/base.html' %}
+{% load static l10n i18n humanize %}
+
+{% block title %}{% trans "Orders" %}{% endblock %}
+
+{% block nav-orders %}active{% endblock %}
+
+{% block breadcrumb %}
+  <li><a href="{% url 'index' %}">{% trans "Home" %}</a></li>
+  <li class="active">{% trans "Orders" %}</li>
+{% endblock %}
+
+{% block body %}
+<div class="page-header">
+  <h2>{% trans "Orders" %}
+    <a class="btn btn-info btn-xs" href="{% url 'orders.create' %}">
+    <span class="glyphicon glyphicon-plus-sign"></span>
+    {% trans "new" %}</a></h2>
+</div>
+
+<div class="row">
+  {% include 'GroupedPurchaseOrder/message.html' %}
+  <div class="col-md-4">
+    {% if orders %}
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>{% trans "Name" %}</th>
+            <th width="20%"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in orders %}
+            <tr>
+              <td><a href="{% url 'orders.details' order.pk %}">{{ order.name }}</a></td>
+              <td>
+		<a class="btn btn-xs btn-info" href="{% url 'orders.update' order.pk %}" title="{% trans "update" %}">
+		  <span class="glyphicon glyphicon-pencil"></span></a>
+		<button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#deleteModal{{ order.pk }}"
+			title="{% trans "delete" %}">
+		  <span class="glyphicon glyphicon-trash"></span></button>
+                <div class="modal fade" id="deleteModal{{ order.pk }}" tabindex="-1" role="dialog"
+		     aria-labelledby="deleteModal{{ order.pk }}Label" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+			  <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h3 class="modal-title" id="deleteModal{{ order.pk }}Label">{% trans "Delete order" %}</h3>
+                      </div>
+                      <div class="modal-body">
+                        <p>{% blocktrans with order.name as name %}Are you sure you want to delete the order: «{{ name }}» ?{% endblocktrans %}</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "Cancel" %}</button>
+                        <a class="btn btn-danger" href="{% url 'orders.delete' order.pk %}">{% trans "Delete" %}</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>{% trans "No orders" %}</p>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
