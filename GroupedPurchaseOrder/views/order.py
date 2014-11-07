@@ -1,5 +1,5 @@
 ####################################################################################################
-#
+# 
 # GroupedPurchaseOrder - A Django Application.
 # Copyright (C) 2014 Fabrice Salvaire
 #
