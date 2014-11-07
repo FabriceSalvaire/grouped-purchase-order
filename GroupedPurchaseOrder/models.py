@@ -32,6 +32,7 @@ from django.utils.translation import ugettext as _
 ####################################################################################################
 
 from .settings import LANGUAGES
+from .tools.enum import ChoiceEnum
 
 ####################################################################################################
 
@@ -174,13 +175,12 @@ class SupplierProduct(models.Model):
 
 ####################################################################################################
 
-class Order(models.Model):
+class OrderStatus(ChoiceEnum):
+    new = _('new')
+    ordered = _('ordered')
+    delivered = _('delivered')
 
-    ORDER_STATUS = (
-        ('new', 'new'),
-        ('ordered', 'ordered'),
-        ('delivered', 'delivered'),
-    )
+class Order(models.Model):
 
     class Meta:
         app_label = 'GroupedPurchaseOrder'
@@ -190,7 +190,7 @@ class Order(models.Model):
     order_date = models.DateTimeField(null=True, blank=True)
     delivery_date = models.DateTimeField(null=True, blank=True)
     manager = models.ForeignKey(Profile, null=True, blank=True)
-    status = models.CharField(max_length=len('delivered'), choices=ORDER_STATUS, default='new')
+    status = models.IntegerField(choices=OrderStatus.to_list(), default=OrderStatus.new.value)
     total = CurrencyField(default=0, help_text='Please fill the total excluding taxes') # HT ?
     duty_tax = CurrencyField(default=0, help_text='Please fill any duty tax') # HT ?
     shipping_rate = CurrencyField(default=0, help_text='Please fill the amount ex VAT') # HT ?
@@ -212,14 +212,13 @@ class Order(models.Model):
 
 ####################################################################################################
 
-class UserOrder(models.Model):
+class UserOrderStatus(ChoiceEnum):
+    new = _('new')
+    cancelled = _('cancelled')
+    ordered = _('ordered')
+    delivered = _('delivered')
 
-    ORDER_STATUS = (
-        ('new', 'new'),
-        ('cancelled', 'cancelled'),
-        ('ordered', 'ordered'),
-        ('delivered', 'delivered'),
-    )
+class UserOrder(models.Model):
 
     class Meta:
         app_label = 'GroupedPurchaseOrder'
@@ -227,7 +226,7 @@ class UserOrder(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True)
     order = models.ForeignKey(Order)
     profile = models.ForeignKey(Profile)
-    status = models.CharField(max_length=len('delivered'), choices=ORDER_STATUS, default='new')
+    status = models.IntegerField(choices=UserOrderStatus.to_list(), default=UserOrderStatus.new.value)
     payed = models.BooleanField(default=False)
     delivery_date = models.DateTimeField(null=True, blank=True)
     # duty_tax
