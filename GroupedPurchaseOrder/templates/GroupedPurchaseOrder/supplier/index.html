@@ -1,5 +1,6 @@
 {% extends 'GroupedPurchaseOrder/base.html' %}
 {% load static l10n i18n humanize %}
+{% load bootstrap %}
 
 {% block title %}{% trans "Suppliers" %}{% endblock %}
 
@@ -14,7 +15,7 @@
 <div class="page-header">
   <h2>{% trans "Suppliers" %}
     <a class="btn btn-info btn-xs" href="{% url 'suppliers.create' %}">
-    <span class="glyphicon glyphicon-plus-sign"></span>
+      {% bootstrap_icon 'plus-sign' %}
     {% trans "new" %}</a></h2>
 </div>
 
@@ -35,10 +36,10 @@
               <td><a href="{% url 'suppliers.details' supplier.pk %}">{{ supplier.name }}</a></td>
               <td>
 		<a class="btn btn-xs btn-info" href="{% url 'suppliers.update' supplier.pk %}" title="{% trans "update" %}">
-		  <span class="glyphicon glyphicon-pencil"></span></a>
+		  {% bootstrap_icon 'pencil' %}</a>
 		<button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#deleteModal{{ supplier.pk }}"
 			title="{% trans "delete" %}">
-		  <span class="glyphicon glyphicon-trash"></span></button>
+		  {% bootstrap_icon 'trash' %}</button>
                 <div class="modal fade" id="deleteModal{{ supplier.pk }}" tabindex="-1" role="dialog"
 		     aria-labelledby="deleteModal{{ supplier.pk }}Label" aria-hidden="true">
                   <div class="modal-dialog">
