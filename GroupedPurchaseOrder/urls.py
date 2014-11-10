@@ -164,6 +164,13 @@ urlpatterns += patterns('GroupedPurchaseOrder.views.order',
         name='orders.delete'),
 )
 
+# Ajax test
+urlpatterns += patterns('GroupedPurchaseOrder.views.ajax',
+    url(r'^ajax/hello$',
+        'hello',
+        name='ajax.hello'),
+)
+
 ####################################################################################################
 # 
 # End

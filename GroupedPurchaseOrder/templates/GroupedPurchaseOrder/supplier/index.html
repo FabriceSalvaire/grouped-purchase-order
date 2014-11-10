@@ -4,6 +4,22 @@
 
 {% block title %}{% trans "Suppliers" %}{% endblock %}
 
+{% block head %}
+<script type="text/javascript" src="{% static 'GroupedPurchaseOrder/js/jquery-v1.11.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'django_ajax/js/jquery.ajax.js' %}"></script>
+<script type="text/javascript">
+ function hello_callback()
+ {
+   ajaxGet('/ajax/hello', function(content)
+	   {
+	     //onSuccess
+	     // alert(content.result);
+	     $("ul#foo").append("<li>" + content.result + "</li>"); 
+	   })
+ }
+</script>
+{% endblock %}
+
 {% block nav-suppliers %}active{% endblock %}
 
 {% load breadcrumbs %}
@@ -20,6 +36,10 @@
       {% bootstrap_icon 'plus-sign' %}
     {% trans "new" %}</a></h2>
 </div>
+
+<ul id="foo">
+</ul>
+<button class="btn btn-xs" onclick="hello_callback()">{% trans "hello" %}</button>
 
 <div class="row">
   {% include 'GroupedPurchaseOrder/message.html' %}
