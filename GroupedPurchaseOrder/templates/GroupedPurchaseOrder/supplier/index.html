@@ -17,6 +17,16 @@
 	     $("ul#foo").append("<li>" + content.result + "</li>"); 
 	   })
  }
+ function bye_callback()
+ {
+   ajaxPost('/ajax/bye', {'foo': 'bar'}, function(content)
+	   {
+	     //onSuccess
+	     // alert(content.result);
+	     $("ul#foo li:last").remove(); 
+	     $("ul#foo li:last").append(' ' + content.result); 
+	   })
+ }
 </script>
 {% endblock %}
 
@@ -40,6 +50,7 @@
 <ul id="foo">
 </ul>
 <button class="btn btn-xs" onclick="hello_callback()">{% trans "hello" %}</button>
+<button class="btn btn-xs btn-danger" onclick="bye_callback()">{% trans "bye" %}</button>
 
 <div class="row">
   {% include 'GroupedPurchaseOrder/message.html' %}

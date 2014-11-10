@@ -169,6 +169,10 @@ urlpatterns += patterns('GroupedPurchaseOrder.views.ajax',
     url(r'^ajax/hello$',
         'hello',
         name='ajax.hello'),
+
+    url(r'^ajax/bye$',
+        'bye',
+        name='ajax.bye'),
 )
 
 ####################################################################################################
