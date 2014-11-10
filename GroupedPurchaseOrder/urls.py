@@ -165,15 +165,15 @@ urlpatterns += patterns('GroupedPurchaseOrder.views.order',
 )
 
 # Ajax test
-urlpatterns += patterns('GroupedPurchaseOrder.views.ajax',
-    url(r'^ajax/hello$',
-        'hello',
-        name='ajax.hello'),
-
-    url(r'^ajax/bye$',
-        'bye',
-        name='ajax.bye'),
-)
+# urlpatterns += patterns('GroupedPurchaseOrder.views.ajax',
+#     url(r'^ajax/hello$',
+#         'hello',
+#         name='ajax.hello'),
+#
+#     url(r'^ajax/bye$',
+#         'bye',
+#         name='ajax.bye'),
+# )
 
 ####################################################################################################
 # 

@@ -74,6 +74,37 @@ def bye(request):
 # 
 # {"content": {"result": "ok bar"}, "status": 200, "statusText": "OK"}
 
+# {% block head %}
+# <script type="text/javascript" src="{% static 'GroupedPurchaseOrder/js/jquery-v1.11.1.min.js' %}"></script>
+# <script type="text/javascript" src="{% static 'django_ajax/js/jquery.ajax.js' %}"></script>
+# <script type="text/javascript">
+#  function hello_callback()
+#  {
+#    ajaxGet('/ajax/hello', function(content)
+# 	   {
+# 	     //onSuccess
+# 	     // alert(content.result);
+# 	     $("ul#foo").append("<li>" + content.result + "</li>"); 
+# 	   })
+#  }
+#  function bye_callback()
+#  {
+#    ajaxPost('/ajax/bye', {'foo': 'bar'}, function(content)
+# 	   {
+# 	     //onSuccess
+# 	     // alert(content.result);
+# 	     $("ul#foo li:last").remove(); 
+# 	     $("ul#foo li:last").append(' ' + content.result); 
+# 	   })
+#  }
+# </script>
+# {% endblock %}
+# 
+# <ul id="foo">
+# </ul>
+# <button class="btn btn-xs" onclick="hello_callback()">{% trans "hello" %}</button>
+# <button class="btn btn-xs btn-danger" onclick="bye_callback()">{% trans "bye" %}</button>
+
 ####################################################################################################
 # 
 # End
