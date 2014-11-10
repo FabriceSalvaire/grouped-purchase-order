@@ -66,11 +66,13 @@
   </div>
 </header>
 
-<div class="container">
-<ul class="breadcrumb">
-{% block breadcrumb %}{% endblock %}
-</ul>
+{% load breadcrumbs %}
+{% block breadcrumbs %}
+  {% clear_breadcrumbs %}
+{% endblock %}
 
+<div class="container">
+{% render_breadcrumbs %}
 {% block body %}{% endblock %}
 
 <hr />

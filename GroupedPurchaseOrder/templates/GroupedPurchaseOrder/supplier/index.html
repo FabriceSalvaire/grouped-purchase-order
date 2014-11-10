@@ -6,9 +6,11 @@
 
 {% block nav-suppliers %}active{% endblock %}
 
-{% block breadcrumb %}
-  <li><a href="{% url 'index' %}">{% trans "Home" %}</a></li>
-  <li class="active">{% trans "Suppliers" %}</li>
+{% load breadcrumbs %}
+{% block breadcrumbs %}
+  {{ block.super }}
+  {% breadcrumb "Home" "index" %}
+  {% breadcrumb "Suppliers" "suppliers.index" %}
 {% endblock %}
 
 {% block body %}

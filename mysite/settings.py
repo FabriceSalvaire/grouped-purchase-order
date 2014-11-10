@@ -73,6 +73,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.sessions',
     'django.contrib.staticfiles',
+    # 'django_bootstrap_breadcrumbs',
     'GroupedPurchaseOrder',
 )
 

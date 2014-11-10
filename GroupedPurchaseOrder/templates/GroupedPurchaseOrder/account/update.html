@@ -5,10 +5,12 @@
 
 {% block nav-account %}active{% endblock %}
 
-{% block breadcrumb %}
-  <li><a href="{% url 'index' %}">{% trans "Home" %}</a></li>
-  <li><a href="{% url 'accounts.profile' %}">{% trans "Account" %}</a></li>
-  <li class="activate">{% trans "Update" %}</li>
+{% load breadcrumbs %}
+{% block breadcrumbs %}
+  {{ block.super }}
+  {% breadcrumb "Home" "index" %}
+  {% breadcrumb "Account" "accounts.profile" %}
+  {% breadcrumb "Update" "" %}
 {% endblock %}
 
 {% block body %}

@@ -5,9 +5,11 @@
 
 {% block nav-orders %}active{% endblock %}
 
-{% block breadcrumb %}
-  <li><a href="{% url 'index' %}">{% trans "Home" %}</a></li>
-  <li class="active">{% trans "Orders" %}</li>
+{% load breadcrumbs %}
+{% block breadcrumbs %}
+  {{ block.super }}
+  {% breadcrumb "Home" "index" %}
+  {% breadcrumb "Orders" "orders.index" %}
 {% endblock %}
 
 {% block body %}

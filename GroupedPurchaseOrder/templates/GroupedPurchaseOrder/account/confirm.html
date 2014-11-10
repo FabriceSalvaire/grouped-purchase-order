@@ -9,10 +9,12 @@
   <meta http-equiv="refresh" content="5;url={% url 'accounts.login' %}">
 {% endblock %}
 
-{% block breadcrumb %}
-  <li><a href="{% url 'index' %}">{% trans "Home" %}</a></li>
-  <li><a href="{% url 'accounts.profile' %}">{% trans "Account" %}</a></li>
-  <li class="activate">{% trans "Confirm" %}</li>
+{% load breadcrumbs %}
+{% block breadcrumbs %}
+  {{ block.super }}
+  {% breadcrumb "Home" "index" %}
+  {% breadcrumb "Account" "accounts.profile" %}
+  {% breadcrumb "Confirm" "" %}
 {% endblock %}
 
 {% block body %}

@@ -5,10 +5,12 @@
 
 {% block nav-suppliers %}active{% endblock %}
 
-{% block breadcrumb %}
-  <li><a href="{% url 'index' %}">{% trans "Home" %}</a></li>
-  <li><a href="{% url 'suppliers.index' %}">{% trans "Suppliers" %}</a></li>
-  <li class="active">{{ update|yesno:_("Update,Create") }}</li>
+{% load breadcrumbs %}
+{% block breadcrumbs %}
+  {{ block.super }}
+  {% breadcrumb "Home" "index" %}
+  {% breadcrumb "Suppliers" "suppliers.index" %}
+  {% breadcrumb update|yesno:_("Update,Create") "" %}
 {% endblock %}
 
 {% block body %}

@@ -5,8 +5,10 @@
 
 {% block nav-index %}active{% endblock %}
 
-{% block breadcrumb %}
-  <li class="active">{% trans "Home" %}</li>
+{% load breadcrumbs %}
+{% block breadcrumbs %}
+  {{ block.super }}
+  {% breadcrumb "Home" "index" %}
 {% endblock %}
 
 {% block body %}
