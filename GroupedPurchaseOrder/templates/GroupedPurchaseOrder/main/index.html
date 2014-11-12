@@ -1,11 +1,10 @@
 {% extends 'GroupedPurchaseOrder/base.html' %}
-{% load i18n %}
+{% load i18n bootstrap breadcrumbs %}
 
 {% block title %}{% trans "Main Page" %}{% endblock %}
 
 {% block nav-index %}active{% endblock %}
 
-{% load breadcrumbs %}
 {% block breadcrumbs %}
   {{ block.super }}
   {% breadcrumb "Home" "index" %}
@@ -14,12 +13,12 @@
 {% block body %}
 <div class="jumbotron">
   <h1>G.P.O.</h1>
-  <p class="lead">{% trans "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam aliquet tellus sit amet faucibus pretium." %}</p>
+  <p class="lead">{% trans "Lorem ipsum dolor sit amet, consectetur adipiscing elit." %}</p>
   {% if user.is_authenticated %}
-  <a class="btn btn-lg btn-success" href="{% url 'suppliers.index' %}">{% trans "Suppliers" %}</a>
-  <a class="btn btn-lg btn-success" href="{% url 'orders.index' %}">{% trans "Orders" %}</a>
+    {% bootstrap_button "Suppliers" style='success' size='lg' href='suppliers.index' %}
+    {% bootstrap_button "Orders" style='success' size='lg' href='orders.index' %}
   {% else %}
-  <a class="btn btn-lg btn-success" href="{% url 'accounts.login' %}">{% trans "Log in" %}</a>
+    {% bootstrap_button "Log in" style='success' size='lg' href='accounts.login' %}
   {% endif %}
 </div>
 

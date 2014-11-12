@@ -16,9 +16,7 @@
 {% block body %}
 <div class="page-header">
   <h2>{% trans "Suppliers" %}
-    <a class="btn btn-info btn-xs" href="{% url 'suppliers.create' %}">
-      {% bootstrap_icon 'plus-sign' %}
-    {% trans "new" %}</a></h2>
+    {% bootstrap_button "new" icon='plus-sign' style='info' size='xs' href='suppliers.create' %}
 </div>
 
 <div class="row">
@@ -37,26 +35,24 @@
             <tr>
               <td><a href="{% url 'suppliers.details' supplier.pk %}">{{ supplier.name }}</a></td>
               <td>
-		<a class="btn btn-xs btn-info" href="{% url 'suppliers.update' supplier.pk %}" title="{% trans "update" %}">
-		  {% bootstrap_icon 'pencil' %}</a>
-		<button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#deleteModal{{ supplier.pk }}"
-			title="{% trans "delete" %}">
-		  {% bootstrap_icon 'trash' %}</button>
+		{% url 'suppliers.update' supplier.pk as update_url %}
+		{% url 'suppliers.delete' supplier.pk as delete_url %}
+		{% bootstrap_icon_button 'pencil' title="update" style='info' size='xs' href=update_url %}
+		{% bootstrap_modal_icon_button 'trash' '#deleteModal' supplier.pk title='delete' style='danger' size='xs' %}
                 <div class="modal fade" id="deleteModal{{ supplier.pk }}" tabindex="-1" role="dialog"
 		     aria-labelledby="deleteModal{{ supplier.pk }}Label" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">
-			  <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+			{% bootstrap_close_button %}
                         <h3 class="modal-title" id="deleteModal{{ supplier.pk }}Label">{% trans "Delete supplier" %}</h3>
                       </div>
                       <div class="modal-body">
                         <p>{% blocktrans with supplier.name as name %}Are you sure you want to delete the supplier: «{{ name }}» ?{% endblocktrans %}</p>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "Cancel" %}</button>
-                        <a class="btn btn-danger" href="{% url 'suppliers.delete' supplier.pk %}">{% trans "Delete" %}</a>
+			{% bootstrap_dismiss_button 'Cancel' style='default' %}
+			{% bootstrap_button 'Delete' style='danger' href=delete_url %}
                       </div>
                     </div>
                   </div>

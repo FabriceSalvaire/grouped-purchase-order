@@ -20,27 +20,56 @@
 
 ####################################################################################################
 
-from django import template
+from django.forms.utils import flatatt
+from django.utils.encoding import force_text as dj_force_text
+from django.utils.html import format_html
 
 ####################################################################################################
 
-from GroupedPurchaseOrder.bootstrap.components import (render_icon,
-                                                       render_button, render_icon_button,
-                                                       render_modal_icon_button, render_dismiss_button,
-                                                       render_close_button)
+def force_text(s):
+    """Force a value to text, render None as an empty string.
+
+    """
+    # force_text(None) -> 'None'
+    if s is None:
+        return ''
+    else:
+        #? difference with str(s)
+        return dj_force_text(s)
 
 ####################################################################################################
 
-register = template.Library()
+def join_text(args, separator=''):
+    """Concatenate several values as a text string with an optional separator.
+
+    """
+    #? force_text(separator)
+    return force_text(separator).join([force_text(x) for x in args if x])
 
 ####################################################################################################
 
-register.simple_tag(render_icon, name='bootstrap_icon')
-register.simple_tag(render_button, name='bootstrap_button')
-register.simple_tag(render_icon_button, name='bootstrap_icon_button')
-register.simple_tag(render_modal_icon_button, name='bootstrap_modal_icon_button')
-register.simple_tag(render_dismiss_button, name='bootstrap_dismiss_button')
-register.simple_tag(render_close_button, name='bootstrap_close_button')
+def merge_new_words(string1, words2, prepend=False):
+    words1 = string1.split()
+    # words2 = string2.split()
+    string3 = ' '.join([x for x in words2 if x not in words1])
+    if prepend:
+        strings = string3, string1
+    else:
+        strings = string1, string3
+    return ' '.join(strings)
+
+####################################################################################################
+
+def render_tag(tag, content, attrs=None):
+
+    """Render a HTML tag.
+
+    """
+
+    return format_html('<{0}{1}>{2}</{0}>',
+                       tag,
+                       flatatt(attrs) if attrs else '',
+                       force_text(content))
 
 ####################################################################################################
 # 
