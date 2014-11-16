@@ -32,22 +32,15 @@ from django.views.generic.list import ListView
 
 ####################################################################################################
 
-from GroupedPurchaseOrder.models import Supplier
+from GroupedPurchaseOrder.models import SupplierProduct, Supplier, Product
 
 ####################################################################################################
 
-class SupplierForm(ModelForm):
+class SupplierProductForm(ModelForm):
 
     class Meta:
-        model = Supplier
+        model = SupplierProduct
         fields = '__all__'
-        # 'name',
-        # 'url',
-        # 'purchase_therms_url',
-        # 'delivery_therms_url',
-        # 'description',
-        # 'minimum_purchase',
-        # 'free_shipment_threshold',
         exclude = ('creation_date',)
         # localized_fields = ('', )
 
@@ -55,93 +48,85 @@ class SupplierForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
 
-        super(SupplierForm, self).__init__(*args, **kwargs)
+        super(SupplierProductForm, self).__init__(*args, **kwargs)
 
-        self.fields['name'].widget.attrs['autofocus'] = 'autofocus'
+        # self.fields['name'].widget.attrs['autofocus'] = 'autofocus'
 
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
 
 ####################################################################################################
 
-class SupplierListView(ListView):
-
-    model = Supplier
-    template_name = 'GroupedPurchaseOrder/supplier/index.html'
-    context_object_name = 'suppliers'
-
-####################################################################################################
-
 @login_required
-def details(request, supplier_id):
+def details(request, supplier_product_id):
 
-    supplier = get_object_or_404(Supplier, pk=supplier_id)
+    supplier_product = get_object_or_404(SupplierProduct, pk=supplier_product_id)
 
-    return render_to_response('GroupedPurchaseOrder/supplier/details.html',
-                              {'supplier': supplier},
+    return render_to_response('GroupedPurchaseOrder/supplier_product/details.html',
+                              {'supplier_product': supplier_product},
                               context_instance=RequestContext(request))
 
 ####################################################################################################
 
 @login_required
-def create(request):
+def create(request, product_id=None):
 
     if request.method == 'POST':
-        form = SupplierForm(request.POST)
+        form = SupplierProductForm(request.POST)
         if form.is_valid():
-            supplier = form.save(commit=False)
-            supplier.save()
-            messages.success(request, _('Supplier successfully created.'))
-            return HttpResponseRedirect(reverse('suppliers.details', args=[supplier.pk]))
+            supplier_product = form.save(commit=False)
+            supplier_product.save()
+            messages.success(request, _('SupplierProduct successfully created.'))
+            return HttpResponseRedirect(reverse('supplier_products.details', args=[supplier_product.pk]))
         else:
             messages.error(request, _("Some information are missing or mistyped"))
     else:
-        form = SupplierForm()
+        if product_id is not None:
+            initial_data = {'product': product_id}
+            product = Product.objects.get(pk=product_id)
+        else:
+            initial_data = {}
+            product = None
+        form = SupplierProductForm(initial=initial_data)
 
-    return render_to_response('GroupedPurchaseOrder/supplier/create.html',
-                              {'form': form},
+    return render_to_response('GroupedPurchaseOrder/supplier_product/create.html',
+                              {'form': form,
+                               'product': product},
                               context_instance=RequestContext(request))
 
 ####################################################################################################
 
 @login_required
-def update(request, supplier_id):
+def update(request, supplier_product_id):
 
-    supplier = get_object_or_404(Supplier, pk=supplier_id)
+    supplier_product = get_object_or_404(SupplierProduct, pk=supplier_product_id)
 
     if request.method == 'POST':
-        form = SupplierForm(request.POST, instance=supplier)
+        form = SupplierProductForm(request.POST, instance=supplier_product)
         if form.is_valid():
-            supplier = form.save()
-            return HttpResponseRedirect(reverse('suppliers.details', args=[supplier.pk]))
+            supplier_product = form.save()
+            return HttpResponseRedirect(reverse('supplier_products.details', args=[supplier_product.pk]))
     else:
-        form = SupplierForm(instance=supplier)
+        form = SupplierProductForm(instance=supplier_product)
 
-    return render_to_response('GroupedPurchaseOrder/supplier/create.html',
-                              {'form': form, 'update': True, 'supplier': supplier},
+    return render_to_response('GroupedPurchaseOrder/supplier_product/create.html',
+                              {'form': form,
+                               'update': True,
+                               'supplier_product': supplier_product,
+                               'supplier':supplier_product.supplier,
+                              },
                               context_instance=RequestContext(request))
 
 ####################################################################################################
 
 @login_required
-def delete(request, supplier_id):
+def delete(request, supplier_product_id):
 
-    supplier = get_object_or_404(Supplier, pk=supplier_id)
-    messages.success(request, _("«%(name)s» deleted") % ({'name': supplier.name}))
-    supplier.delete()
+    supplier_product = get_object_or_404(SupplierProduct, pk=supplier_product_id)
+    messages.success(request, _("«%(name)s» deleted") % ({'name': supplier_product.name}))
+    supplier_product.delete()
 
-    return HttpResponseRedirect(reverse('suppliers.index'))
-
-####################################################################################################
-
-@login_required
-def catalog(request, supplier_id):
-
-    supplier = get_object_or_404(Supplier, pk=supplier_id)
-
-    return render_to_response('GroupedPurchaseOrder/supplier/catalog.html',
-                              {'supplier': supplier},
-                              context_instance=RequestContext(request))
+    return HttpResponseRedirect(reverse('supplier_products.index'))
 
 ####################################################################################################
 # 

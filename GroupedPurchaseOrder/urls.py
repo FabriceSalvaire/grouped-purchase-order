@@ -33,14 +33,17 @@ from GroupedPurchaseOrder.views.account import (AuthenticationForm,
                                                 PasswordResetForm,
                                                 SetPasswordForm)
 
-from GroupedPurchaseOrder.views.supplier import (SupplierListView)
+from GroupedPurchaseOrder.views.manufacturer import (ManufacturerListView)
 from GroupedPurchaseOrder.views.order import (OrderListView)
+from GroupedPurchaseOrder.views.supplier import (SupplierListView)
 
 ####################################################################################################
+#
+# Main page
+#
 
 # Fixme: name: a.b or a_b ?
 
-# Main page
 urlpatterns = patterns('',
    # url(r'^$', MainView.as_view(), name='index'),
     url(r'^$',
@@ -48,7 +51,11 @@ urlpatterns = patterns('',
         name='index'),
 )
 
+####################################################################################################
+#
 # Authentication
+#
+
 urlpatterns += patterns('django.contrib.auth.views',
    url(r'^accounts/login/$',
        'login',
@@ -88,6 +95,11 @@ urlpatterns += patterns('django.contrib.auth.views',
         name='password_reset_complete'),
 )
 
+####################################################################################################
+#
+# Profile
+#
+
 urlpatterns += patterns('GroupedPurchaseOrder.views.account',
     url(r'^accounts/register/$',
         'register',
@@ -118,7 +130,61 @@ urlpatterns += patterns('GroupedPurchaseOrder.views.account',
         name='accounts.delete'),
 )
 
+####################################################################################################
+#
+# Manufacturer
+#
+
+urlpatterns += patterns('GroupedPurchaseOrder.views.manufacturer',
+    url(r'^manufacturers/$',
+        login_required(ManufacturerListView.as_view()),
+        name='manufacturers.index'),
+
+    url(r'^manufacturers/create/$',
+        'create',
+        name='manufacturers.create'),
+
+    url(r'^manufacturers/(?P<manufacturer_id>\d+)/$',
+        'details',
+        name='manufacturers.details'),
+
+    url(r'^manufacturers/(?P<manufacturer_id>\d+)/update/$',
+        'update',
+        name='manufacturers.update'),
+
+    url(r'^manufacturers/(?P<manufacturer_id>\d+)/delete/$',
+        'delete',
+        name='manufacturers.delete'),
+)
+
+####################################################################################################
+#
+# Product
+#
+
+urlpatterns += patterns('GroupedPurchaseOrder.views.product',
+    url(r'^products/(?P<manufacturer_id>\d+)/create/$',
+        'create',
+        name='products.create'),
+
+    url(r'^products/(?P<product_id>\d+)/$',
+        'details',
+        name='products.details'),
+
+    url(r'^products/(?P<product_id>\d+)/update/$',
+        'update',
+        name='products.update'),
+
+    url(r'^products/(?P<product_id>\d+)/delete/$',
+        'delete',
+        name='products.delete'),
+)
+
+####################################################################################################
+#
 # Supplier
+#
+
 urlpatterns += patterns('GroupedPurchaseOrder.views.supplier',
     url(r'^suppliers/$',
         login_required(SupplierListView.as_view()),
@@ -139,9 +205,36 @@ urlpatterns += patterns('GroupedPurchaseOrder.views.supplier',
     url(r'^suppliers/(?P<supplier_id>\d+)/delete/$',
         'delete',
         name='suppliers.delete'),
+
+    url(r'^suppliers/(?P<supplier_id>\d+)/catalog/$',
+        'catalog',
+        name='suppliers.catalog'),
 )
 
+####################################################################################################
+#
+# Supplier Product
+#
+
+urlpatterns += patterns('GroupedPurchaseOrder.views.supplier_product',
+    url(r'^supplier_products/(?P<product_id>\d+)/create/$',
+        'create',
+        name='supplier_products.create'),
+
+    url(r'^supplier_products/(?P<supplier_product_id>\d+)/update/$',
+        'update',
+        name='supplier_products.update'),
+
+    url(r'^supplier_products/(?P<supplier_product_id>\d+)/delete/$',
+        'delete',
+        name='supplier_products.delete'),
+)
+
+####################################################################################################
+#
 # Order
+#
+
 urlpatterns += patterns('GroupedPurchaseOrder.views.order',
     url(r'^orders/$',
         login_required(OrderListView.as_view()),
@@ -163,6 +256,8 @@ urlpatterns += patterns('GroupedPurchaseOrder.views.order',
         'delete',
         name='orders.delete'),
 )
+
+####################################################################################################
 
 # Ajax test
 # urlpatterns += patterns('GroupedPurchaseOrder.views.ajax',

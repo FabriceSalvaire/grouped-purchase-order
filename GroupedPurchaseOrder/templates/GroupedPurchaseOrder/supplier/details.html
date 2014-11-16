@@ -1,11 +1,10 @@
 {% extends 'GroupedPurchaseOrder/base.html' %}
-{% load static l10n i18n %}
+{% load static l10n i18n humanize bootstrap breadcrumbs %}
 
 {% block title %}{% blocktrans with supplier.name as name %}Supplier «{{ name }}»{% endblocktrans %}{% endblock %}
 
 {% block nav-suppliers %}active{% endblock %}
 
-{% load breadcrumbs %}
 {% block breadcrumbs %}
   {{ block.super }}
   {% breadcrumb "Home" "index" %}
@@ -19,11 +18,36 @@
 
 <div class="row">
   {% include 'GroupedPurchaseOrder/message.html' %}
-
   <div class="col-md-6">
+    <dl class="list-unstyled">
+      {% with new_order=supplier.new_order %}
+	{% if new_order %}
+	  <li><a href="{% url 'orders.details' new_order.pk %}">
+	    {% bootstrap_icon 'shopping-cart' %} {% trans "New order" %}</a></li>
+	{% endif %}
+	<li><a href="{% url 'suppliers.catalog' supplier.pk %}">
+	  {% bootstrap_icon 'book' %} {% trans "Catalog" %}</a></li>
+      {% endwith % %}
+    </dl>
+  </div>
+  <div class="col-md-6 col-md-offset-6">
+    <dl class="list-unstyled">
+      {% if supplier.url %}
+      <li><a href="{{ supplier.url }}">{% bootstrap_icon 'home' %}</a></li>
+      {% endif %}
+      {% if supplier.purchase_therms_url %}
+      <li><a href="{{ supplier.purchase_therms_url }}">{% trans "therms of purchase" %}</a></li>
+      {% endif %}
+      {% if supplier.delivery_therms_url %}
+      <li><a href="{{ supplier.delivery_therms_url }}">{% trans "therms of delivery" %}</a></li>
+      {% endif %}
+      <li><p>{{ supplier.description }}</p></li>
+    </dl>
     <dl class="dl-horizontal">
-      <dt>{% trans "Description" %}</dt>
-      <dd>{{ supplier.description }}</dd>
+      <dt>{% trans "Minimum purchase" %}</dt>
+      <dd>{{ supplier.minimum_purchase }} € HT</dd>
+      <dt>{% trans "Free shipment threshold" %}</dt>
+      <dd>{{ supplier.free_shipment_threshold }} € HT</dd>
     </dl>
   </div>
 </div>

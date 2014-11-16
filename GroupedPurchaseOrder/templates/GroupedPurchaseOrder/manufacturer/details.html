@@ -1,0 +1,81 @@
+{% extends 'GroupedPurchaseOrder/base.html' %}
+{% load static l10n i18n humanize bootstrap breadcrumbs %}
+
+{% block title %}{% blocktrans with manufacturer.name as name %}Manufacturer «{{ name }}»{% endblocktrans %}{% endblock %}
+
+{% block nav-manufacturers %}active{% endblock %}
+
+{% block breadcrumbs %}
+  {{ block.super }}
+  {% breadcrumb "Home" "index" %}
+  {% breadcrumb "Manufacturers" "manufacturers.index" %}
+  {% breadcrumb manufacturer.name "manufacturers.details" manufacturer.pk %}
+{% endblock %}
+
+{% block body %}
+{% url 'manufacturers.update' manufacturer.pk as update_url %}
+{% url 'products.create' manufacturer.pk as create_product_url %}
+<h2>{{ manufacturer.name }}</h2>
+
+<div class="btn-group">
+  {% bootstrap_icon_button 'home' title='Go to manufacturer home page' style='info' size='xs' href=manufacturer.url %}
+  {% bootstrap_icon_button 'wrench' title='Update' style='info' size='xs' href=update_url %}
+  {% bootstrap_icon_button 'plus-sign' title="New product" style='info' size='xs' href=create_product_url %}
+</div>
+
+<div class="row">
+  {% include 'GroupedPurchaseOrder/message.html' %}
+  <div class="col-md-12">
+    {% if manufacturer.products %}
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>{% trans "Name" %}</th>
+            <th></th>
+            <th>{% trans "Part Number" %}</th>
+            <th>{% trans "Description" %}</th>
+            <th width="20%"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for product in manufacturer.products %}
+            <tr>
+	      <td><a href="{% url 'products.details' product.pk %}">{{ product.name }}</a></td>
+	      <td>{% if product.url %}
+		<a href="{{ product.url }}">{% bootstrap_icon 'home' %}</a>{% endif %}</td>
+	      <td>{{ product.part_number }}</td>
+	      <td>{{ product.description }}</td>
+              <td>
+		{% url 'products.update' product.pk as update_url %}
+		{% url 'products.delete' product.pk as delete_url %}
+		{% bootstrap_icon_button 'pencil' title="update" style='info' size='xs' href=update_url %}
+		{% bootstrap_modal_icon_button 'trash' '#deleteModal' product.pk title='delete' style='danger' size='xs' %}
+                <div class="modal fade" id="deleteModal{{ product.pk }}" tabindex="-1" role="dialog"
+		     aria-labelledby="deleteModal{{ product.pk }}Label" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+			{% bootstrap_close_button %}
+                        <h3 class="modal-title" id="deleteModal{{ product.pk }}Label">{% trans "Delete product" %}</h3>
+                      </div>
+                      <div class="modal-body">
+                        <p>{% blocktrans with product.name as name %}Are you sure you want to delete the product: «{{ name }}» ?{% endblocktrans %}</p>
+                      </div>
+                      <div class="modal-footer">
+			{% bootstrap_dismiss_button 'Cancel' style='default' %}
+			{% bootstrap_button 'Delete' style='danger' href=delete_url %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>{% trans "No products" %}</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

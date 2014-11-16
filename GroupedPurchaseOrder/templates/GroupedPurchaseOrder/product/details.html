@@ -1,0 +1,98 @@
+{% extends 'GroupedPurchaseOrder/base.html' %}
+{% load static l10n i18n humanize bootstrap breadcrumbs %}
+
+{% block title %}{% blocktrans with product.name as name %}Product «{{ name }}»{% endblocktrans %}{% endblock %}
+
+{% block nav-products %}active{% endblock %}
+
+{% block breadcrumbs %}
+  {{ block.super }}
+  {% breadcrumb "Home" "index" %}
+  {% breadcrumb "Manufacturers" "manufacturers.index" %}
+  {% breadcrumb product.manufacturer.name "manufacturers.details" product.manufacturer.pk %}
+  {% breadcrumb product.name "products.details" product.pk %}
+{% endblock %}
+
+{% block body %}
+{% url 'products.update' product.pk as update_url %}
+{% url 'supplier_products.create' product.pk as create_supplier_product_url %}
+<h2>{{ product.name }}</h2>
+<div class="btn-group">
+  {% if product.url %}
+    {% bootstrap_icon_button 'home' title='Go to manufacturer product page' style='info' size='xs' href=product.url %}
+  {% endif %}
+  {% bootstrap_icon_button 'wrench' title='Update' style='info' size='xs' href=update_url %}
+  {% bootstrap_icon_button 'plus-sign' title="New supplier" style='info' size='xs' href=create_supplier_product_url %}
+</div>
+
+<div class="row">
+  {% include 'GroupedPurchaseOrder/message.html' %}
+  <div class="col-md-12">
+    <dl class="list-unstyled">
+      {% comment %}
+      {% if product.url %}
+	<li><a href="{{ product.url }}">{% bootstrap_icon 'home' %}</a></li>
+      {% endif %}
+      {% endcomment %}
+      <li><p>{{ product.description }}</p></li>
+    </dl>
+    <dl class="dl-horizontal">
+      <dt>{% trans "Part Number" %}</dt>
+      <dd>{{ product.part_number }}</dd>
+    </dl>
+  </div>
+  <div class="col-md-12">
+    {% if product.supplier_products %}
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>{% trans "Supplier" %}</th>
+            <th>{% trans "Order Code" %}</th>
+            <th>{% trans "Price" %}</th>
+            <th width="20%"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for supplier_product in product.supplier_products %}
+            <tr>
+	      <td>{{ supplier_product.supplier.name }}</td>
+	      {% if supplier_product.url %}
+		<td><a href="{{supplier_product.url}}" target="_blank">{{ supplier_product.order_code }}</a></td>
+	      {% else %}
+		<td>{{ supplier_product.order_code }}</td>
+	      {% endif %}
+	      <td>{{ supplier_product.price }}</td>
+              <td>
+		{% url 'supplier_products.update' supplier_product.pk as update_url %}
+		{% url 'supplier_products.delete' supplier_product.pk as delete_url %}
+		{% bootstrap_icon_button 'pencil' title="update" style='info' size='xs' href=update_url %}
+		{% bootstrap_modal_icon_button 'trash' '#deleteModal' supplier_product.pk title='delete' style='danger' size='xs' %}
+                <div class="modal fade" id="deleteModal{{ supplier_product.pk }}" tabindex="-1" role="dialog"
+		     aria-labelledby="deleteModal{{ supplier_product.pk }}Label" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+			{% bootstrap_close_button %}
+                        <h3 class="modal-title" id="deleteModal{{ supplier_product.pk }}Label">{% trans "Delete supplier product" %}</h3>
+                      </div>
+                      <div class="modal-body">
+                        <p>{% blocktrans with supplier_product.name as name %}Are you sure you want to delete the supplier product: «{{ name }}» ?{% endblocktrans %}</p>
+                      </div>
+                      <div class="modal-footer">
+			{% bootstrap_dismiss_button 'Cancel' style='default' %}
+			{% bootstrap_button 'Delete' style='danger' href=delete_url %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>{% trans "No suppliers" %}</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

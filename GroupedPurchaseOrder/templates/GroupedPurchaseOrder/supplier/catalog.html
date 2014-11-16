@@ -1,0 +1,61 @@
+{% extends 'GroupedPurchaseOrder/base.html' %}
+{% load static l10n i18n humanize bootstrap breadcrumbs %}
+
+{% block title %}{% blocktrans with supplier.name as name %}Supplier «{{ name }}»{% endblocktrans %}{% endblock %}
+
+{% block nav-suppliers %}active{% endblock %}
+
+{% block breadcrumbs %}
+  {{ block.super }}
+  {% breadcrumb "Home" "index" %}
+  {% breadcrumb "Suppliers" "suppliers.index" %}
+  {% breadcrumb supplier.name "suppliers.catalog" supplier.pk %}
+{% endblock %}
+
+{% block body %}
+<h2>{{ supplier.name }}</h2>
+
+<div class="row">
+  {% include 'GroupedPurchaseOrder/message.html' %}
+  <div class="col-md-12">
+    {% if supplier.supplier_products %}
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>{% trans "Name" %}</th>
+            <th></th>
+            <th></th>
+            <th>{% trans "Manufacturer" %}</th>
+            <th></th>
+            <th>{% trans "Order Code" %}</th>
+            <th>{% trans "Part Number" %}</th>
+            <th>{% trans "Price" %}</th>
+            <th width="20%"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for supplier_product in supplier.supplier_products %}
+	    {% with product=supplier_product.product %}{% with manufacturer=product.manufacturer %}
+              <tr>
+		<td>{{ product.name }}</td>
+		<td>{% if supplier_product.url %}
+		  <a href="{{ supplier_product.url }}">{% bootstrap_icon 'new-window' %}</a>{% endif %}</td>
+		<td>{% if product.url %}
+		  <a href="{{ product.url }}">{% bootstrap_icon 'home' %}</a>{% endif %}</td>
+		<td>{{ manufacturer.name }}</td>
+		<td>{% if manufacturer.url %}
+		  <a href="{{ manufacturer.url }}">{% bootstrap_icon 'home' %}</a>{% endif %}</td>
+		<td>{{ supplier_product.order_code }}</td>
+		<td>{{ product.part_number }}</td>
+		<td>{{ supplier_product.price }}</td>
+              </tr>
+	    {% endwith %}{% endwith %}
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>{% trans "No products" %}</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

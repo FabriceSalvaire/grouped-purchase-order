@@ -42,6 +42,10 @@ register.simple_tag(render_modal_icon_button, name='bootstrap_modal_icon_button'
 register.simple_tag(render_dismiss_button, name='bootstrap_dismiss_button')
 register.simple_tag(render_close_button, name='bootstrap_close_button')
 
+# Add icon_link
+# <a href="{{ supplier.url }}">{% bootstrap_icon 'home' %}</a>
+# {% bootstrap_icon_link 'home' supplier.url %}
+
 ####################################################################################################
 # 
 # End

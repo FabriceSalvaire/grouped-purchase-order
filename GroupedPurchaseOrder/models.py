@@ -83,6 +83,13 @@ class Profile(models.Model):
 
 ####################################################################################################
 
+class OrderStatus(ChoiceEnum):
+    new = _('new')
+    ordered = _('ordered')
+    delivered = _('delivered')
+
+####################################################################################################
+
 class Supplier(models.Model):
 
     class Meta:
@@ -103,6 +110,36 @@ class Supplier(models.Model):
     def __str__(self):
         return "{}".format(self.name)
 
+    ##############################################
+
+    def new_order(self):
+
+        orders = self.order_set.filter(status=OrderStatus.new.value)
+        if orders:
+            if len(orders) > 1:
+                raise NameError('More than one order')
+            return orders[0]
+        else:
+            return None
+
+    ##############################################
+
+    def ordered_order(self):
+
+        return self.order_set.filter(status=OrderStatus.ordered)
+
+    ##############################################
+
+    def delivered_order(self):
+
+        return self.order_set.filter(status=OrderStatus.delivered)
+
+    ##############################################
+
+    def supplier_products(self):
+
+        return self.supplierproduct_set.all()
+
 ####################################################################################################
 
 class Manufacturer(models.Model):
@@ -118,6 +155,12 @@ class Manufacturer(models.Model):
 
     def __str__(self):
         return "{}".format(self.name)
+
+    ##############################################
+
+    def products(self):
+        
+        return self.product_set.all()
 
 ####################################################################################################
 
@@ -149,6 +192,12 @@ class Product(models.Model):
     def manufacturer_name(self):
         return self.manufacturer.name
 
+    ##############################################
+
+    def supplier_products(self):
+
+        return self.supplierproduct_set.all()
+
 ####################################################################################################
 
 class SupplierProduct(models.Model):
@@ -174,11 +223,6 @@ class SupplierProduct(models.Model):
         return "{} - {}".format(self.supplier.name, self.order_code)
 
 ####################################################################################################
-
-class OrderStatus(ChoiceEnum):
-    new = _('new')
-    ordered = _('ordered')
-    delivered = _('delivered')
 
 class Order(models.Model):
 

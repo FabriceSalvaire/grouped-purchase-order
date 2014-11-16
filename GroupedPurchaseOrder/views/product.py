@@ -32,22 +32,17 @@ from django.views.generic.list import ListView
 
 ####################################################################################################
 
-from GroupedPurchaseOrder.models import Supplier
+from GroupedPurchaseOrder.models import Product, Manufacturer
 
 ####################################################################################################
 
-class SupplierForm(ModelForm):
+class ProductForm(ModelForm):
 
     class Meta:
-        model = Supplier
+        model = Product
         fields = '__all__'
         # 'name',
         # 'url',
-        # 'purchase_therms_url',
-        # 'delivery_therms_url',
-        # 'description',
-        # 'minimum_purchase',
-        # 'free_shipment_threshold',
         exclude = ('creation_date',)
         # localized_fields = ('', )
 
@@ -55,7 +50,7 @@ class SupplierForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
 
-        super(SupplierForm, self).__init__(*args, **kwargs)
+        super(ProductForm, self).__init__(*args, **kwargs)
 
         self.fields['name'].widget.attrs['autofocus'] = 'autofocus'
 
@@ -64,84 +59,72 @@ class SupplierForm(ModelForm):
 
 ####################################################################################################
 
-class SupplierListView(ListView):
-
-    model = Supplier
-    template_name = 'GroupedPurchaseOrder/supplier/index.html'
-    context_object_name = 'suppliers'
-
-####################################################################################################
-
 @login_required
-def details(request, supplier_id):
+def details(request, product_id):
 
-    supplier = get_object_or_404(Supplier, pk=supplier_id)
+    product = get_object_or_404(Product, pk=product_id)
 
-    return render_to_response('GroupedPurchaseOrder/supplier/details.html',
-                              {'supplier': supplier},
+    return render_to_response('GroupedPurchaseOrder/product/details.html',
+                              {'product': product},
                               context_instance=RequestContext(request))
 
 ####################################################################################################
 
 @login_required
-def create(request):
+def create(request, manufacturer_id=None):
 
     if request.method == 'POST':
-        form = SupplierForm(request.POST)
+        form = ProductForm(request.POST)
         if form.is_valid():
-            supplier = form.save(commit=False)
-            supplier.save()
-            messages.success(request, _('Supplier successfully created.'))
-            return HttpResponseRedirect(reverse('suppliers.details', args=[supplier.pk]))
+            product = form.save(commit=False)
+            product.save()
+            messages.success(request, _('Product successfully created.'))
+            return HttpResponseRedirect(reverse('products.details', args=[product.pk]))
         else:
             messages.error(request, _("Some information are missing or mistyped"))
     else:
-        form = SupplierForm()
+        if manufacturer_id is not None:
+            initial_data = {'manufacturer': manufacturer_id}
+            manufacturer = Manufacturer.objects.get(pk=manufacturer_id)
+        else:
+            initial_data = {}
+            manufacturer = None
+        form = ProductForm(initial=initial_data)
 
-    return render_to_response('GroupedPurchaseOrder/supplier/create.html',
-                              {'form': form},
+    return render_to_response('GroupedPurchaseOrder/product/create.html',
+                              {'form': form,
+                               'manufacturer': manufacturer},
                               context_instance=RequestContext(request))
 
 ####################################################################################################
 
 @login_required
-def update(request, supplier_id):
+def update(request, product_id):
 
-    supplier = get_object_or_404(Supplier, pk=supplier_id)
+    product = get_object_or_404(Product, pk=product_id)
 
     if request.method == 'POST':
-        form = SupplierForm(request.POST, instance=supplier)
+        form = ProductForm(request.POST, instance=product)
         if form.is_valid():
-            supplier = form.save()
-            return HttpResponseRedirect(reverse('suppliers.details', args=[supplier.pk]))
+            product = form.save()
+            return HttpResponseRedirect(reverse('products.details', args=[product.pk]))
     else:
-        form = SupplierForm(instance=supplier)
+        form = ProductForm(instance=product)
 
-    return render_to_response('GroupedPurchaseOrder/supplier/create.html',
-                              {'form': form, 'update': True, 'supplier': supplier},
+    return render_to_response('GroupedPurchaseOrder/product/create.html',
+                              {'form': form, 'update': True, 'product': product},
                               context_instance=RequestContext(request))
 
 ####################################################################################################
 
 @login_required
-def delete(request, supplier_id):
+def delete(request, product_id):
 
-    supplier = get_object_or_404(Supplier, pk=supplier_id)
-    messages.success(request, _("«%(name)s» deleted") % ({'name': supplier.name}))
-    supplier.delete()
+    product = get_object_or_404(Product, pk=product_id)
+    messages.success(request, _("«%(name)s» deleted") % ({'name': product.name}))
+    product.delete()
 
-    return HttpResponseRedirect(reverse('suppliers.index'))
-
-####################################################################################################
-
-@login_required
-def catalog(request, supplier_id):
-
-    supplier = get_object_or_404(Supplier, pk=supplier_id)
-
-    return render_to_response('GroupedPurchaseOrder/supplier/catalog.html',
-                              {'supplier': supplier},
-                              context_instance=RequestContext(request))
+    return HttpResponseRedirect(reverse('products.index'))
 
 ####################################################################################################
 # 
