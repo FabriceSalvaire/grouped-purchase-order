@@ -1,0 +1,205 @@
+[
+  {
+    "fields": {
+      "creation_date": "2014-11-05T11:38:30.687Z",
+      "name": "NXP",
+      "url": "http://www.nxp.com/"
+    },
+    "pk": 1,
+    "model": "GroupedPurchaseOrder.manufacturer"
+  },
+  {
+    "fields": {
+      "creation_date": "2014-11-05T11:41:29.591Z",
+      "name": "On Semiconductor",
+      "url": "http://www.onsemi.com/"
+    },
+    "pk": 2,
+    "model": "GroupedPurchaseOrder.manufacturer"
+  },
+  {
+    "fields": {
+      "creation_date": "2014-11-05T11:57:51.863Z",
+      "shipping_rate": "0",
+      "status": 1,
+      "order_date": null,
+      "manager": null,
+      "duty_tax": "0",
+      "delivery_date": null,
+      "total": "0",
+      "supplier": 1,
+      "vat_tax": "0"
+    },
+    "pk": 1,
+    "model": "GroupedPurchaseOrder.order"
+  },
+  {
+    "fields": {
+      "creation_date": "2014-11-05T11:39:11.346Z",
+      "url": "http://foo.org/",
+      "description": "DIODE ZENER 10V 250MW TO-236AB-3",
+      "name": "BZX84-C10,215",
+      "manufacturer": 1,
+      "part_number": "BZX84-C10,215"
+    },
+    "pk": 1,
+    "model": "GroupedPurchaseOrder.product"
+  },
+  {
+    "fields": {
+      "creation_date": "2014-11-05T11:43:20.258Z",
+      "url": "http://foo.org/",
+      "description": "TRANSISTOR MOSFET P 20V SOT-323",
+      "name": "NTS4101PT1G",
+      "manufacturer": 2,
+      "part_number": "NTS4101PT1G"
+    },
+    "pk": 2,
+    "model": "GroupedPurchaseOrder.product"
+  },
+  {
+    "fields": {
+      "creation_date": "2014-11-05T12:00:29.070Z",
+      "user_order": 1,
+      "quantity": 1,
+      "supplier_product": 1
+    },
+    "pk": 1,
+    "model": "GroupedPurchaseOrder.productorder"
+  },
+  {
+    "fields": {
+      "creation_date": "2014-11-05T12:00:38.451Z",
+      "user_order": 1,
+      "quantity": 1,
+      "supplier_product": 2
+    },
+    "pk": 2,
+    "model": "GroupedPurchaseOrder.productorder"
+  },
+  {
+    "fields": {
+      "hash_id": "4b8bce26d2e0f2955b20d5f653cc0b",
+      "timezone": "Europe/Paris",
+      "phone_number": "",
+      "user": 5,
+      "language": "en"
+    },
+    "pk": 4,
+    "model": "GroupedPurchaseOrder.profile"
+  },
+  {
+    "fields": {
+      "creation_date": "2014-11-05T10:34:02.178Z",
+      "purchase_therms_url": "http://fr.farnell.com/cgv",
+      "url": "http://fr.farnell.com/",
+      "delivery_therms_url": "",
+      "free_shipment_threshold": "30",
+      "name": "Farnell",
+      "minimum_purchase": "0",
+      "description": "Farnell \u00e9l\u00e8ve des frais de pr\u00e9paration de commande de 6.90\u20ac HT pour chaque commande inf\u00e9rieure \u00e0 30\u20ac HT."
+    },
+    "pk": 1,
+    "model": "GroupedPurchaseOrder.supplier"
+  },
+  {
+    "fields": {
+      "creation_date": "2014-11-05T10:45:30.127Z",
+      "purchase_therms_url": "http://www.digikey.fr/fr/fr/info/terms.html",
+      "url": "http://www.digikey.fr/",
+      "delivery_therms_url": "http://www.digikey.fr/fr/help/free-shipping",
+      "free_shipment_threshold": "65",
+      "name": "Digi-Key",
+      "minimum_purchase": "0",
+      "description": "Des frais d'envoi de 18,00 \u20ac seront factur\u00e9s pour toute commande inf\u00e9rieure \u00e0 65,00 \u20ac."
+    },
+    "pk": 2,
+    "model": "GroupedPurchaseOrder.supplier"
+  },
+  {
+    "fields": {
+      "creation_date": "2014-11-05T10:57:09.695Z",
+      "purchase_therms_url": "http://fr.rs-online.com/web/generalDisplay.html?id=aboutRS&file=conditions",
+      "url": "http://fr.rs-online.com/",
+      "delivery_therms_url": "",
+      "free_shipment_threshold": "0",
+      "name": "Radiospares",
+      "minimum_purchase": "0",
+      "description": ""
+    },
+    "pk": 3,
+    "model": "GroupedPurchaseOrder.supplier"
+  },
+  {
+    "fields": {
+      "creation_date": "2014-11-05T11:39:56.695Z",
+      "url": "http://uk.farnell.com/nxp/bzx84-c10-215/diode-zener-10v-250mw-to-236ab/dp/2319201?in_merch=New%20Products&in_merch=Featured%20New%20Products&MER=i-9b10-00002068",
+      "price": "0.0411",
+      "product": 1,
+      "supplier": 1,
+      "order_code": "2319201"
+    },
+    "pk": 1,
+    "model": "GroupedPurchaseOrder.supplierproduct"
+  },
+  {
+    "fields": {
+      "creation_date": "2014-11-05T11:43:50.965Z",
+      "url": "http://fr.farnell.com/on-semiconductor/nts4101pt1g/transistor-mosfet-p-20v-sot-323/dp/1453617",
+      "price": "0.395",
+      "product": 2,
+      "supplier": 1,
+      "order_code": "1453617"
+    },
+    "pk": 2,
+    "model": "GroupedPurchaseOrder.supplierproduct"
+  },
+  {
+    "fields": {
+      "last_login": "2014-11-03T23:14:36.150Z",
+      "is_active": true,
+      "username": "admin",
+      "groups": [],
+      "email": "fabrice.salvaire@orange.fr",
+      "first_name": "",
+      "date_joined": "2014-10-31T09:26:16.323Z",
+      "user_permissions": [],
+      "last_name": "",
+      "is_staff": true,
+      "is_superuser": true,
+      "password": "pbkdf2_sha256$12000$aSWSaMnSigyL$GrJZHfjJbFrOJ9nZEKi0dpccwJ5AqXiHvD6qmmXx970="
+    },
+    "pk": 1,
+    "model": "auth.user"
+  },
+  {
+    "fields": {
+      "last_login": "2014-11-05T15:34:29.235Z",
+      "is_active": true,
+      "username": "fabrice",
+      "groups": [],
+      "email": "fabrice.salvaire@orange.fr",
+      "first_name": "fabrice",
+      "date_joined": "2014-11-04T12:45:58.809Z",
+      "user_permissions": [],
+      "last_name": "salvaire",
+      "is_staff": true,
+      "is_superuser": true,
+      "password": "pbkdf2_sha256$12000$JfC4aU63McMu$Susfrglwq8DMqiWjPuG3xUQmnGJnnYMV76jQiV2t2Pg="
+    },
+    "pk": 5,
+    "model": "auth.user"
+  },
+  {
+    "fields": {
+      "creation_date": "2014-11-05T12:00:23.869Z",
+      "payed": false,
+      "status": 1,
+      "profile": 4,
+      "order": 1,
+      "delivery_date": null
+    },
+    "pk": 1,
+    "model": "GroupedPurchaseOrder.userorder"
+  }
+]
