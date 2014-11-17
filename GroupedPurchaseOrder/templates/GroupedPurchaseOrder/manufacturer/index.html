@@ -19,7 +19,24 @@
 
 <div class="row">
   {% include 'GroupedPurchaseOrder/message.html' %}
-  <div class="col-md-4">
+</div>
+<div class="row">
+  <form class="form-horizontal" role="form" action="{% url 'manufacturers.index' %}">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="id_name" class="col-md-2 control-label">Name</label>
+      <div class="col-md-4">
+	<input type="search" class="form-control" id="id_name"
+	       name="name" placeholder="Name" value="{{ form.name.value }}">
+      </div>
+    </div>
+    <div class="col-md-offset-2 col-md-4">
+      <button type="submit" class="btn btn-primary">{% trans "Search" %}</button>
+    </div>
+  </form>
+</div>
+<div class="row">
+  <div class="col-md-6">
     {% if manufacturers %}
       <table class="table table-striped">
         <thead>
@@ -66,7 +83,7 @@
     <nav>
       <ul class="pagination">
 	{% if page_obj.has_previous %}
-	  <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+	  <li><a href="?page={{ page_obj.previous_page_number }}{{ query }}">&laquo;</a></li>
 	{% else %}
 	  <li class="disabled"><span>&laquo;</span></li>
 	{% endif %}
@@ -74,11 +91,11 @@
  	  {% if page_obj.number == page_number %}
 	    <li class="active"><span>{{ page_number }} <span class="sr-only">({% trans "current" %})</span></span></li>
 	  {% else %}
-	    <li><a href="?page={{ page_number }}">{{ page_number }}</a></li>
+	    <li><a href="?page={{ page_number }}{{ query }}">{{ page_number }}</a></li>
 	  {% endif %}
 	{% endfor %}
 	{% if page_obj.has_next %}
-	  <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+	  <li><a href="?page={{ page_obj.next_page_number }}{{ query }}">&raquo;</a></li>
 	{% else %}
 	  <li class="disabled"><span>&raquo;</span></li>
 	{% endif %}
