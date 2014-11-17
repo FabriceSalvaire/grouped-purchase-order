@@ -64,6 +64,8 @@ class ManufacturerListView(ListView):
     model = Manufacturer
     template_name = 'GroupedPurchaseOrder/manufacturer/index.html'
     context_object_name = 'manufacturers'
+    queryset = Manufacturer.objects.all().order_by('name')
+    paginate_by = 10
 
 ####################################################################################################
 

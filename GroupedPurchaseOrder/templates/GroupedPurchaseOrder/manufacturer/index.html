@@ -63,6 +63,28 @@
     {% else %}
       <p>{% trans "No manufacturers" %}</p>
     {% endif %}
+    <nav>
+      <ul class="pagination">
+	{% if page_obj.has_previous %}
+	  <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+	{% else %}
+	  <li class="disabled"><span>&laquo;</span></li>
+	{% endif %}
+	{% for page_number in page_obj.paginator.page_range %}
+ 	  {% if page_obj.number == page_number %}
+	    <li class="active"><span>{{ page_number }} <span class="sr-only">({% trans "current" %})</span></span></li>
+	  {% else %}
+	    <li><a href="?page={{ page_number }}">{{ page_number }}</a></li>
+	  {% endif %}
+	{% endfor %}
+	{% if page_obj.has_next %}
+	  <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+	{% else %}
+	  <li class="disabled"><span>&raquo;</span></li>
+	{% endif %}
+      </ul>
+    </nav>
+    <small>{{ page_obj.start_index }} - {{ page_obj.end_index }}  / {{ page_obj.paginator.count }} manufacturers</small>
   </div>
 </div>
 
