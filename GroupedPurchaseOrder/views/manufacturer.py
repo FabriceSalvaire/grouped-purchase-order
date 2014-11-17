@@ -73,36 +73,20 @@ class ManufacturerSearchForm(Form):
 
 class ManufacturerListView(FormMixin, ListView):
 
-    # {'data': None, 'prefix': None, 'initial': {}}
-    # [17/Nov/2014 17:55:20] "GET /manufacturers/ HTTP/1.1" 200 35339
-    # {'initial': {}, 'prefix': None, 'data': <QueryDict: {'csrfmiddlewaretoken': ['xIF20ZHDFw9q18m03EJI19CPwIeWGLUM'], 'query': ['Al']}>}
-    # Form is valid {'name__icontains': 'Al'}
-    # [17/Nov/2014 17:56:13] "GET /manufacturers/?csrfmiddlewaretoken=xIF20ZHDFw9q18m03EJI19CPwIeWGLUM&query=Al HTTP/1.1" 200 8343
-
-    # {'data': <QueryDict: {'query': ['a'], 'csrfmiddlewaretoken': ['xIF20ZHDFw9q18m03EJI19CPwIeWGLUM']}>, 'prefix': None, 'initial': {}}
-    # Form is valid {'name__icontains': 'a'}
-    # [17/Nov/2014 18:19:29] "GET /manufacturers/?csrfmiddlewaretoken=xIF20ZHDFw9q18m03EJI19CPwIeWGLUM&query=a HTTP/1.1" 200 11678
-    # {'data': <QueryDict: {'page': ['2']}>, 'prefix': None, 'initial': {}}
-    # Form is valid {'name__icontains': ''}
-    # [17/Nov/2014 18:19:36] "GET /manufacturers/?page=2 HTTP/1.1" 200 11836
-
     model = Manufacturer
     template_name = 'GroupedPurchaseOrder/manufacturer/index.html'
     context_object_name = 'manufacturers'
     queryset = Manufacturer.objects.all().order_by('name')
     paginate_by = 25
-    form_class=ManufacturerSearchForm
+    form_class = ManufacturerSearchForm
 
     ##############################################
 
     def get_form_kwargs(self):
         # Called by self.get_form
-        kwargs = {'initial': self.get_initial(),
-                  'prefix': self.get_prefix(),
-                  'data': self.request.GET or None,
-                 }
-        # print(kwargs)
-        return kwargs
+        return {'initial': self.get_initial(),
+                'prefix': self.get_prefix(),
+                'data': self.request.GET or None}
 
     ##############################################
 
@@ -112,16 +96,14 @@ class ManufacturerListView(FormMixin, ListView):
 
         form = self.get_form(self.get_form_class())
         if form.is_valid():
-            # print('Form is valid {}'.format(form.filter_by()))
             self.object_list = self.object_list.filter(**form.filter_by())
             name_query = form.cleaned_data['name']
-            query = '&name=' + name_query
+            query = '&name=' + name_query # Fixme: escape
         else:
             query = ''
 
         # allow_empty = self.get_allow_empty() # assumed to be True
-        context = self.get_context_data(form=form)
-        context['query'] = query
+        context = self.get_context_data(form=form, query=query)
         return self.render_to_response(context)
 
 ####################################################################################################
