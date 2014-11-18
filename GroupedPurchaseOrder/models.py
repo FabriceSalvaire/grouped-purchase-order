@@ -254,6 +254,26 @@ class Order(models.Model):
     def name(self):
         return "{} - {}".format(self.supplier.name, self.pk)
 
+    ##############################################
+
+    def user_orders(self):
+
+        return self.userorder_set.all()
+
+    ##############################################
+
+    def user_order(self, user):
+
+        profile = Profile.objects.filter(user=user)
+        user_orders = self.userorder_set.filter(profile=profile)
+        if user_orders:
+            if len(user_orders) > 1:
+                raise NameError('More than one user order')
+            return user_orders[0]
+        else:
+            # create one
+            return None
+
 ####################################################################################################
 
 class UserOrderStatus(ChoiceEnum):
@@ -286,6 +306,12 @@ class UserOrder(models.Model):
 
     def name(self):
         return "{} - {}".format(str(self.order), str(self.profile))
+
+    ##############################################
+
+    def product_orders(self):
+
+        return self.productorder_set.all()
 
 ####################################################################################################
 

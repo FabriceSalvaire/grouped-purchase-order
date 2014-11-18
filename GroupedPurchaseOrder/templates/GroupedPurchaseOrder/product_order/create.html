@@ -1,23 +1,21 @@
 {% extends 'GroupedPurchaseOrder/base.html' %}
-{% load static l10n i18n humanize bootstrap breadcrumbs %}
+{% load static i18n %}
 
-{% block title %}{{ update|yesno:_("Update,New product") }}{% endblock %}
+{% block title %}{{ update|yesno:_("Update,New product_order") }}{% endblock %}
 
-{% block nav-manufacturers %}active{% endblock %}
+{% block nav-orders %}active{% endblock %}
 
+{% load breadcrumbs %}
 {% block breadcrumbs %}
   {{ block.super }}
-  {% breadcrumb 'Home' 'index' %}
-  {% breadcrumb 'Manufacturers' 'manufacturers.index' %}
-  {% if manufacturer %}
-    {% breadcrumb manufacturer.name 'manufacturers.details' manufacturer.pk %}
-  {% endif %}
+  {% breadcrumb "Home" "index" %}
+  {% breadcrumb "Suppliers" "suppliers.index" %}
   {% breadcrumb update|yesno:_("Update,Create") "" %}
 {% endblock %}
 
 {% block body %}
-<h2>{% if update %}{% blocktrans with product.name as name %}Update «{{ name }}»{% endblocktrans %}
-  {% else %}{% trans "New product" %}{% endif %}</h2>
+<h2>{% if update %}{% blocktrans with product_order.name as name %}Update «{{ name }}»{% endblocktrans %}
+  {% else %}{% trans "New product_order" %}{% endif %}</h2>
 
 <div class="row">
   <div class="col-md-12">

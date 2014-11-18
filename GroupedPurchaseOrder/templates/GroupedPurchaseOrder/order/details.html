@@ -1,11 +1,10 @@
 {% extends 'GroupedPurchaseOrder/base.html' %}
-{% load static l10n i18n %}
+{% load static l10n i18n bootstrap breadcrumbs %}
 
 {% block title %}{% blocktrans with order.name as name %}Order «{{ name }}»{% endblocktrans %}{% endblock %}
 
 {% block nav-orders %}active{% endblock %}
 
-{% load breadcrumbs %}
 {% block breadcrumbs %}
   {{ block.super }}
   {% breadcrumb "Home" "index" %}
@@ -19,12 +18,71 @@
 
 <div class="row">
   {% include 'GroupedPurchaseOrder/message.html' %}
-
+</div>
+<div class="row">
   <div class="col-md-6">
     <dl class="dl-horizontal">
-      <dt>{% trans "Description" %}</dt>
-      <dd>{{ order.description }}</dd>
+      <dt>{% trans "Manager" %}</dt>
+      <dd>{{ order.manager }}</dd>
     </dl>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    {% if order.user_orders %}
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>{% trans "Name" %}</th>
+            <th>{% trans "Product" %}</th>
+            <th>{% trans "Order Code" %}</th>
+            <th>{% trans "Unit Price" %}</th>
+            <th>{% trans "Quantity" %}</th>
+            <th width="20%"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user_order in order.user_orders %}
+            {% for product_order in user_order.product_orders %}
+              <tr>
+		<td>{{ user_order.profile.user }}</td>
+		<td>{{ product_order.supplier_product.product }}</td>
+		<td>{{ product_order.supplier_product.order_code }}</td>
+		<td>{{ product_order.supplier_product.price }}</td>
+		<td>{{ product_order.quantity }}</td>
+		<td>
+		  {% url 'product_orders.update' product_order.pk as update_url %}
+		  {% url 'product_orders.delete' product_order.pk as delete_url %}
+		  {% bootstrap_icon_button 'pencil' title="update" style='info' size='xs' href=update_url %}
+		  {% bootstrap_modal_icon_button 'trash' '#deleteModal' product.pk title='delete' style='danger' size='xs' %}
+                  <div class="modal fade" id="deleteModal{{ product.pk }}" tabindex="-1" role="dialog"
+		       aria-labelledby="deleteModal{{ product.pk }}Label" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+		  	{% bootstrap_close_button %}
+                          <h3 class="modal-title" id="deleteModal{{ product.pk }}Label">{% trans "Delete product" %}</h3>
+                        </div>
+                        <div class="modal-body">
+                          <p>{% blocktrans with product_order.supplier_product.product as name %}Are you sure you want to delete the product: «{{ name }}» ?{% endblocktrans %}</p>
+                        </div>
+                        <div class="modal-footer">
+		  	{% bootstrap_dismiss_button 'Cancel' style='default' %}
+		  	{% bootstrap_button 'Delete' style='danger' href=delete_url %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+		</td>
+              </tr>
+            {% endfor %}
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>{% trans "No products" %}</p>
+    {% endif %}
+    {# {% include 'GroupedPurchaseOrder/pagination.html' %} #}
   </div>
 </div>
 {% endblock %}

@@ -3,7 +3,7 @@
 
 {% block title %}{% blocktrans with product.name as name %}Product «{{ name }}»{% endblocktrans %}{% endblock %}
 
-{% block nav-products %}active{% endblock %}
+{% block nav-manufacturers %}active{% endblock %}
 
 {% block breadcrumbs %}
   {{ block.super }}
@@ -63,8 +63,10 @@
 	      {% endif %}
 	      <td>{{ supplier_product.price }}</td>
               <td>
+		{% url 'product_orders.create' supplier_product.pk as order_url %}
 		{% url 'supplier_products.update' supplier_product.pk as update_url %}
 		{% url 'supplier_products.delete' supplier_product.pk as delete_url %}
+		{% bootstrap_icon_button 'shopping-cart' title="order" style='info' size='xs' href=order_url %}
 		{% bootstrap_icon_button 'pencil' title="update" style='info' size='xs' href=update_url %}
 		{% bootstrap_modal_icon_button 'trash' '#deleteModal' supplier_product.pk title='delete' style='danger' size='xs' %}
                 <div class="modal fade" id="deleteModal{{ supplier_product.pk }}" tabindex="-1" role="dialog"

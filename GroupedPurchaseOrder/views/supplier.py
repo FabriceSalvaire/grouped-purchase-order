@@ -23,12 +23,13 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.forms import ModelForm
+from django.forms import ModelForm, Form, CharField
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from django.views.generic.list import ListView
+from django.views.generic.edit import FormMixin
 
 ####################################################################################################
 
@@ -64,11 +65,51 @@ class SupplierForm(ModelForm):
 
 ####################################################################################################
 
-class SupplierListView(ListView):
+class SupplierSearchForm(Form):
+
+    name = CharField(label=_('Name'), required=False, initial='')
+
+    ##############################################
+
+    def filter_by(self):
+        return {'name__icontains': self.cleaned_data['name']}
+
+####################################################################################################
+
+class SupplierListView(FormMixin, ListView):
 
     model = Supplier
     template_name = 'GroupedPurchaseOrder/supplier/index.html'
     context_object_name = 'suppliers'
+    queryset = Supplier.objects.all().order_by('name')
+    paginate_by = 25
+    form_class = SupplierSearchForm
+
+    ##############################################
+
+    def get_form_kwargs(self):
+        # Called by self.get_form
+        return {'initial': self.get_initial(),
+                'prefix': self.get_prefix(),
+                'data': self.request.GET or None}
+
+    ##############################################
+
+    def get(self, request, *args, **kwargs):
+
+        self.object_list = self.get_queryset()
+
+        form = self.get_form(self.get_form_class())
+        if form.is_valid():
+            self.object_list = self.object_list.filter(**form.filter_by())
+            name_query = form.cleaned_data['name']
+            query = '&name=' + name_query # Fixme: escape
+        else:
+            query = ''
+
+        # allow_empty = self.get_allow_empty() # assumed to be True
+        context = self.get_context_data(form=form, query=query)
+        return self.render_to_response(context)
 
 ####################################################################################################
 

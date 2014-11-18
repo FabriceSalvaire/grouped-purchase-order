@@ -19,6 +19,23 @@
 
 <div class="row">
   {% include 'GroupedPurchaseOrder/message.html' %}
+</div>
+<div class="row">
+  <form class="form-horizontal" role="form" action="{% url 'suppliers.index' %}">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="id_name" class="col-md-2 control-label">Name</label>
+      <div class="col-md-4">
+	<input type="search" class="form-control" id="id_name"
+	       name="name" placeholder="Name" value="{{ form.name.value }}">
+      </div>
+    </div>
+    <div class="col-md-offset-2 col-md-4">
+      <button type="submit" class="btn btn-primary">{% trans "Search" %}</button>
+    </div>
+  </form>
+</div>
+<div class="row">
   <div class="col-md-4">
     {% if suppliers %}
       <table class="table table-striped">
@@ -63,6 +80,7 @@
     {% else %}
       <p>{% trans "No suppliers" %}</p>
     {% endif %}
+    {% include 'GroupedPurchaseOrder/pagination.html' %}
   </div>
 </div>
 

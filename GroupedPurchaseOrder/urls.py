@@ -258,6 +258,34 @@ urlpatterns += patterns('GroupedPurchaseOrder.views.order',
 )
 
 ####################################################################################################
+#
+# User Order
+#
+
+####################################################################################################
+#
+# Product Order
+#
+
+urlpatterns += patterns('GroupedPurchaseOrder.views.product_order',
+    url(r'^product_orders/create/(?P<supplier_product_id>\d+)/$',
+        'create',
+        name='product_orders.create'),
+
+    url(r'^product_orders/(?P<product_order_id>\d+)/$',
+        'details',
+        name='product_orders.details'),
+
+    url(r'^product_orders/(?P<product_order_id>\d+)/update/$',
+        'update',
+        name='product_orders.update'),
+
+    url(r'^product_orders/(?P<product_order_id>\d+)/delete/$',
+        'delete',
+        name='product_orders.delete'),
+)
+
+####################################################################################################
 
 # Ajax test
 # urlpatterns += patterns('GroupedPurchaseOrder.views.ajax',
