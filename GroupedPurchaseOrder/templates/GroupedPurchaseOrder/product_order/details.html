@@ -9,7 +9,10 @@
 {% block breadcrumbs %}
   {{ block.super }}
   {% breadcrumb "Home" "index" %}
-  {% breadcrumb "Product_orders" "product_orders.index" %}
+  {% breadcrumb "Orders" "orders.index" %}
+  {% with order=product_order.user_order.order %}
+    {% breadcrumb order.name "orders.details" order.pk %} #}
+  {% endwith %}
   {% breadcrumb product_order.name "product_orders.details" product_order.pk %}
 {% endblock %}
 

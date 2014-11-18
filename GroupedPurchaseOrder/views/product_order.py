@@ -70,13 +70,18 @@ def details(request, product_order_id):
 @login_required
 def create(request, supplier_product_id):
 
+    # http_referer = request.META['HTTP_REFERER']
+    # print(http_referer)
+
     if request.method == 'POST':
         form = ProductOrderForm(request.POST)
         if form.is_valid():
             product_order = form.save(commit=False)
             product_order.save()
             messages.success(request, _('ProductOrder successfully created.'))
-            return HttpResponseRedirect(reverse('product_orders.details', args=[product_order.pk]))
+            product_order_url = reverse('product_orders.details', args=[product_order.pk])
+            order_url = reverse('orders.details', args=[product_order.user_order.order.pk])
+            return HttpResponseRedirect(order_url)
         else:
             messages.error(request, _("Some information are missing or mistyped"))
     else:
@@ -119,10 +124,11 @@ def update(request, product_order_id=None):
 def delete(request, product_order_id):
 
     product_order = get_object_or_404(ProductOrder, pk=product_order_id)
-    messages.success(request, _("«%(name)s» deleted") % ({'name': product_order.name}))
+    order = product_order.user_order.order
+    messages.success(request, _("«%(name)s» deleted") % ({'name': product_order.name()}))
     product_order.delete()
 
-    return HttpResponseRedirect(reverse('product_orders.index'))
+    return HttpResponseRedirect(reverse('orders.details', args=[order.pk]))
 
 ####################################################################################################
 # 
