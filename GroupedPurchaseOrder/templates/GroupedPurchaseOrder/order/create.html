@@ -3,6 +3,11 @@
 
 {% block title %}{{ update|yesno:_("Update,New order") }}{% endblock %}
 
+{% block head %}
+  <link rel="stylesheet" type="text/css"
+	href="{% get_static_prefix %}GroupedPurchaseOrder/css/bootstrap-datetimepicker.min.css" />
+{% endblock %}
+
 {% block nav-orders %}active{% endblock %}
 
 {% load breadcrumbs %}
@@ -28,7 +33,18 @@
             <div class="form-group{% if field.errors %} has-error{% endif %}">
               <label class="col-md-4 control-label" for="{{ field.id_for_label }}">{% trans field.label %}</label>
               <div class="col-md-8">
-		{{ field }}
+		{% if 'date' in field.label %}
+		  {% if field.label == 'Order date' %}
+		    <div class="input-group date" id="order_date_picker">
+		  {% elif field.label == 'Delivery date' %}
+		    <div class="input-group date" id="delivery_date_picker">
+		  {% endif %}
+		    {{ field }}
+		      <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+		    </div>
+		{% else %}
+		  {{ field }}
+		{% endif %}
 		{% for error in field.errors %}<span class="help-block">{{ error }}</span>{% endfor %}
               </div>
             </div>
@@ -43,4 +59,26 @@
     </form>
   </div>
 </div>
+{% endblock %}
+
+{% block script %}
+<script src="{% get_static_prefix %}GroupedPurchaseOrder/js/moment-with-locales.min.js"></script>
+<script src="{% get_static_prefix %}GroupedPurchaseOrder/js/bootstrap-datetimepicker.min.js"></script>
+<script>
+  $(function() {
+    $('#order_date_picker').datetimepicker({
+      showToday: true,
+      language: '{{ LANGUAGE_CODE }}',
+      minuteStepping: 15,
+    }).on('dp.change', function(ev){
+      var start_date = new Date(ev.date.valueOf());
+      $('#delivery_date_picker').data("DateTimePicker").setMinDate(start_date);
+    });
+    $('#delivery_date_picker').datetimepicker({
+      showToday: true,
+      language: '{{ LANGUAGE_CODE }}',
+      minuteStepping: 15,
+    });
+  });
+</script>
 {% endblock %}
