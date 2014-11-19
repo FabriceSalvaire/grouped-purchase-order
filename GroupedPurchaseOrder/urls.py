@@ -284,6 +284,10 @@ urlpatterns += patterns('GroupedPurchaseOrder.views.product_order',
         'update',
         name='product_orders.update'),
 
+    url(r'^product_orders/(?P<product_order_id>\d+)/update_xhr/$',
+        'update_xhr',
+        name='product_orders.update_xhr'),
+
     url(r'^product_orders/(?P<product_order_id>\d+)/delete/$',
         'delete',
         name='product_orders.delete'),

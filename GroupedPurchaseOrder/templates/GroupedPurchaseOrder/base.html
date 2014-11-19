@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load static i18n bootstrap %}
-<html lang="{{ LANGUAGE_CODE }}">
+<html lang="{{ LANGUAGE_CODE }}" {% block np_app %}{% endblock %}>
 <head>
   <meta charset="utf-8">
   <title>G.P.O. - {% block title %}{% endblock %}</title>
@@ -79,8 +79,8 @@
 <hr />
 <footer>
   <p>&copy; GroupedPurchaseOrder 2014 / Fabrice Salvaire /
-    <a href="https://github.com/FabriceSalvaire/GroupedPurchaseOrder/releases/tag/v0.1">v0.1</a>
-    <span class="pull-right"><a href="https://github.com/FabriceSalvaire/GroupedPurchaseOrder">{% trans "About" %}</a></span>
+    <a href="https://github.com/FabriceSalvaire/grouped-purchase-order/releases/tag/v0.1">v0.1</a>
+    <span class="pull-right"><a href="https://github.com/FabriceSalvaire/grouped-purchase-order">{% trans "About" %}</a></span>
   </p>
 </footer>
 </div>

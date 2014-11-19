@@ -1,18 +1,21 @@
 {% extends 'GroupedPurchaseOrder/base.html' %}
 {% load static l10n i18n bootstrap breadcrumbs %}
 
+{% block np_app %}ng-app="order_details"{% endblock %}
+
 {% block title %}{% blocktrans with order.name as name %}Order «{{ name }}»{% endblocktrans %}{% endblock %}
 
 {% block nav-orders %}active{% endblock %}
 
 {% block breadcrumbs %}
   {{ block.super }}
-  {% breadcrumb "Home" "index" %}
-  {% breadcrumb "Orders" "orders.index" %}
-  {% breadcrumb order.name "orders.details" order.pk %}
+  {% breadcrumb "Home" 'index' %}
+  {% breadcrumb "Orders" 'orders.index' %}
+  {% breadcrumb order.name 'orders.details' order.pk %}
 {% endblock %}
 
 {% block body %}
+
 <h2>{{ order.name }}
   <small><a href="{% url 'orders.update' order.pk %}">({% trans "update" %})</a></small></h2>
 
@@ -30,9 +33,50 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-12" ng-controller="ModalController">
     {% if order.user_orders %}
       <a href="{% url "orders.csv" order.pk %}">{% bootstrap_icon 'file' %} CSV</a>
+
+      <script type="text/ng-template" id="DeleteModalContent.html">
+	<div class="modal-header">
+	  <button class="close" data-dismiss="modal" type="button" ng-click="cancel()">
+	    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	  <h3 class="modal-title">{% trans "Delete product" %}</h3>
+	</div>
+        <div class="modal-body">
+          {# {% blocktrans with ... as name %}Are you sure you want to delete the product: "{{ name }}" ?{% endblocktrans %} #}
+	  <p>{% trans 'Are you sure you want to delete the product: "' %}{% verbatim %}{{ description }}{% endverbatim %}{% trans '" ?' %} </p>
+        </div>
+	<div class="modal-footer">
+	  <button class="btn btn-default" ng-click="cancel()">{% trans 'Cancel' %}</button>
+	  <button class="btn btn-danger" ng-click="ok()">{% trans 'Delete' %}</button>
+	</div>
+      </script>
+
+      <script type="text/ng-template" id="UpdateModalContent.html">
+	<div class="modal-header">
+	  <h3 class="modal-title">{% trans "Update product" %}</h3>
+	</div>
+        <div class="modal-body">
+	  <form class="form-horizontal" role="form">
+	    <div class="row">
+	      <div class="col-md-6">
+		<div class="form-group">
+		  <label class="col-md-4 control-label" for="id_quantity">Quantity</label>
+		  <div class="col-md-8">
+		    <input class="form-control" id="id_quantity" min="0" name="quantity" type="number"
+			   value="{% verbatim %}{{ quantity }}{% endverbatim %}" />
+		  </div>
+		</div>
+	    </div>
+	  </form>
+        </div>
+	<div class="modal-footer">
+	  <button class="btn btn-default" ng-click="cancel()">{% trans 'Cancel' %}</button>
+	  <button class="btn btn-danger" ng-click="ok()">{% trans 'OK' %}</button>
+	</div>
+      </script>
+
       <table class="table table-striped">
         <thead>
           <tr>
@@ -64,25 +108,15 @@
 		  {% url 'product_orders.update' product_order.pk as update_url %}
 		  {% url 'product_orders.delete' product_order.pk as delete_url %}
 		  {% bootstrap_icon_button 'pencil' title="update" style='info' size='xs' href=update_url %}
-		  {% bootstrap_modal_icon_button 'trash' '#deleteModal' product.pk title='delete' style='danger' size='xs' %}
-                  <div class="modal fade" id="deleteModal{{ product.pk }}" tabindex="-1" role="dialog"
-		       aria-labelledby="deleteModal{{ product.pk }}Label" aria-hidden="true">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-		  	{% bootstrap_close_button %}
-                          <h3 class="modal-title" id="deleteModal{{ product.pk }}Label">{% trans "Delete product" %}</h3>
-                        </div>
-                        <div class="modal-body">
-                          <p>{% blocktrans with product_order.supplier_product.product as name %}Are you sure you want to delete the product: «{{ name }}» ?{% endblocktrans %}</p>
-                        </div>
-                        <div class="modal-footer">
-		  	{% bootstrap_dismiss_button 'Cancel' style='default' %}
-		  	{% bootstrap_button 'Delete' style='danger' href=delete_url %}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+		  <button class="btn btn-info btn-xs"
+			  ng-click="open_update('{{ supplier_product.product }}',
+                                                '{{ product_order.quantity }}',
+                                                '{% url 'product_orders.update_xhr' product_order.pk %}',
+			                        '{% url 'orders.details' order.pk %}')">
+		    {% bootstrap_icon 'pencil' %}</button>
+		  <button class="btn btn-danger btn-xs"
+			  ng-click="open_delete('{{ supplier_product.product }}', '{{ delete_url }}')">
+		    {% bootstrap_icon 'trash' %}</button>
 		</td>
               </tr>
             {% endwith %}
@@ -96,4 +130,11 @@
     {# {% include 'GroupedPurchaseOrder/pagination.html' %} #}
   </div>
 </div>
+{% endblock %}
+
+{% block script %}
+  <script src="{% get_static_prefix %}GroupedPurchaseOrder/js/angular.min.js"></script>
+  <script src="{% get_static_prefix %}GroupedPurchaseOrder/js/ui-bootstrap-tpls-0.12.0.min.js"></script>
+  <script type="text/javascript" src="{% static 'django_ajax/js/jquery.ajax.js' %}"></script>
+  <script src="{% get_static_prefix %}GroupedPurchaseOrder/js-gpo/order_details.js"></script>
 {% endblock %}

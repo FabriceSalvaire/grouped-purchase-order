@@ -29,6 +29,9 @@ from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from django.views.generic.list import ListView
+from django.views.decorators.http import require_POST
+
+from django_ajax.decorators import ajax
 
 ####################################################################################################
 
@@ -110,13 +113,25 @@ def update(request, product_order_id=None):
         form = ProductOrderForm(request.POST, instance=product_order)
         if form.is_valid():
             product_order = form.save()
-            return HttpResponseRedirect(reverse('product_orders.details', args=[product_order.pk]))
+            return HttpResponseRedirect(reverse('orders.details', args=[product_order.user_order.order.pk]))
     else:
         form = ProductOrderForm(instance=product_order)
 
     return render_to_response('GroupedPurchaseOrder/product_order/create.html',
                               {'form': form, 'update': True, 'product_order': product_order},
                               context_instance=RequestContext(request))
+
+####################################################################################################
+
+@ajax
+@require_POST
+def update_xhr(request, product_order_id):
+ 
+    product_order = get_object_or_404(ProductOrder, pk=product_order_id)
+    product_order.quantity = request.POST['quantity']
+    product_order.save()
+
+    return {}
 
 ####################################################################################################
 
