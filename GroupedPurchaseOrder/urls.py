@@ -248,6 +248,10 @@ urlpatterns += patterns('GroupedPurchaseOrder.views.order',
         'details',
         name='orders.details'),
 
+    url(r'^orders/(?P<order_id>\d+)/csv/$',
+        'upload_csv',
+        name='orders.csv'),
+
     url(r'^orders/(?P<order_id>\d+)/update/$',
         'update',
         name='orders.update'),

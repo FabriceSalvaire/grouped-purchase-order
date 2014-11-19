@@ -20,11 +20,13 @@
 
 ####################################################################################################
 
+import csv
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.forms import ModelForm
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
@@ -73,6 +75,45 @@ def details(request, order_id):
     return render_to_response('GroupedPurchaseOrder/order/details.html',
                               {'order': order},
                               context_instance=RequestContext(request))
+
+####################################################################################################
+
+@login_required
+def upload_csv(request, order_id):
+
+    order = get_object_or_404(Order, pk=order_id)
+    
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="{}.csv"'.format(order.name)
+    
+    writer = csv.writer(response)
+    writer.writerow([_('Buyer'),
+                     _('Product'), # Description
+                     _('Order Code'),
+                     _('Unit Price'),
+                     _('Quantity'),
+                     _('Line price'),
+                    ])
+    for user_order in order.user_orders():
+        for product_order in user_order.product_orders():
+            supplier_product = product_order.supplier_product
+            writer.writerow([user_order.profile.user,
+                             str(supplier_product.product),
+                             supplier_product.order_code,
+                             supplier_product.price,
+                             product_order.quantity,
+                             product_order.total(),
+                            ])
+    writer.writerow(['Total',
+                     '',
+                     '',
+                     '',
+                     '',
+                     order.total(),
+                 ])
+
+    
+    return response
 
 ####################################################################################################
 

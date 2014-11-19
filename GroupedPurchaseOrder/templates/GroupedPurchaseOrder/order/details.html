@@ -24,32 +24,42 @@
     <dl class="dl-horizontal">
       <dt>{% trans "Manager" %}</dt>
       <dd>{{ order.manager }}</dd>
+      <dt>{% trans "Total" %}</dt>
+      <dd>{{ order.total }}</dd>
     </dl>
   </div>
 </div>
 <div class="row">
   <div class="col-md-12">
     {% if order.user_orders %}
+      <a href="{% url "orders.csv" order.pk %}">{% bootstrap_icon 'file' %} CSV</a>
       <table class="table table-striped">
         <thead>
           <tr>
             <th>{% trans "Name" %}</th>
             <th>{% trans "Product" %}</th>
             <th>{% trans "Order Code" %}</th>
-            <th>{% trans "Unit Price" %}</th>
             <th>{% trans "Quantity" %}</th>
+            <th>{% trans "Unit Price" %}</th>
+            <th>{% trans "Line Price" %}</th>
             <th width="20%"></th>
           </tr>
         </thead>
         <tbody>
           {% for user_order in order.user_orders %}
             {% for product_order in user_order.product_orders %}
+	      {% with supplier_product=product_order.supplier_product %}
               <tr>
 		<td>{{ user_order.profile.user }}</td>
-		<td>{{ product_order.supplier_product.product }}</td>
-		<td>{{ product_order.supplier_product.order_code }}</td>
-		<td>{{ product_order.supplier_product.price }}</td>
+		<td>{{ supplier_product.product }}</td>
+		{% if supplier_product.url %}
+		<td><a href="{{ supplier_product.url }}" target="_blank">{{ supplier_product.order_code }}</a></td>
+		{% else %}
+		<td>{{ supplier_product.order_code }}</td>
+		{% endif %}
 		<td>{{ product_order.quantity }}</td>
+		<td>{{ supplier_product.price }}</td>
+		<td>{{ product_order.total }}</td>
 		<td>
 		  {% url 'product_orders.update' product_order.pk as update_url %}
 		  {% url 'product_orders.delete' product_order.pk as delete_url %}
@@ -75,6 +85,7 @@
                   </div>
 		</td>
               </tr>
+            {% endwith %}
             {% endfor %}
           {% endfor %}
         </tbody>

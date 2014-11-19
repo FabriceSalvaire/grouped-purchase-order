@@ -222,6 +222,14 @@ class SupplierProduct(models.Model):
     def name(self):
         return "{} - {}".format(self.supplier.name, self.order_code)
 
+    ##############################################
+
+    def compute_price(self, quantity):
+
+        # We could encode price like this : 10.0 < 10:9.90 < 50:9.80 ...
+
+        return quantity * self.price
+
 ####################################################################################################
 
 class Order(models.Model):
@@ -274,6 +282,12 @@ class Order(models.Model):
             # create one
             return None
 
+    ##############################################
+
+    def total(self):
+
+        return sum(user_order.total() for user_order in self.userorder_set.all())
+
 ####################################################################################################
 
 class UserOrderStatus(ChoiceEnum):
@@ -289,7 +303,7 @@ class UserOrder(models.Model):
 
     creation_date = models.DateTimeField(auto_now_add=True)
     order = models.ForeignKey(Order)
-    profile = models.ForeignKey(Profile)
+    profile = models.ForeignKey(Profile) # or User ?
     status = models.IntegerField(choices=UserOrderStatus.to_list(), default=UserOrderStatus.new.value)
     payed = models.BooleanField(default=False)
     delivery_date = models.DateTimeField(null=True, blank=True)
@@ -313,6 +327,12 @@ class UserOrder(models.Model):
 
         return self.productorder_set.all()
 
+    ##############################################
+
+    def total(self):
+
+        return sum(product_order.total() for product_order in self.productorder_set.all())
+
 ####################################################################################################
 
 class ProductOrder(models.Model):
@@ -335,6 +355,11 @@ class ProductOrder(models.Model):
 
     def name(self):
         return "{} - {}".format(str(self.user_order), self.pk)
+
+    ##############################################
+
+    def total(self):
+        return self.supplier_product.compute_price(self.quantity)
 
 ####################################################################################################
 # 
