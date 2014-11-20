@@ -33,7 +33,7 @@ from GroupedPurchaseOrder.views.account import (AuthenticationForm,
                                                 PasswordResetForm,
                                                 SetPasswordForm)
 
-from GroupedPurchaseOrder.views.manufacturer import (ManufacturerListView)
+from GroupedPurchaseOrder.views.manufacturer import (ManufacturerListView, ManufacturerCatalogListView)
 from GroupedPurchaseOrder.views.order import (OrderListView)
 from GroupedPurchaseOrder.views.supplier import (SupplierListView)
 
@@ -145,7 +145,8 @@ urlpatterns += patterns('GroupedPurchaseOrder.views.manufacturer',
         name='manufacturers.create'),
 
     url(r'^manufacturers/(?P<manufacturer_id>\d+)/$',
-        'details',
+        # 'details',
+        login_required(ManufacturerCatalogListView.as_view()),
         name='manufacturers.details'),
 
     url(r'^manufacturers/(?P<manufacturer_id>\d+)/update/$',

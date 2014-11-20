@@ -23,6 +23,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 from django.forms import ModelForm, Form, CharField
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render_to_response
@@ -33,7 +34,7 @@ from django.views.generic.edit import FormMixin
 
 ####################################################################################################
 
-from GroupedPurchaseOrder.models import Manufacturer
+from GroupedPurchaseOrder.models import Manufacturer, Product
 
 ####################################################################################################
 
@@ -108,14 +109,68 @@ class ManufacturerListView(FormMixin, ListView):
 
 ####################################################################################################
 
-@login_required
-def details(request, manufacturer_id):
+# @login_required
+# def details(request, manufacturer_id):
 
-    manufacturer = get_object_or_404(Manufacturer, pk=manufacturer_id)
+#     manufacturer = get_object_or_404(Manufacturer, pk=manufacturer_id)
 
-    return render_to_response('GroupedPurchaseOrder/manufacturer/details.html',
-                              {'manufacturer': manufacturer},
-                              context_instance=RequestContext(request))
+#     return render_to_response('GroupedPurchaseOrder/manufacturer/details.html',
+#                               {'manufacturer': manufacturer},
+#                               context_instance=RequestContext(request))
+
+####################################################################################################
+
+class ProductSearchForm(Form):
+
+    keywords = CharField(label=_('Name'), required=False, initial='')
+
+    ##############################################
+
+    def filter_by(self):
+        # return {'name__icontains': self.cleaned_data['keywords']}
+        keywords = self.cleaned_data['keywords']
+        return (Q(name__icontains=keywords) |
+                Q(description__icontains=keywords) |
+                Q(part_number__icontains=keywords))
+
+####################################################################################################
+
+class ManufacturerCatalogListView(FormMixin, ListView):
+
+    model = Product
+    template_name = 'GroupedPurchaseOrder/manufacturer/details.html'
+    context_object_name = 'products'
+    paginate_by = 25
+    form_class = ProductSearchForm
+
+    ##############################################
+
+    def get_form_kwargs(self):
+        # Called by self.get_form
+        return {'initial': self.get_initial(),
+                'prefix': self.get_prefix(),
+                'data': self.request.GET or None}
+
+    ##############################################
+
+    def get(self, request, manufacturer_id, *args, **kwargs):
+
+        manufacturer = get_object_or_404(Manufacturer, pk=manufacturer_id)
+
+        self.object_list = manufacturer.product_set.all().order_by('name')
+
+        form = self.get_form(self.get_form_class())
+        if form.is_valid():
+            self.object_list = self.object_list.filter(form.filter_by()) # **
+            keywords_query = form.cleaned_data['keywords']
+            query = '&keywords=' + keywords_query # Fixme: escape
+        else:
+            query = ''
+        print(form.is_valid(), query)
+
+        # allow_empty = self.get_allow_empty() # assumed to be True
+        context = self.get_context_data(form=form, query=query, manufacturer=manufacturer)
+        return self.render_to_response(context)
 
 ####################################################################################################
 

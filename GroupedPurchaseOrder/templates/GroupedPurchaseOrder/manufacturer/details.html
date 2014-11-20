@@ -33,7 +33,7 @@
       <label for="id_keywords" class="col-md-2 control-label">Keywords</label>
       <div class="col-md-4">
 	<input type="search" class="form-control" id="id_keywords"
-	       keywords="keywords" placeholder="Keywords" value="{{ form.keywords.value }}">
+	       name="keywords" placeholder="Keywords" value="{{ form.keywords.value }}">
       </div>
     </div>
     <div class="col-md-offset-2 col-md-4">
@@ -55,7 +55,7 @@
           </tr>
         </thead>
         <tbody>
-          {% for product in manufacturer.products %}
+          {% for product in products %}
             <tr>
 	      <td><a href="{% url 'products.details' product.pk %}">{{ product.name }}</a></td>
 	      <td>{% if product.url %}
