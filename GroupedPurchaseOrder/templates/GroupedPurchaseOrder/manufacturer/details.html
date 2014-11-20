@@ -51,7 +51,6 @@
             <th></th>
             <th>{% trans "Part Number" %}</th>
             <th>{% trans "Description" %}</th>
-            <th width="20%"></th>
           </tr>
         </thead>
         <tbody>
@@ -62,30 +61,6 @@
 		<a href="{{ product.url }}">{% bootstrap_icon 'home' %}</a>{% endif %}</td>
 	      <td>{{ product.part_number }}</td>
 	      <td>{{ product.description }}</td>
-              <td>
-		{% url 'products.update' product.pk as update_url %}
-		{% url 'products.delete' product.pk as delete_url %}
-		{% bootstrap_icon_button 'pencil' title="update" style='info' size='xs' href=update_url %}
-		{% bootstrap_modal_icon_button 'trash' '#deleteModal' product.pk title='delete' style='danger' size='xs' %}
-                <div class="modal fade" id="deleteModal{{ product.pk }}" tabindex="-1" role="dialog"
-		     aria-labelledby="deleteModal{{ product.pk }}Label" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-			{% bootstrap_close_button %}
-                        <h3 class="modal-title" id="deleteModal{{ product.pk }}Label">{% trans "Delete product" %}</h3>
-                      </div>
-                      <div class="modal-body">
-                        <p>{% blocktrans with product.name as name %}Are you sure you want to delete the product: «{{ name }}» ?{% endblocktrans %}</p>
-                      </div>
-                      <div class="modal-footer">
-			{% bootstrap_dismiss_button 'Cancel' style='default' %}
-			{% bootstrap_button 'Delete' style='danger' href=delete_url %}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </td>
             </tr>
           {% endfor %}
         </tbody>
