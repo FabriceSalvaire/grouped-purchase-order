@@ -42,37 +42,12 @@
         <thead>
           <tr>
             <th>{% trans "Name" %}</th>
-            <th width="20%"></th>
           </tr>
         </thead>
         <tbody>
           {% for supplier in suppliers %}
             <tr>
               <td><a href="{% url 'suppliers.details' supplier.pk %}">{{ supplier.name }}</a></td>
-              <td>
-		{% url 'suppliers.update' supplier.pk as update_url %}
-		{% url 'suppliers.delete' supplier.pk as delete_url %}
-		{% bootstrap_icon_button 'pencil' title="update" style='info' size='xs' href=update_url %}
-		{% bootstrap_modal_icon_button 'trash' '#deleteModal' supplier.pk title='delete' style='danger' size='xs' %}
-                <div class="modal fade" id="deleteModal{{ supplier.pk }}" tabindex="-1" role="dialog"
-		     aria-labelledby="deleteModal{{ supplier.pk }}Label" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-			{% bootstrap_close_button %}
-                        <h3 class="modal-title" id="deleteModal{{ supplier.pk }}Label">{% trans "Delete supplier" %}</h3>
-                      </div>
-                      <div class="modal-body">
-                        <p>{% blocktrans with supplier.name as name %}Are you sure you want to delete the supplier: «{{ name }}» ?{% endblocktrans %}</p>
-                      </div>
-                      <div class="modal-footer">
-			{% bootstrap_dismiss_button 'Cancel' style='default' %}
-			{% bootstrap_button 'Delete' style='danger' href=delete_url %}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </td>
             </tr>
           {% endfor %}
         </tbody>
