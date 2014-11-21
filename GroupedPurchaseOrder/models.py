@@ -120,7 +120,9 @@ class Supplier(models.Model):
                 raise NameError('More than one order')
             return orders[0]
         else:
-            return None
+            order = Order(supplier=self)
+            order.save()
+            return order
 
     ##############################################
 
@@ -272,15 +274,16 @@ class Order(models.Model):
 
     def user_order(self, user):
 
-        profile = Profile.objects.filter(user=user)
+        profile = Profile.objects.filter(user=user)[0]
         user_orders = self.userorder_set.filter(profile=profile)
         if user_orders:
             if len(user_orders) > 1:
                 raise NameError('More than one user order')
             return user_orders[0]
         else:
-            # create one
-            return None
+            user_order = UserOrder(order=self, profile=profile)
+            user_order.save()
+            return user_order
 
     ##############################################
 
