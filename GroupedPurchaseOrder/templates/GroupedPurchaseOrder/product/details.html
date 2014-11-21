@@ -1,6 +1,8 @@
 {% extends 'GroupedPurchaseOrder/base.html' %}
 {% load static l10n i18n humanize bootstrap breadcrumbs %}
 
+{% block np_app %}ng-app="order_details"{% endblock %}
+
 {% block title %}{% blocktrans with product.name as name %}Product «{{ name }}»{% endblocktrans %}{% endblock %}
 
 {% block nav-manufacturers %}active{% endblock %}
@@ -41,8 +43,49 @@
       <dd>{{ product.part_number }}</dd>
     </dl>
   </div>
-  <div class="col-md-12">
+  <div class="col-md-12" ng-controller="ModalController">
     {% if product.supplier_products %}
+
+      <script type="text/ng-template" id="DeleteModalContent.html">
+	<div class="modal-header">
+	  <button class="close" data-dismiss="modal" type="button" ng-click="cancel()">
+	    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	  <h3 class="modal-title">{% trans "Delete product" %}</h3>
+	</div>
+        <div class="modal-body">
+          {# {% blocktrans with ... as name %}Are you sure you want to delete the product: "{{ name }}" ?{% endblocktrans %} #}
+	  <p>{% trans 'Are you sure you want to delete the product: "' %}{% verbatim %}{{ description }}{% endverbatim %}{% trans '" ?' %} </p>
+        </div>
+	<div class="modal-footer">
+	  <button class="btn btn-default" ng-click="cancel()">{% trans 'Cancel' %}</button>
+	  <button class="btn btn-danger" ng-click="ok()">{% trans 'Delete' %}</button>
+	</div>
+      </script>
+
+      <script type="text/ng-template" id="UpdateModalContent.html">
+	<div class="modal-header">
+	  <h3 class="modal-title">{% trans "Order product" %}</h3>
+	</div>
+        <div class="modal-body">
+	  <form class="form-horizontal" role="form">
+	    <div class="row">
+	      <div class="col-md-6">
+		<div class="form-group">
+		  <label class="col-md-4 control-label" for="id_quantity">Quantity</label>
+		  <div class="col-md-8">
+		    <input class="form-control" id="id_quantity" min="0" name="quantity" type="number"
+			   value="{% verbatim %}{{ quantity }}{% endverbatim %}" />
+		  </div>
+		</div>
+	    </div>
+	  </form>
+        </div>
+	<div class="modal-footer">
+	  <button class="btn btn-default" ng-click="cancel()">{% trans 'Cancel' %}</button>
+	  <button class="btn btn-danger" ng-click="ok()">{% trans 'Order' %}</button>
+	</div>
+      </script>
+
       <table class="table table-striped">
         <thead>
           <tr>
@@ -66,7 +109,13 @@
 		{% url 'product_orders.create' supplier_product.pk as order_url %}
 		{% url 'supplier_products.update' supplier_product.pk as update_url %}
 		{% url 'supplier_products.delete' supplier_product.pk as delete_url %}
-		{% bootstrap_icon_button 'shopping-cart' title="order" style='info' size='xs' href=order_url %}
+		{# {% bootstrap_icon_button 'shopping-cart' title="order" style='info' size='xs' href=order_url %} #}
+		<button class="btn btn-info btn-xs"
+			ng-click="open_update('{{ supplier_product.product }}',
+                        '1',
+                        '{% url 'product_orders.create_xhr' supplier_product.pk %}',
+			'{% url 'products.details' product.pk %}')">
+		  {% bootstrap_icon 'shopping-cart' %}</button>
 		{% bootstrap_icon_button 'pencil' title="update" style='info' size='xs' href=update_url %}
 		{% bootstrap_modal_icon_button 'trash' '#deleteModal' supplier_product.pk title='delete' style='danger' size='xs' %}
                 <div class="modal fade" id="deleteModal{{ supplier_product.pk }}" tabindex="-1" role="dialog"
@@ -87,6 +136,11 @@
                     </div>
                   </div>
                 </div>
+		{% comment %}
+		  <button class="btn btn-danger btn-xs"
+			  ng-click="open_delete('{{ supplier_product.product }}', '{{ delete_url }}')">
+		    {% bootstrap_icon 'trash' %}</button>
+		{% endcomment %}
               </td>
             </tr>
           {% endfor %}
@@ -97,4 +151,11 @@
     {% endif %}
   </div>
 </div>
+{% endblock %}
+
+{% block script %}
+  <script src="{% get_static_prefix %}GroupedPurchaseOrder/js/angular.min.js"></script>
+  <script src="{% get_static_prefix %}GroupedPurchaseOrder/js/ui-bootstrap-tpls-0.12.0.min.js"></script>
+  <script type="text/javascript" src="{% static 'django_ajax/js/jquery.ajax.js' %}"></script>
+  <script src="{% get_static_prefix %}GroupedPurchaseOrder/js-gpo/order_details.js"></script>
 {% endblock %}

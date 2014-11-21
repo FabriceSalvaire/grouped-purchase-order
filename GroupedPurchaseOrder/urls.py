@@ -277,6 +277,10 @@ urlpatterns += patterns('GroupedPurchaseOrder.views.product_order',
         'create',
         name='product_orders.create'),
 
+    url(r'^product_orders/create_xhr/(?P<supplier_product_id>\d+)/$',
+        'create_xhr',
+        name='product_orders.create_xhr'),
+
     url(r'^product_orders/(?P<product_order_id>\d+)/$',
         'details',
         name='product_orders.details'),

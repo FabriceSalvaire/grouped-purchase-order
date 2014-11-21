@@ -104,6 +104,22 @@ def create(request, supplier_product_id):
 
 ####################################################################################################
 
+@ajax
+@require_POST
+def create_xhr(request, supplier_product_id):
+
+    supplier_product = get_object_or_404(SupplierProduct, pk=supplier_product_id)
+    order = supplier_product.supplier.new_order()
+    user_order = order.user_order(request.user)
+    product_order = ProductOrder(user_order=user_order,
+                                 supplier_product=supplier_product,
+                                 quantity=request.POST['quantity'])
+    product_order.save()
+    
+    return {}
+
+####################################################################################################
+
 @login_required
 def update(request, product_order_id=None):
 
