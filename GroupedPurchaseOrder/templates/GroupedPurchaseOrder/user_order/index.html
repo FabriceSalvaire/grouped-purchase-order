@@ -1,43 +1,45 @@
 {% extends 'GroupedPurchaseOrder/base.html' %}
-{% load static l10n i18n humanize %}
+{% load static l10n i18n humanize bootstrap breadcrumbs %}
 
 {% block title %}{% trans "Orders" %}{% endblock %}
 
 {% block nav-orders %}active{% endblock %}
 
-{% load breadcrumbs %}
 {% block breadcrumbs %}
   {{ block.super }}
   {% breadcrumb "Home" "index" %}
   {% breadcrumb "Orders" "orders.index" %}
+  {% breadcrumb "My Orders" "" %}
 {% endblock %}
 
 {% block body %}
 <div class="page-header">
-  <h2>{% trans "Orders" %}</h2>
+  <h2>{% trans "My Orders" %}</h2>
 </div>
 
 <div class="row">
   {% include 'GroupedPurchaseOrder/message.html' %}
-  <div class="col-md-6">
-    <dl class="list-unstyled">
-      <li><a href="{% url 'user_orders.index' %}">My orders</a></li>
-    </dl>
-  </div>
-</div>
-<div class="row">
- <div class="col-md-4">
-    {% if orders %}
+  <div class="col-md-4">
+    {% if user_orders %}
       <table class="table table-striped">
         <thead>
           <tr>
             <th>{% trans "Name" %}</th>
+            <th>{% trans "Total" %}</th>
+            <th>{% trans "Payed" %}</th>
           </tr>
         </thead>
         <tbody>
-          {% for order in orders %}
+          {% for user_order in user_orders %}
             <tr>
-              <td><a href="{% url 'orders.details' order.pk %}">{{ order.name }}</a></td>
+              <td><a href="{% url 'orders.details' user_order.order.pk %}">{{ user_order.name }}</a></td>
+	      <td>{{ user_order.total }}</td>
+	      {% if user_order.payed %}
+		<td class="text-success">{% bootstrap_icon 'ok' %}</td>
+	      {% else %}
+		<td class="text-danger">{% bootstrap_icon 'warning-sign' %}</td>
+	      {% endif %}
+	      {% url 'user_orders.update' user_order.pk as update_url %}
             </tr>
           {% endfor %}
         </tbody>

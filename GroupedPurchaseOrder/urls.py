@@ -36,6 +36,7 @@ from GroupedPurchaseOrder.views.account import (AuthenticationForm,
 from GroupedPurchaseOrder.views.manufacturer import (ManufacturerListView, ManufacturerCatalogListView)
 from GroupedPurchaseOrder.views.order import (OrderListView)
 from GroupedPurchaseOrder.views.supplier import (SupplierListView)
+from GroupedPurchaseOrder.views.user_order import (UserOrderListView)
 
 ####################################################################################################
 #
@@ -266,6 +267,24 @@ urlpatterns += patterns('GroupedPurchaseOrder.views.order',
 #
 # User Order
 #
+
+urlpatterns += patterns('GroupedPurchaseOrder.views.user_order',
+    url(r'^user_orders/$',
+        login_required(UserOrderListView.as_view()),
+        name='user_orders.index'),
+
+    # url(r'^user_orders/(?P<user_order_id>\d+)/$',
+    #     'details',
+    #     name='user_orders.details'),
+
+    url(r'^user_orders/(?P<user_order_id>\d+)/update/$',
+        'update',
+        name='user_orders.update'),
+
+    # url(r'^user_orders/(?P<user_order_id>\d+)/delete/$',
+    #     'delete',
+    #     name='user_orders.delete'),
+)
 
 ####################################################################################################
 #

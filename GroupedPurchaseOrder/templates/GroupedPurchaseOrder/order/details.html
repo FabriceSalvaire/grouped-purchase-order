@@ -175,6 +175,8 @@
 	      {% else %}
 		<td class="text-danger">{% bootstrap_icon 'warning-sign' %}</td>
 	      {% endif %}
+	      {% url 'user_orders.update' user_order.pk as update_url %}
+	      <td>{% bootstrap_icon_button 'pencil' title="update" style='info' size='xs' href=update_url %}</td>
             </tr>
           {% endfor %}
         </tbody>

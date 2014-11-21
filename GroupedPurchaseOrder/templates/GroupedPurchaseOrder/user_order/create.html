@@ -1,0 +1,77 @@
+{% extends 'GroupedPurchaseOrder/base.html' %}
+{% load static i18n %}
+
+{% block title %}{{ update|yesno:_("Update,New user order") }}{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" type="text/css"
+	href="{% get_static_prefix %}GroupedPurchaseOrder/css/bootstrap-datetimepicker.min.css" />
+{% endblock %}
+
+{% block nav-orders %}active{% endblock %}
+
+{% load breadcrumbs %}
+{% block breadcrumbs %}
+  {{ block.super }}
+  {% breadcrumb "Home" "index" %}
+  {% breadcrumb "Orders" "orders.index" %}
+  {% with order=user_order.order %}
+  {% breadcrumb order.name "orders.details" order.pk %}
+  {% endwith %}
+  {% breadcrumb update|yesno:_("Update,Create") "" %}
+{% endblock %}
+
+{% block body %}
+<h2>{% if update %}{% blocktrans with user_order as name %}Update «{{ name }}»{% endblocktrans %}
+  {% else %}{% trans "New user_order" %}{% endif %}</h2>
+
+<div class="row">
+  <div class="col-md-12">
+    {% include 'GroupedPurchaseOrder/message.html' %}
+    <form class="form-horizontal" role="form" action="." method="post">
+      {% csrf_token %}
+      <div class="row">
+	<div class="col-md-6">
+	  {% for field in form.visible_fields %}
+            <div class="form-group{% if field.errors %} has-error{% endif %}">
+              <label class="col-md-4 control-label" for="{{ field.id_for_label }}">{% trans field.label %}</label>
+              <div class="col-md-8">
+		{% if 'date' in field.label %}
+		  {% if field.label == 'Delivery date' %}
+		    <div class="input-group date" id="delivery_date_picker">
+		  {% endif %}
+		    {{ field }}
+		      <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+		    </div>
+		{% else %}
+		  {{ field }}
+		{% endif %}
+		{% for error in field.errors %}<span class="help-block">{{ error }}</span>{% endfor %}
+              </div>
+            </div>
+	   {% endfor %}
+	</div>
+	<div class="form-group">
+	  <div class="col-md-10 col-md-offset-2">
+            <button type="submit" class="btn btn-primary">{{ update|yesno:_("Update,Create") }}</button>
+	  </div>
+	</div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{% get_static_prefix %}GroupedPurchaseOrder/js/moment-with-locales.min.js"></script>
+<script src="{% get_static_prefix %}GroupedPurchaseOrder/js/bootstrap-datetimepicker.min.js"></script>
+<script>
+  $(function() {
+    $('#delivery_date_picker').datetimepicker({
+      showToday: true,
+      language: '{{ LANGUAGE_CODE }}',
+      minuteStepping: 15,
+    });
+  });
+</script>
+{% endblock %}
