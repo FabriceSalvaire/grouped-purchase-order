@@ -77,7 +77,8 @@ def create(request, product_id=None):
             supplier_product = form.save(commit=False)
             supplier_product.save()
             messages.success(request, _('SupplierProduct successfully created.'))
-            return HttpResponseRedirect(reverse('supplier_products.details', args=[supplier_product.pk]))
+            product = supplier_product.product
+            return HttpResponseRedirect(reverse('products.details', args=[product.pk]))
         else:
             messages.error(request, _("Some information are missing or mistyped"))
     else:
@@ -105,7 +106,8 @@ def update(request, supplier_product_id):
         form = SupplierProductForm(request.POST, instance=supplier_product)
         if form.is_valid():
             supplier_product = form.save()
-            return HttpResponseRedirect(reverse('supplier_products.details', args=[supplier_product.pk]))
+            product = supplier_product.product
+            return HttpResponseRedirect(reverse('products.details', args=[product.pk]))
     else:
         form = SupplierProductForm(instance=supplier_product)
 
@@ -123,10 +125,11 @@ def update(request, supplier_product_id):
 def delete(request, supplier_product_id):
 
     supplier_product = get_object_or_404(SupplierProduct, pk=supplier_product_id)
+    product = supplier_product.product
     messages.success(request, _("«%(name)s» deleted") % ({'name': supplier_product.name}))
     supplier_product.delete()
 
-    return HttpResponseRedirect(reverse('supplier_products.index'))
+    return HttpResponseRedirect(reverse('products.details', args=[product.pk]))
 
 ####################################################################################################
 # 
