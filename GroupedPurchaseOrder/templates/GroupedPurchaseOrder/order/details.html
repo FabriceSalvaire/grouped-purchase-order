@@ -23,12 +23,42 @@
   {% include 'GroupedPurchaseOrder/message.html' %}
 </div>
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-4">
     <dl class="dl-horizontal">
       <dt>{% trans "Manager" %}</dt>
       <dd>{{ order.manager }}</dd>
+      <dt>{% trans "Order date" %}</dt>
+      <dd>{{ order.order_date }}</dd>
+      <dt>{% trans "Delivery date" %}</dt>
+      <dd>{{ order.delivery_date }}</dd>
+    </dl>
+  </div>
+  <div class="col-md-4">
+    <dl class="dl-horizontal">
       <dt>{% trans "Total" %}</dt>
       <dd>{{ order.total }}</dd>
+      <dt>{% trans "Minimum purchase" %}</dt>
+      {% if order.minimum_purchase_reached %}
+	<dd class="text-success">{% bootstrap_icon 'ok' %}</dd>
+      {% else %}
+	<dd class="text-danger">{% bootstrap_icon 'ban-circle' %}</dd>
+      {% endif %}
+      <dt>{% trans "Free shipment threshold" %}</dt>
+      {% if order.free_shipment_threshold_reached %}
+	<dd class="text-success">{% bootstrap_icon 'ok' %}</dd>
+      {% else %}
+	<dd class="text-danger">{% bootstrap_icon 'ban-circle' %}</dd>
+      {% endif %}
+    </dl>
+  </div>
+  <div class="col-md-4">
+    <dl class="dl-horizontal">
+      <dt>{% trans "Shipping rate" %}</dt>
+      <dd>{{ order.shipping_rate }}</dd>
+      <dt>{% trans "Duty tax" %}</dt>
+      <dd>{{ order.duty_tax }}</dd>
+      <dt>{% trans "VAT tax" %}</dt>
+      <dd>{{ order.vat_tax }}</dd>
     </dl>
   </div>
 </div>
@@ -105,6 +135,7 @@
 		<td>{{ product_order.quantity }}</td>
 		<td>{{ supplier_product.price }}</td>
 		<td>{{ product_order.total }}</td>
+		{% if user_order.profile == profile %}
 		<td>
 		  {% url 'product_orders.delete' product_order.pk as delete_url %}
 		  <button class="btn btn-info btn-xs"
@@ -117,12 +148,38 @@
 			  ng-click="open_delete('{{ supplier_product.product }}', '{{ delete_url }}')">
 		    {% bootstrap_icon 'trash' %}</button>
 		</td>
+		{% endif %}
               </tr>
             {% endwith %}{% endwith %}
             {% endfor %}
           {% endfor %}
         </tbody>
       </table>
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>{% trans "Name" %}</th>
+            <th>{% trans "Total" %}</th>
+            <th>{% trans "Payed" %}</th>
+            <th width="20%"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user_order in order.user_orders %}
+            <tr>
+	      <td>{{ user_order.profile.user }}</td>
+	      <td>{{ user_order.total }}</td>
+	      {% if user_order.payed %}
+		<td class="text-success">{% bootstrap_icon 'ok' %}</td>
+	      {% else %}
+		<td class="text-danger">{% bootstrap_icon 'warning-sign' %}</td>
+	      {% endif %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
     {% else %}
       <p>{% trans "No products" %}</p>
     {% endif %}

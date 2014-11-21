@@ -291,6 +291,18 @@ class Order(models.Model):
 
         return sum(user_order.total() for user_order in self.userorder_set.all())
 
+    ##############################################
+
+    def minimum_purchase_reached(self):
+
+        return self.supplier.minimum_purchase <= self.total()
+
+    ##############################################
+
+    def free_shipment_threshold_reached(self):
+
+        return self.supplier.free_shipment_threshold <= self.total()
+
 ####################################################################################################
 
 class UserOrderStatus(ChoiceEnum):

@@ -73,7 +73,8 @@ def details(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
 
     return render_to_response('GroupedPurchaseOrder/order/details.html',
-                              {'order': order},
+                              {'order': order,
+                               'profile': request.user.profile},
                               context_instance=RequestContext(request))
 
 ####################################################################################################
