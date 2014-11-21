@@ -13,8 +13,10 @@
 {% endblock %}
 
 {% block body %}
-<h2>{{ supplier.name }}
-  <small><a href="{% url 'suppliers.update' supplier.pk %}">({% trans "update" %})</a></small></h2>
+<div class="page-header">
+  <h2>{{ supplier.name }}
+    <small><a href="{% url 'suppliers.update' supplier.pk %}">({% trans "update" %})</a></small></h2>
+</div>
 
 <div class="row">
   {% include 'GroupedPurchaseOrder/message.html' %}
@@ -49,6 +51,52 @@
       <dt>{% trans "Free shipment threshold" %}</dt>
       <dd>{{ supplier.free_shipment_threshold }} € HT</dd>
     </dl>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <h3>Ordered Orders</h3>
+    {% if supplier.ordered_orders %}
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>{% trans "Name" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in supplier.ordered_orders %}
+            <tr>
+              <td><a href="{% url 'orders.details' order.pk %}">{{ order.name }}</a></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>{% trans "No orders" %}</p>
+    {% endif %}
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <h3>Delivered Orders</h3>
+    {% if supplier.delivered_orders %}
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>{% trans "Name" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in supplier.delivered_orders %}
+            <tr>
+              <td><a href="{% url 'orders.details' order.pk %}">{{ order.name }}</a></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>{% trans "No orders" %}</p>
+    {% endif %}
   </div>
 </div>
 {% endblock %}

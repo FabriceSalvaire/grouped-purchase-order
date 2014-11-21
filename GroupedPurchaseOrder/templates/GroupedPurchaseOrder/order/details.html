@@ -15,9 +15,10 @@
 {% endblock %}
 
 {% block body %}
-
-<h2>{{ order.name }}
-  <small><a href="{% url 'orders.update' order.pk %}">({% trans "update" %})</a></small></h2>
+<div class="page-header">
+  <h2>{{ order.name }}
+    <small><a href="{% url 'orders.update' order.pk %}">({% trans "update" %})</a></small></h2>
+</div>
 
 <div class="row">
   {% include 'GroupedPurchaseOrder/message.html' %}
@@ -35,8 +36,6 @@
   </div>
   <div class="col-md-4">
     <dl class="dl-horizontal">
-      <dt>{% trans "Total" %}</dt>
-      <dd>{{ order.total }}</dd>
       <dt>{% trans "Minimum purchase" %}</dt>
       {% if order.minimum_purchase_reached %}
 	<dd class="text-success">{% bootstrap_icon 'ok' %}</dd>
@@ -51,14 +50,18 @@
       {% endif %}
     </dl>
   </div>
-  <div class="col-md-4">
+  <div class="col-md-3">
     <dl class="dl-horizontal">
+      <dt>{% trans "Ex. Total" %}</dt>
+      <dd class="text-right">{{ order.total }}</dd>
       <dt>{% trans "Shipping rate" %}</dt>
-      <dd>{{ order.shipping_rate }}</dd>
-      <dt>{% trans "Duty tax" %}</dt>
-      <dd>{{ order.duty_tax }}</dd>
+      <dd class="text-right">{{ order.shipping_rate }}</dd>
       <dt>{% trans "VAT tax" %}</dt>
-      <dd>{{ order.vat_tax }}</dd>
+      <dd class="text-right">{{ order.vat_tax }}</dd>
+      <dt>{% trans "Duty tax" %}</dt>
+      <dd class="text-right">{{ order.duty_tax }}</dd>
+      <dt>{% trans "Total" %}</dt>
+      <dd class="text-right">{{ order.total }}</dd>
     </dl>
   </div>
 </div>

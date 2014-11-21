@@ -126,15 +126,15 @@ class Supplier(models.Model):
 
     ##############################################
 
-    def ordered_order(self):
+    def ordered_orders(self):
 
-        return self.order_set.filter(status=OrderStatus.ordered)
+        return self.order_set.filter(status=OrderStatus.ordered.value)
 
     ##############################################
 
-    def delivered_order(self):
+    def delivered_orders(self):
 
-        return self.order_set.filter(status=OrderStatus.delivered)
+        return self.order_set.filter(status=OrderStatus.delivered.value)
 
     ##############################################
 

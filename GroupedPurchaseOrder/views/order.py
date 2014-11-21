@@ -43,7 +43,7 @@ class OrderForm(ModelForm):
     class Meta:
         model = Order
         fields = '__all__'
-        exclude = ('creation_date',)
+        exclude = ('creation_date', 'supplier')
         # localized_fields = ('', )
 
     ##############################################
