@@ -1,0 +1,56 @@
+{% extends "GroupedPurchaseOrder/base.html" %} 
+{% load i18n bootstrap %} 
+
+{% block title %}{% trans "Messages" %}{% endblock %}
+
+{% block nav-orders %}active{% endblock %}
+
+{% load breadcrumbs %}
+{% block breadcrumbs %}
+  {{ block.super }}
+  {% breadcrumb "Home" "index" %}
+  {% breadcrumb "Messages" "messages_inbox" %}
+{% endblock %}
+
+{% block content %}
+<ul class="nav nav-pills" role="tablist">
+  <li role="presentation"><a href="{% url 'messages_inbox' %}">{% trans "Inbox" %}</a></li>
+  <li role="presentation"><a href="{% url 'messages_outbox' %}">{% trans "Sent Messages" %}</a></li>
+  <li role="presentation"><a href="{% url 'messages_compose' %}">{% trans "New Message" %}</a></li>
+  <li role="presentation" class="active"><a href="{% url 'messages_trash' %}">{% trans "trash" %}</a></li>
+</ul>
+
+<div class="row">
+  <div class="col-md-12">
+    {% include 'GroupedPurchaseOrder/message.html' %}
+    {% if message_list %} 
+      <table class="table table-striped">
+	<thead>
+          <tr>
+	    <th>{% trans "Sender" %}</th>
+	    <th>{% trans "Subject" %}</th>
+	    <th>{% trans "Date" %}</th>
+	    <th>{% trans "Action" %}</th>
+	  </tr>
+	</thead>
+	<tbody>
+	  {% for message in message_list %} 
+	    <tr>
+              <td>{{ message.sender }}</td>
+              <td> 
+		{{ message.subject }}
+              </td>
+              <td>{{ message.sent_at|date:_("DATETIME_FORMAT") }}</td>
+              <td><a href="{% url 'messages_undelete' message.id %}">{% trans "undelete" %}</a></td>
+	    </tr>
+	  {% endfor %}
+	</tbody>
+      </table>
+    {% else %}
+      <p>{% trans "No messages." %}</p>
+    {% endif %}   
+    <br />
+    <p>{% trans "Deleted Messages are removed from the trash at unregular intervals, don't rely on this feature for long-time storage." %}</p>
+  </div>
+</div>
+{% endblock %}

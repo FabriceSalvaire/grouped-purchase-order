@@ -1,0 +1,51 @@
+{% extends "GroupedPurchaseOrder/base.html" %} 
+{% load i18n bootstrap %} 
+
+{% block title %}{% trans "Messages" %}{% endblock %}
+
+{% block nav-orders %}active{% endblock %}
+
+{% load breadcrumbs %}
+{% block breadcrumbs %}
+  {{ block.super }}
+  {% breadcrumb "Home" "index" %}
+  {% breadcrumb "Messages" "messages_inbox" %}
+{% endblock %}
+
+{% block content %}
+<ul class="nav nav-pills" role="tablist">
+  <li role="presentation"><a href="{% url 'messages_inbox' %}">{% trans "Inbox" %}</a></li>
+  <li role="presentation"><a href="{% url 'messages_outbox' %}">{% trans "Sent Messages" %}</a></li>
+  <li role="presentation" class="active"><a href="{% url 'messages_compose' %}">{% trans "New Message" %}</a></li>
+  <li role="presentation"><a href="{% url 'messages_trash' %}">{% trans "trash" %}</a></li>
+</ul>
+
+<h2>{% trans "Compose Message"%}</h2>
+
+<div class="row">
+  {% include 'GroupedPurchaseOrder/message.html' %}
+  <div class="col-md-12">
+    <form class="form-horizontal" role="form" action="." method="post">
+      {% csrf_token %}
+      <div class="row">
+	<div class="col-md-6">
+	  {% for field in form.visible_fields %}
+            <div class="form-group{% if field.errors %} has-error{% endif %}">
+              <label class="col-md-4 control-label" for="{{ field.id_for_label }}">{% trans field.label %}</label>
+              <div class="col-md-8">
+		{{ field }}
+		{% for error in field.errors %}<span class="help-block">{{ error }}</span>{% endfor %}
+              </div>
+            </div>
+	  {% endfor %}
+	</div>
+	<div class="form-group">
+	  <div class="col-md-10 col-md-offset-2">
+            <button type="submit" class="btn btn-primary">{% trans "Send" %}</button>
+	  </div>
+	</div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
