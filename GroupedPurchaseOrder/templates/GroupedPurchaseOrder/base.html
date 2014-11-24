@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% load static i18n bootstrap %}
+{% load static i18n bootstrap inbox %}
 <html lang="{{ LANGUAGE_CODE }}" {% block np_app %}{% endblock %}>
 <head>
   <meta charset="utf-8">
@@ -34,10 +34,13 @@
     <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
       <ul class="nav navbar-nav">
         <li class="{% block nav-index %}{% endblock %}">
-	  <a href="{% url 'index' %}"><span class="glyphicon glyphicon-home"></span> {% trans "Home" %}</a></li>
-        <li class="{% block nav-manufacturers %}{% endblock %}"><a href="{% url 'manufacturers.index' %}"><span class="glyphicon glyphicon-tasks"></span> {%trans "Manufacturers" %}</a></li>
-        <li class="{% block nav-suppliers %}{% endblock %}"><a href="{% url 'suppliers.index' %}"><span class="glyphicon glyphicon-tasks"></span> {%trans "Suppliers" %}</a></li>
-        <li class="{% block nav-orders %}{% endblock %}"><a href="{% url 'orders.index' %}"><span class="glyphicon glyphicon-tasks"></span> {%trans "Orders" %}</a></li>
+	  <a href="{% url 'index' %}">{% bootstrap_icon 'home' %} {% trans "Home" %}</a></li>
+        <li class="{% block nav-manufacturers %}{% endblock %}">
+	  <a href="{% url 'manufacturers.index' %}">{% bootstrap_icon 'tasks' %} {%trans "Manufacturers" %}</a></li>
+        <li class="{% block nav-suppliers %}{% endblock %}">
+	  <a href="{% url 'suppliers.index' %}">{% bootstrap_icon 'tasks' %} {%trans "Suppliers" %}</a></li>
+        <li class="{% block nav-orders %}{% endblock %}">
+	  <a href="{% url 'orders.index' %}">{% bootstrap_icon 'tasks' %} {%trans "Orders" %}</a></li>
 	{% comment %}
         <li class="{% block nav-help %}{% endblock %}"><a href="{% url
         'help.index' %}"><span class="glyphicon glyphicon-question-sign"></span>
@@ -46,21 +49,28 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         {% if user.is_authenticated %}
+	  {# {{ messages_inbox_count }} #}
           <li class="dropdown {% block nav-account %}{% endblock %}">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-	      <span class="glyphicon glyphicon-user"></span> {{ user.get_full_name }}<b class="caret"></b></a>
+	      {% bootstrap_icon 'user' %} {{ user.get_full_name }} <b class="caret"></b></a>
             <ul class="dropdown-menu">
+              <li><a href="{% url 'messages_inbox' %}">
+	        {% bootstrap_icon 'envelope' %} {% trans "Messages" %}</a></li>
               <li><a href="{% url 'accounts.profile' %}">
-	        <span class="glyphicon glyphicon-cog"></span> {% trans "Profile" %}</a></li>
+	        {% bootstrap_icon 'cog' %} {% trans "Profile" %}</a></li>
               <li class="divider"></li>
               <li> <a href="{% url 'accounts.logout' %}">
-		  <span class="glyphicon glyphicon-off"></span> {% trans "Log out" %}</a></li>
+		  {% bootstrap_icon 'off' %} {% trans "Log out" %}</a></li>
             </ul>
           </li>
+	  {% inbox_count as unread_message %}
+	  {% if unread_message %}
+	    <li><a href="{% url 'messages_inbox' %}">{% bootstrap_icon 'envelope' %} {{ unread_message }}</a></li>
+	  {% endif %}
 	  <li><a href="/admin" %}">{% bootstrap_icon 'wrench' %}</a></li>
         {% else %}
           <li class="{% block nav-login %}{% endblock %}"><a href="{% url 'accounts.login' %}">
-	    <span class="glyphicon glyphicon-user"></span> {% trans "Log in" %}</a></li>
+	    {% bootstrap_icon 'user' %} {% trans "Log in" %}</a></li>
         {% endif %}
       </ul>
     </nav>
@@ -74,6 +84,8 @@
 
 <div class="container">
 {% render_breadcrumbs %}
+{% block content %}{% endblock %}
+{% block sidebar %}{% endblock %}
 {% block body %}{% endblock %}
 
 <hr />

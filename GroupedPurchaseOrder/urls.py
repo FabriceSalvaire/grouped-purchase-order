@@ -23,7 +23,9 @@
 from django.conf.urls import patterns, url
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, RedirectView
+
+import django_messages.views as messages_views
 
 ####################################################################################################
 
@@ -129,6 +131,62 @@ urlpatterns += patterns('GroupedPurchaseOrder.views.account',
     url(r'^accounts/delete/$',
         'delete',
         name='accounts.delete'),
+)
+
+####################################################################################################
+#
+# Messages
+#
+
+# url(r'^messages/', include('django_messages.urls')),
+
+urlpatterns += patterns('',
+    url(r'^messages/$',
+        RedirectView.as_view(url='inbox/'),
+        name='messages_redirect'),
+
+    url(r'^messages/inbox/$',
+        messages_views.inbox,
+        {'template_name': 'GroupedPurchaseOrder/messages/inbox.html',},
+        name='messages_inbox'),
+                        
+    url(r'^messages/outbox/$',
+        messages_views.outbox,
+        {'template_name': 'GroupedPurchaseOrder/messages/outbox.html',},
+        name='messages_outbox'),
+                        
+    url(r'^messages/compose/$',
+        messages_views.compose,
+        {'template_name': 'GroupedPurchaseOrder/messages/compose.html',},
+        name='messages_compose'),
+
+    url(r'^messages/compose/(?P<recipient>[\w.@+-]+)/$',
+        messages_views.compose,
+        {'template_name': 'GroupedPurchaseOrder/messages/compose.html',},
+        name='messages_compose_to'),
+
+    url(r'^reply/(?P<message_id>[\d]+)/$',
+        messages_views.reply,
+        {'template_name': 'GroupedPurchaseOrder/messages/compose.html',},
+        name='messages_reply'),
+
+    url(r'^messages/view/(?P<message_id>[\d]+)/$',
+        messages_views.view,
+        {'template_name': 'GroupedPurchaseOrder/messages/view.html',},
+        name='messages_detail'),
+
+    url(r'^messages/delete/(?P<message_id>[\d]+)/$',
+        messages_views.delete,
+        name='messages_delete'),
+
+    url(r'^messages/undelete/(?P<message_id>[\d]+)/$',
+        messages_views.undelete,
+        name='messages_undelete'),
+
+    url(r'^messages/trash/$',
+        messages_views.trash,
+        {'template_name': 'GroupedPurchaseOrder/messages/trash.html',},
+        name='messages_trash'),
 )
 
 ####################################################################################################

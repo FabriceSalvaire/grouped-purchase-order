@@ -53,6 +53,8 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = ['localhost']
 
+SITE_ID = 1
+
 ####################################################################################################
 #
 # Application definition
@@ -61,7 +63,7 @@ ALLOWED_HOSTS = ['localhost']
 INSTALLED_APPS = (
     # /!\ ordered list
     # 'django.contrib.admindocs',
-    # 'django.contrib.sites',
+    'django.contrib.sites',
     # 'tastypie',
     # 'django_admin_bootstrapped.bootstrap3', # before admin
     # 'django_admin_bootstrapped', # before admin
@@ -75,6 +77,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     # 'django_bootstrap_breadcrumbs',
     'django_ajax',
+    'notification',
+    'django_messages',
     'GroupedPurchaseOrder',
 )
 
@@ -87,6 +91,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware', # require session
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'django_messages.context_processors.inbox',
 )
 
 ROOT_URLCONF = 'mysite.urls'
