@@ -390,6 +390,20 @@ urlpatterns += patterns('GroupedPurchaseOrder.views.product_order',
 
 ####################################################################################################
 
+# django-angular test
+
+from GroupedPurchaseOrder.views.angular import CrudOrderView
+
+urlpatterns += patterns('',
+  url(r'^crud/orders/?$', CrudOrderView.as_view(), name='crud_orders_view'),
+
+  url(r'^angular_test/$',
+      TemplateView.as_view(template_name='GroupedPurchaseOrder/angular_test/page.html'),
+      name='angular_test'),
+)
+
+####################################################################################################
+
 # Ajax test
 # urlpatterns += patterns('GroupedPurchaseOrder.views.ajax',
 #     url(r'^ajax/hello$',

@@ -76,6 +76,8 @@ TEMPLATE_CONTEXT_PROCESSORS = TCP + (
 )
 
 FIXTURE_DIR = 'fixtures'
+# python manage.py collectstatic
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates'),
                  # Fixme: for notification
@@ -116,6 +118,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     # 'django_bootstrap_breadcrumbs',
     'django_ajax',
+    'djangular',
     'notification',
     'django_messages',
     'GroupedPurchaseOrder',

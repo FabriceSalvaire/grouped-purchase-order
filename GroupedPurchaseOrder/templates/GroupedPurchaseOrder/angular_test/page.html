@@ -1,0 +1,37 @@
+{% extends 'GroupedPurchaseOrder/base.html' %}
+{% load i18n bootstrap breadcrumbs %}
+
+{% block np_app %}ng-app="crud_orders"{% endblock %}
+
+{% block title %}{% trans "Angular Test" %}{% endblock %}
+
+{% block nav-index %}active{% endblock %}
+
+{% block breadcrumbs %}
+  {{ block.super }}
+  {% breadcrumb "Home" "index" %}
+  {% breadcrumb "Test" "" %}
+{% endblock %}
+
+{% block body %}
+<div class="row">
+  {% include 'GroupedPurchaseOrder/message.html' %}
+  <div class="col-md-12" ng-controller="order_controller">
+    <ul>
+      <li ng-repeat="order in orders">
+	<span>{% verbatim %}{{order.duty_tax}}{% endverbatim %}</span>
+	<span>{% verbatim %}{{order.supplier}}{% endverbatim %}</span>
+      </li>
+    </ul>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+{# <script type="text/javascript" src="{% get_static_prefix %}GroupedPurchaseOrder/js/angular.min.js"></script> #}
+<script type="text/javascript" src="{{ STATIC_URL }}GroupedPurchaseOrder/js/angular.min.js" ></script>
+<script type="text/javascript" src="{{ STATIC_URL }}GroupedPurchaseOrder/js/angular-cookies.min.js" ></script>
+<script type="text/javascript" src="{{ STATIC_URL }}GroupedPurchaseOrder/js/angular-resource.min.js" ></script>
+<script type="text/javascript" src="{{ STATIC_URL }}djangular/js/django-angular.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}GroupedPurchaseOrder/js-gpo/angular_test.js"></script>
+{% endblock %}
