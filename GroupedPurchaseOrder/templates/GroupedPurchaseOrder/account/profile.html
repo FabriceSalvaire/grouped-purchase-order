@@ -33,7 +33,9 @@
     {% url 'accounts.profile.update' as URL %}
     <h3>{% trans "Information" %}
       <a class="btn btn-info btn-xs" href="{% url 'accounts.profile.update' %}">
-	<span class="glyphicon glyphicon-wrench"></span> {% trans "update" %}</a></h3>
+	<span class="glyphicon glyphicon-wrench"></span> {% trans "update" %}</a>
+      <a class="btn btn-info btn-xs" href="{% url 'notification_notice_settings' %}">
+	<span class="glyphicon glyphicon-wrench"></span> {% trans "notification settings" %}</a></h3>
     <div class="row">
       <div class="col-md-6">
         <dl class="dl-horizontal">

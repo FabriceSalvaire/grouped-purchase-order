@@ -25,6 +25,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import TemplateView, RedirectView
 
+from notification.views import notice_settings
 import django_messages.views as messages_views
 
 ####################################################################################################
@@ -131,6 +132,18 @@ urlpatterns += patterns('GroupedPurchaseOrder.views.account',
     url(r'^accounts/delete/$',
         'delete',
         name='accounts.delete'),
+)
+
+####################################################################################################
+#
+# Notification
+#
+
+urlpatterns += patterns('',
+    url(r"^settings/$",
+        notice_settings,
+        # {'template_name': 'GroupedPurchaseOrder/notification/notice_settings.html',},
+        name="notification_notice_settings"),
 )
 
 ####################################################################################################

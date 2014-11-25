@@ -53,8 +53,6 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = ['localhost']
 
-SITE_ID = 1
-
 ####################################################################################################
 #
 # Application definition
@@ -135,10 +133,15 @@ STATIC_URL = '/static/'
 
 ####################################################################################################
 
-TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
+TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates'),
+                 # Fixme: for notification
+                 os.path.join(BASE_DIR, 'GroupedPurchaseOrder', 'templates', 'GroupedPurchaseOrder')]
 
 # Log email on console
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+SITE_ID = 1
+DEFAULT_FROM_EMAIL = 'fabrice.salvaire@orange.fr'
 
 ####################################################################################################
 
