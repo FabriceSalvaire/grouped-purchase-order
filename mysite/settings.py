@@ -50,6 +50,8 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
+TASTYPIE_FULL_DEBUG = True
+
 # Log email on console
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -105,7 +107,6 @@ INSTALLED_APPS = (
     # /!\ ordered list
     # 'django.contrib.admindocs',
     'django.contrib.sites',
-    # 'tastypie',
     # 'django_admin_bootstrapped.bootstrap3', # before admin
     # 'django_admin_bootstrapped', # before admin
     'suit', # before admin
@@ -117,6 +118,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.staticfiles',
     # 'django_bootstrap_breadcrumbs',
+    'tastypie',
     'django_ajax',
     'djangular',
     'notification',

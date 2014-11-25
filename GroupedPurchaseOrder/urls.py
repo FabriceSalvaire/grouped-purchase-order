@@ -404,6 +404,19 @@ urlpatterns += patterns('',
 
 ####################################################################################################
 
+# Tastypie test
+
+from django.conf.urls import include
+from .api import OrderResource
+
+order_resource = OrderResource()
+
+urlpatterns += patterns('',
+    (r'^api/', include(order_resource.urls)),
+)
+
+####################################################################################################
+
 # Ajax test
 # urlpatterns += patterns('GroupedPurchaseOrder.views.ajax',
 #     url(r'^ajax/hello$',
