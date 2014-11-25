@@ -1,0 +1,787 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-11-20 11:16+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: bootstrap/components.py:165
+msgid "Close"
+msgstr ""
+
+#: models.py:77
+msgid "UTC is not valid timezone"
+msgstr ""
+
+#: models.py:87 models.py:294
+#: templates/GroupedPurchaseOrder/order/index.html:20
+#: unit_test/tools/test_enum.py:41
+msgid "new"
+msgstr ""
+
+#: models.py:88 models.py:296 unit_test/tools/test_enum.py:42
+msgid "ordered"
+msgstr ""
+
+#: models.py:89 models.py:297 unit_test/tools/test_enum.py:43
+msgid "delivered"
+msgstr ""
+
+#: models.py:295
+msgid "cancelled"
+msgstr ""
+
+#: templates/404.html:4 templates/404.html.py:23
+msgid "Page not found"
+msgstr ""
+
+#: templates/404.html:17 templates/500.html:17
+#: templates/GroupedPurchaseOrder/base.html:37
+msgid "Home"
+msgstr ""
+
+#: templates/404.html:18 templates/404.html.py:23
+msgid "Error 404"
+msgstr ""
+
+#: templates/404.html:25
+msgid ""
+"The page you requested could not be found, either contact your webmaster or "
+"try again later. Use your browsers <b>Back</b> button to navigate to the "
+"page you have previously come from."
+msgstr ""
+
+#: templates/404.html:27 templates/500.html:27
+msgid "Take Me Home"
+msgstr ""
+
+#: templates/500.html:4 templates/500.html.py:23
+msgid "Server error"
+msgstr ""
+
+#: templates/500.html:18 templates/500.html.py:23
+msgid "Error 500"
+msgstr ""
+
+#: templates/500.html:25
+msgid ""
+"The server cannot server the page you requested, either contact your "
+"webmaster or try again later. Use your browsers <b>Back</b> button to "
+"navigate to the page you have prevously come from."
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/confirm.html:4
+msgid "Confirm"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/confirm.html:22
+msgid "Registration confirmed"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/confirm.html:27
+msgid "Thanks for registering to G.P.O."
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/confirm.html:29
+#, python-format
+msgid ""
+"You will be <a href=\"%(URL)s\">redirected</a> to the login page in 5 "
+"seconds ..."
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/logged_out.html:4
+#: templates/GroupedPurchaseOrder/account/logged_out.html:38
+msgid "Logged out"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/logged_out.html:39
+msgid "Thanks for using GroupedPurchaseOrder."
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/logged_out.html:40
+msgid "Log in again"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/login.html:4
+#: templates/GroupedPurchaseOrder/account/login.html:56
+#: templates/GroupedPurchaseOrder/account/password_reset_complete.html:24
+#: templates/GroupedPurchaseOrder/base.html:64
+msgid "Log in"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/login.html:47
+msgid ""
+"<strong>Wrong username or password</strong>: Note that both fields may be "
+"case-sensitive"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/login.html:53
+msgid "Please sign in"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/login.html:58
+#: templates/GroupedPurchaseOrder/account/register.html:18
+msgid "Create an account"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/login.html:61
+msgid "Forgotten your password?"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/login.html:62
+msgid "Request a new one:"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/login.html:63
+#: templates/GroupedPurchaseOrder/account/password_reset.html:4
+#: templates/GroupedPurchaseOrder/account/password_reset.html:18
+#: templates/GroupedPurchaseOrder/account/password_reset_confirm.html:4
+msgid "Password reset"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/password_change.html:4
+#: templates/GroupedPurchaseOrder/account/password_change.html:18
+msgid "Change password"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/password_change.html:26
+#: views/account.py:82
+msgid "Old password"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/password_change.html:35
+#: templates/GroupedPurchaseOrder/account/password_change.html:44
+#: views/account.py:77 views/account.py:79 views/account.py:122
+#: views/account.py:124
+msgid "New password"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/password_change.html:54
+msgid "Change"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/password_reset.html:23
+msgid ""
+"Forgotten your password? Enter your email address below, and we'll email "
+"instructions for setting a new one."
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/password_reset.html:27
+msgid "Email address:"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/password_reset.html:37
+msgid "Reset my password"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/password_reset_complete.html:4
+#: templates/GroupedPurchaseOrder/account/password_reset_complete.html:18
+msgid "Password reset complete"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/password_reset_complete.html:23
+msgid "Your password has been set.  You may go ahead and log in now."
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/password_reset_confirm.html:19
+msgid "Enter new password"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/password_reset_confirm.html:24
+msgid ""
+"Please enter your new password twice so we can verify you typed it in "
+"correctly."
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/password_reset_confirm.html:28
+msgid "New password:"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/password_reset_confirm.html:37
+msgid "Confirm password:"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/password_reset_confirm.html:47
+msgid "Change my password"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/password_reset_confirm.html:55
+msgid "Password reset unsuccessful"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/password_reset_confirm.html:60
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a new password reset."
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/password_reset_done.html:4
+#: templates/GroupedPurchaseOrder/account/password_reset_done.html:18
+msgid "Password reset successful"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/password_reset_done.html:23
+msgid ""
+"We've emailed you instructions for setting your password to the email "
+"address you submitted. You should be receiving it shortly."
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/password_reset_email.txt:2
+#, python-format
+msgid ""
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s."
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/password_reset_email.txt:4
+msgid "Please go to the following page and choose a new password:"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/password_reset_email.txt:7
+msgid "Your username, in case you've forgotten:"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/password_reset_email.txt:9
+msgid "Thanks for using our site!"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/password_reset_email.txt:12
+msgid "The G.P.O. team"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/profile.html:4
+#: templates/GroupedPurchaseOrder/base.html:55
+msgid "Profile"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/profile.html:17
+msgid "My profile"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/profile.html:34
+msgid "Information"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/profile.html:36
+#: templates/GroupedPurchaseOrder/account/profile.html:48
+#: templates/GroupedPurchaseOrder/order/details.html:20
+#: templates/GroupedPurchaseOrder/product_order/details.html:21
+#: templates/GroupedPurchaseOrder/supplier/details.html:17
+msgid "update"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/profile.html:40
+#: templates/GroupedPurchaseOrder/manufacturer/details.html:50
+#: templates/GroupedPurchaseOrder/manufacturer/index.html:44
+#: templates/GroupedPurchaseOrder/order/details.html:83
+#: templates/GroupedPurchaseOrder/order/index.html:30
+#: templates/GroupedPurchaseOrder/supplier/catalog.html:25
+#: templates/GroupedPurchaseOrder/supplier/index.html:44
+#: views/manufacturer.py:65 views/supplier.py:70
+msgid "Name"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/profile.html:42
+#: templates/GroupedPurchaseOrder/account/register.html:75
+#: views/account.py:102
+msgid "email"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/profile.html:44
+#: templates/GroupedPurchaseOrder/account/update.html:56
+msgid "Phone number"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/profile.html:46
+#: templates/GroupedPurchaseOrder/account/register.html:36
+#: templates/GroupedPurchaseOrder/account/register.html:45 views/account.py:57
+#: views/account.py:155 views/account.py:157
+msgid "Password"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/profile.html:53
+#: templates/GroupedPurchaseOrder/account/update.html:68
+msgid "Language"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/profile.html:57
+msgid "undefined"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/profile.html:59
+#: templates/GroupedPurchaseOrder/account/update.html:81
+msgid "Timezone"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/profile.html:67
+#: templates/GroupedPurchaseOrder/account/profile.html:69
+#: templates/GroupedPurchaseOrder/account/profile.html:75
+#: templates/GroupedPurchaseOrder/account/profile.html:82
+msgid "Deleting my account"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/profile.html:68
+msgid ""
+"If you want to remove your account, just click on the folowing button. Be "
+"careful as it will permanently remove all your outings and personal data."
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/profile.html:69
+msgid "delete"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/profile.html:78
+msgid ""
+"Are you sure you want to delete your account? It will permanently delete all "
+"your outings along with your personal data."
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/profile.html:81
+#: templates/GroupedPurchaseOrder/order/details.html:51
+#: templates/GroupedPurchaseOrder/order/details.html:75
+msgid "Cancel"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/register.html:4
+#: templates/GroupedPurchaseOrder/account/register.html:86
+msgid "Register"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/register.html:25
+msgid "Account information"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/register.html:27 views/account.py:60
+#: views/account.py:160
+msgid "Username"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/register.html:55
+#: templates/GroupedPurchaseOrder/account/update.html:36
+msgid "Personnal information"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/register.html:57
+#: templates/GroupedPurchaseOrder/account/update.html:38
+msgid "First name"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/register.html:66
+#: templates/GroupedPurchaseOrder/account/update.html:47
+msgid "Last name"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/register_email.html:1
+#, python-format
+msgid ""
+"Hello %(fullname)s,\n"
+"\n"
+"Thanks for registering to G.P.O.\n"
+"In order to activate your account, click on the confirmation link: %(URL)s.\n"
+"\n"
+"If you haven't registered to G.P.O., just delete this mail and the "
+"registration will be canceled.\n"
+"\n"
+"-- \n"
+"The G.P.O. team"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/register_end.html:4
+msgid "Register end"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/register_end.html:18
+msgid "email confirmation"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/register_end.html:23
+msgid "Check your mailbox for the confirmation mail."
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/register_end.html:24
+msgid ""
+"This mail will contains instructions to activate your account. Just click on "
+"the link to activate your account and log in G.P.O."
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/register_end.html:25
+msgid "If you haven't received the mail, check the spam folder."
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/update.html:4
+#: templates/GroupedPurchaseOrder/account/update.html:93
+msgid "Update"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/update.html:18
+msgid "Update my account"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/update.html:66
+msgid "Localization"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/account/update.html:87
+msgid "Your browser is in the same timezone as <u id=\"current_timezone\"></u>"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/base.html:38
+#: templates/GroupedPurchaseOrder/manufacturer/index.html:4
+#: templates/GroupedPurchaseOrder/manufacturer/index.html:16
+msgid "Manufacturers"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/base.html:39
+#: templates/GroupedPurchaseOrder/supplier/index.html:4
+#: templates/GroupedPurchaseOrder/supplier/index.html:16
+msgid "Suppliers"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/base.html:40
+#: templates/GroupedPurchaseOrder/order/index.html:4
+#: templates/GroupedPurchaseOrder/order/index.html:17
+msgid "Orders"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/base.html:58
+msgid "Log out"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/base.html:84
+msgid "About"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/main/index.html:4
+msgid "Main Page"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/main/index.html:16
+msgid "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/main/index.html:30
+msgid "Subscribe"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/main/index.html:31
+msgid "Create an account on G.P.O."
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/main/index.html:32
+msgid "Register »"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/manufacturer/create.html:4
+msgid "Update,New manufacturer"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/manufacturer/create.html:12
+#: templates/GroupedPurchaseOrder/manufacturer/create.html:38
+#: templates/GroupedPurchaseOrder/order/create.html:18
+#: templates/GroupedPurchaseOrder/order/create.html:55
+#: templates/GroupedPurchaseOrder/product/create.html:15
+#: templates/GroupedPurchaseOrder/product/create.html:41
+#: templates/GroupedPurchaseOrder/product_order/create.html:20
+#: templates/GroupedPurchaseOrder/product_order/create.html:46
+#: templates/GroupedPurchaseOrder/supplier/create.html:12
+#: templates/GroupedPurchaseOrder/supplier/create.html:38
+#: templates/GroupedPurchaseOrder/supplier_product/create.html:15
+#: templates/GroupedPurchaseOrder/supplier_product/create.html:41
+msgid "Update,Create"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/manufacturer/create.html:16
+#: templates/GroupedPurchaseOrder/order/create.html:22
+#: templates/GroupedPurchaseOrder/product/create.html:19
+#: templates/GroupedPurchaseOrder/product_order/create.html:24
+#: templates/GroupedPurchaseOrder/supplier/create.html:16
+#: templates/GroupedPurchaseOrder/supplier_product/create.html:19
+#, python-format
+msgid "Update «%(name)s»"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/manufacturer/create.html:17
+msgid "New manufacturer"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/manufacturer/details.html:4
+#, python-format
+msgid "Manufacturer «%(name)s»"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/manufacturer/details.html:40
+#: templates/GroupedPurchaseOrder/manufacturer/index.html:34
+#: templates/GroupedPurchaseOrder/supplier/index.html:34
+msgid "Search"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/manufacturer/details.html:52
+#: templates/GroupedPurchaseOrder/product/details.html:41
+#: templates/GroupedPurchaseOrder/supplier/catalog.html:31
+msgid "Part Number"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/manufacturer/details.html:53
+msgid "Description"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/manufacturer/details.html:76
+#: templates/GroupedPurchaseOrder/order/details.html:44
+msgid "Delete product"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/manufacturer/details.html:79
+#, python-format
+msgid "Are you sure you want to delete the product: «%(name)s» ?"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/manufacturer/details.html:94
+#: templates/GroupedPurchaseOrder/order/details.html:126
+#: templates/GroupedPurchaseOrder/supplier/catalog.html:57
+msgid "No products"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/manufacturer/index.html:56
+msgid "No manufacturers"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/order/create.html:4
+msgid "Update,New order"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/order/create.html:23
+#: templates/GroupedPurchaseOrder/supplier/details.html:26
+msgid "New order"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/order/details.html:6
+#: templates/GroupedPurchaseOrder/product_order/details.html:4
+#, python-format
+msgid "Order «%(name)s»"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/order/details.html:28
+msgid "Manager"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/order/details.html:30
+msgid "Total"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/order/details.html:48
+msgid "Are you sure you want to delete the product: \""
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/order/details.html:48
+msgid "\" ?"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/order/details.html:52
+msgid "Delete"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/order/details.html:58
+msgid "Update product"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/order/details.html:76
+msgid "OK"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/order/details.html:84 views/order.py:91
+msgid "Product"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/order/details.html:85
+#: templates/GroupedPurchaseOrder/product/details.html:51
+#: templates/GroupedPurchaseOrder/supplier/catalog.html:30 views/order.py:92
+msgid "Order Code"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/order/details.html:86 views/order.py:94
+msgid "Quantity"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/order/details.html:87 views/order.py:93
+msgid "Unit Price"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/order/details.html:88
+msgid "Line Price"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/order/index.html:42
+msgid "No orders"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/pagination.html:11
+msgid "current"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/pagination.html:23
+msgid "items"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/product/create.html:4
+msgid "Update,New product"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/product/create.html:20
+msgid "New product"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/product/details.html:4
+#, python-format
+msgid "Product «%(name)s»"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/product/details.html:50
+msgid "Supplier"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/product/details.html:52
+#: templates/GroupedPurchaseOrder/supplier/catalog.html:32
+msgid "Price"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/product/details.html:79
+msgid "Delete supplier product"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/product/details.html:82
+#, python-format
+msgid "Are you sure you want to delete the supplier product: «%(name)s» ?"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/product/details.html:97
+#: templates/GroupedPurchaseOrder/supplier/index.html:56
+msgid "No suppliers"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/product_order/create.html:4
+msgid "Update,New product order"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/product_order/create.html:25
+msgid "New product order"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/supplier/catalog.html:4
+#: templates/GroupedPurchaseOrder/supplier/details.html:4
+#, python-format
+msgid "Supplier «%(name)s»"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/supplier/catalog.html:28
+msgid "Manufacturer"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/supplier/create.html:4
+msgid "Update,New supplier"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/supplier/create.html:17
+msgid "New supplier"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/supplier/details.html:29
+msgid "Catalog"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/supplier/details.html:39
+msgid "therms of purchase"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/supplier/details.html:42
+msgid "therms of delivery"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/supplier/details.html:47
+msgid "Minimum purchase"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/supplier/details.html:49
+msgid "Free shipment threshold"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/supplier_product/create.html:4
+msgid "Update,New supplier_product"
+msgstr ""
+
+#: templates/GroupedPurchaseOrder/supplier_product/create.html:20
+msgid "New supplier_product"
+msgstr ""
+
+#: views/account.py:230
+msgid "Subscription to G.P.O."
+msgstr ""
+
+#: views/account.py:238 views/manufacturer.py:133 views/order.py:131
+#: views/product.py:84 views/product_order.py:89 views/supplier.py:138
+#: views/supplier_product.py:82
+msgid "Some information are missing or mistyped"
+msgstr ""
+
+#: views/account.py:265
+msgid ""
+"You should update your timezone. Without it G.P.O. will not work as expected."
+msgstr ""
+
+#: views/account.py:291
+msgid "Personnal information updated"
+msgstr ""
+
+#: views/account.py:305
+msgid "Password changed successfully"
+msgstr ""
+
+#: views/manufacturer.py:130
+msgid "Manufacturer successfully created."
+msgstr ""
+
+#: views/manufacturer.py:166 views/order.py:164 views/product.py:124
+#: views/product_order.py:143 views/supplier.py:171
+#: views/supplier_product.py:126
+#, python-format
+msgid "«%(name)s» deleted"
+msgstr ""
+
+#: views/order.py:90
+msgid "Buyer"
+msgstr ""
+
+#: views/order.py:95
+msgid "Line price"
+msgstr ""
+
+#: views/order.py:128
+msgid "Order successfully created."
+msgstr ""
+
+#: views/product.py:81
+msgid "Product successfully created."
+msgstr ""
+
+#: views/product_order.py:84
+msgid "ProductOrder successfully created."
+msgstr ""
+
+#: views/supplier.py:135
+msgid "Supplier successfully created."
+msgstr ""
+
+#: views/supplier_product.py:79
+msgid "SupplierProduct successfully created."
+msgstr ""
