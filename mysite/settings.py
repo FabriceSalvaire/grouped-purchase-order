@@ -18,6 +18,9 @@
 # 
 ####################################################################################################
 
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
+
 ####################################################################################################
 
 """
@@ -34,16 +37,12 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 import os
 
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
+
 ####################################################################################################
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '&z*c()=5e#jjkml#n%wx^))lkz16kwluu@tnqi5f(2!5e!vq^f'
+#
+# Debug
+#
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -51,7 +50,49 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
+# Log email on console
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+####################################################################################################
+
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+
+####################################################################################################
+
+ROOT_URLCONF = 'mysite.urls'
+
+WSGI_APPLICATION = 'mysite.wsgi.application'
+
 ALLOWED_HOSTS = ['localhost']
+SITE_ID = 1
+DEFAULT_FROM_EMAIL = 'fabrice.salvaire@orange.fr'
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = '&z*c()=5e#jjkml#n%wx^))lkz16kwluu@tnqi5f(2!5e!vq^f'
+
+TEMPLATE_CONTEXT_PROCESSORS = TCP + (
+    'django.core.context_processors.request',
+)
+
+FIXTURE_DIR = 'fixtures'
+STATIC_URL = '/static/'
+TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates'),
+                 # Fixme: for notification
+                 os.path.join(BASE_DIR, 'GroupedPurchaseOrder', 'templates', 'GroupedPurchaseOrder')]
+
+####################################################################################################
+#
+# Database
+#   https://docs.djangoproject.com/en/1.7/ref/settings/#databases
+#
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 ####################################################################################################
 #
@@ -92,23 +133,6 @@ MIDDLEWARE_CLASSES = (
     # 'django_messages.context_processors.inbox',
 )
 
-ROOT_URLCONF = 'mysite.urls'
-
-WSGI_APPLICATION = 'mysite.wsgi.application'
-
-####################################################################################################
-#
-# Database
-#   https://docs.djangoproject.com/en/1.7/ref/settings/#databases
-#
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
 ####################################################################################################
 #
 # Internationalization
@@ -125,33 +149,9 @@ USE_TZ = True
 
 ####################################################################################################
 #
-# Static files (CSS, JavaScript, Images)
-#   https://docs.djangoproject.com/en/1.7/howto/static-files/
+# Django Suit configuration
 #
 
-STATIC_URL = '/static/'
-
-####################################################################################################
-
-TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates'),
-                 # Fixme: for notification
-                 os.path.join(BASE_DIR, 'GroupedPurchaseOrder', 'templates', 'GroupedPurchaseOrder')]
-
-# Log email on console
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-SITE_ID = 1
-DEFAULT_FROM_EMAIL = 'fabrice.salvaire@orange.fr'
-
-####################################################################################################
-
-from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
-
-TEMPLATE_CONTEXT_PROCESSORS = TCP + (
-    'django.core.context_processors.request',
-)
-
-# Django Suit configuration
 SUIT_CONFIG = {
     # header
     'ADMIN_NAME': 'G.P.O.',
@@ -180,10 +180,6 @@ SUIT_CONFIG = {
     # misc
     # 'LIST_PER_PAGE': 15
 }
-
-####################################################################################################
-
-FIXTURE_DIR = 'fixtures'
 
 ####################################################################################################
 # 
