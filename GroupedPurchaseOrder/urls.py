@@ -20,26 +20,28 @@
 
 ####################################################################################################
 
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns, url, include
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import TemplateView, RedirectView
 
 from notification.views import notice_settings
 import django_messages.views as messages_views
+from tastypie.api import Api
 
 ####################################################################################################
 
-# from GroupedPurchaseOrder.views.main import MainView
-from GroupedPurchaseOrder.views.account import (AuthenticationForm,
+from .api import OrderResource
+# from .views.main import MainView
+from .views.account import (AuthenticationForm,
                                                 PasswordChangeForm,
                                                 PasswordResetForm,
                                                 SetPasswordForm)
-
-from GroupedPurchaseOrder.views.manufacturer import (ManufacturerListView, ManufacturerCatalogListView)
-from GroupedPurchaseOrder.views.order import (OrderListView)
-from GroupedPurchaseOrder.views.supplier import (SupplierListView)
-from GroupedPurchaseOrder.views.user_order import (UserOrderListView)
+from .views.angular import CrudOrderView
+from .views.manufacturer import (ManufacturerListView, ManufacturerCatalogListView)
+from .views.order import (OrderListView)
+from .views.supplier import (SupplierListView)
+from .views.user_order import (UserOrderListView)
 
 ####################################################################################################
 #
@@ -392,8 +394,6 @@ urlpatterns += patterns('GroupedPurchaseOrder.views.product_order',
 
 # django-angular test
 
-from GroupedPurchaseOrder.views.angular import CrudOrderView
-
 urlpatterns += patterns('',
   url(r'^crud/orders/?$', CrudOrderView.as_view(), name='crud_orders_view'),
 
@@ -406,13 +406,12 @@ urlpatterns += patterns('',
 
 # Tastypie test
 
-from django.conf.urls import include
-from .api import OrderResource
-
-order_resource = OrderResource()
+v1_api = Api(api_name='v1')
+v1_api.register(OrderResource())
 
 urlpatterns += patterns('',
-    (r'^api/', include(order_resource.urls)),
+    # http://127.0.0.1:8000/api/v1/order/?format=json
+    (r'^api/', include(v1_api.urls)),
 )
 
 ####################################################################################################
