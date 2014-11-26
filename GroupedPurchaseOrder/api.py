@@ -20,17 +20,31 @@
 
 ####################################################################################################
 
+from tastypie import fields
 from tastypie.authentication import SessionAuthentication, ApiKeyAuthentication
 from tastypie.resources import ModelResource
 from tastypie.authorization import DjangoAuthorization, ReadOnlyAuthorization
 
 ####################################################################################################
 
-from .models import Order
+from .models import Supplier, Order
+
+####################################################################################################
+
+class SupplierResource(ModelResource):
+
+    class Meta:
+        queryset = Supplier.objects.all()
+        resource_name = 'supplier'
+        # authentication = ApiKeyAuthentication()
+        authentication = SessionAuthentication()
+        authorization = ReadOnlyAuthorization()
 
 ####################################################################################################
 
 class OrderResource(ModelResource):
+
+    # supplier = fields.ForeignKey(SupplierResource, 'supplier')
 
     class Meta:
         queryset = Order.objects.all()
@@ -44,6 +58,7 @@ class OrderResource(ModelResource):
     def dehydrate(self, bundle):
 
         bundle.data['name'] = bundle.obj.name()
+        bundle.data['supplier'] = bundle.obj.supplier.pk
         return bundle
 
 ####################################################################################################

@@ -31,7 +31,7 @@ from tastypie.api import Api
 
 ####################################################################################################
 
-from .api import OrderResource
+from .api import SupplierResource, OrderResource
 # from .views.main import MainView
 from .views.account import (AuthenticationForm,
                                                 PasswordChangeForm,
@@ -395,6 +395,8 @@ urlpatterns += patterns('GroupedPurchaseOrder.views.product_order',
 # django-angular test
 
 urlpatterns += patterns('',
+  # http://127.0.0.1:8000/crud/orders/
+  # http://127.0.0.1:8000/crud/orders/?pk=1
   url(r'^crud/orders/?$', CrudOrderView.as_view(), name='crud_orders_view'),
 
   url(r'^angular_test/$',
@@ -407,10 +409,12 @@ urlpatterns += patterns('',
 # Tastypie test
 
 v1_api = Api(api_name='v1')
+v1_api.register(SupplierResource())
 v1_api.register(OrderResource())
 
 urlpatterns += patterns('',
     # http://127.0.0.1:8000/api/v1/order/?format=json
+    # http://127.0.0.1:8000/api/v1/order/1/?format=json
     (r'^api/', include(v1_api.urls)),
 )
 

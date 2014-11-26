@@ -1,7 +1,7 @@
 {% extends 'GroupedPurchaseOrder/base.html' %}
 {% load static i18n bootstrap breadcrumbs %}
 
-{% block np_app %}ng-app="crud_orders"{% endblock %}
+{% block np_app %}ng-app="crud_order"{% endblock %}
 
 {% block title %}{% trans "Angular Test" %}{% endblock %}
 
@@ -19,8 +19,8 @@
   <div class="col-md-12" ng-controller="order_controller">
     <ul>
       <li ng-repeat="order in orders">
-	<span>{% verbatim %}{{order.duty_tax}}{% endverbatim %}</span>
-	<span>{% verbatim %}{{order.supplier}}{% endverbatim %}</span>
+	<span>{% verbatim %}{{order.name}}{% endverbatim %}</span>
+	<p>{% verbatim %}{{order.supplier.description}}{% endverbatim %}</p>
       </li>
     </ul>
   </div>
