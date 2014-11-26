@@ -18,13 +18,27 @@
 # 
 ####################################################################################################
 
-# Why ?
-gettext = lambda s: s
+####################################################################################################
+
+from django.contrib.messages import constants as message_constants
+from django.utils.translation import ugettext_lazy as _
+
+####################################################################################################
 
 LANGUAGES = (
-    ('en', gettext('English')),
-    ('fr', gettext('Français')),
+    ('en', _('English')),
+    ('fr', _('Français')),
 )
+
+# Accounts related urls
+LOGIN_REDIRECT_URL = 'accounts.profile'
+LOGIN_URL = 'accounts.login'
+LOGOUT_URL = 'accounts.logout'
+
+# For bootstrap 3, error messages should be flaged 'danger'
+MESSAGE_TAGS = {
+    message_constants.ERROR: 'danger'
+}
 
 ####################################################################################################
 # 
