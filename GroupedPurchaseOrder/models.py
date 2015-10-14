@@ -243,7 +243,7 @@ class Order(models.Model):
     supplier = models.ForeignKey(Supplier)
     order_date = models.DateTimeField(null=True, blank=True)
     delivery_date = models.DateTimeField(null=True, blank=True)
-    manager = models.ForeignKey(Profile, null=True, blank=True)
+    manager = models.ForeignKey(Profile, null=True, blank=True) # Fixme: -> User
     status = models.IntegerField(choices=OrderStatus.to_list(), default=OrderStatus.new.value)
     total = CurrencyField(default=0, help_text='Please fill the total excluding taxes') # HT ?
     duty_tax = CurrencyField(default=0, help_text='Please fill any duty tax') # HT ?
@@ -318,7 +318,7 @@ class UserOrder(models.Model):
 
     creation_date = models.DateTimeField(auto_now_add=True)
     order = models.ForeignKey(Order)
-    profile = models.ForeignKey(Profile) # or User ?
+    profile = models.ForeignKey(Profile) # Fixme: -> User
     status = models.IntegerField(choices=UserOrderStatus.to_list(), default=UserOrderStatus.new.value)
     payed = models.BooleanField(default=False)
     delivery_date = models.DateTimeField(null=True, blank=True)

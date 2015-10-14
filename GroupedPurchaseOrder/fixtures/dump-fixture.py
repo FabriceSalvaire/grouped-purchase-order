@@ -48,7 +48,7 @@ for model_class in model_list:
         json_string += ','
 json_string += ']'
 
-with open('demo.json', 'w') as f:
+with open('db.json', 'w') as f:
     data = json.loads(json_string)
     json.dump(data, f, indent='  ')
 

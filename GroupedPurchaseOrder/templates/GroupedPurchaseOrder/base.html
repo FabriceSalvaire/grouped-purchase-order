@@ -3,12 +3,20 @@
 <html lang="{{ LANGUAGE_CODE }}" {% block np_app %}{% endblock %}>
 <head>
   <meta charset="utf-8">
-  <title>G.P.O. - {% block title %}{% endblock %}</title>
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link href="{% get_static_prefix %}GroupedPurchaseOrder/css/bootstrap-v3.3.0.min.css" rel="stylesheet" media="screen">
+  <title>G.P.O. - {% block title %}{% endblock %}</title>
+  <meta name="description" content="Grouped Purchase Order">
+  <meta name="author" content="Fabrice Salvaire">
+
+  <link href="{% get_static_prefix %}GroupedPurchaseOrder/css/bootstrap-v3.3.0.min.css" rel="stylesheet">
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
   <style>
     body {
       padding-top: 60px
@@ -65,7 +73,8 @@
           </li>
 	  {% inbox_count as unread_message %}
 	  {% if unread_message %}
-	    <li><a href="{% url 'messages_inbox' %}">{% bootstrap_icon 'envelope' %} {{ unread_message }}</a></li>
+	    <li><a href="{% url 'messages_inbox' %}"><span class="badge">{% bootstrap_icon 'envelope' %}
+	      {{ unread_message }}</span></a></li>
 	  {% endif %}
 	  <li><a href="/admin" %}">{% bootstrap_icon 'wrench' %}</a></li>
         {% else %}

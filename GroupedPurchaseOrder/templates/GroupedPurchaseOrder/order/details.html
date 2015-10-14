@@ -179,7 +179,15 @@
 		<td class="text-danger">{% bootstrap_icon 'warning-sign' %}</td>
 	      {% endif %}
 	      {% url 'user_orders.update' user_order.pk as update_url %}
-	      <td>{% bootstrap_icon_button 'pencil' title="update" style='info' size='xs' href=update_url %}</td>
+	      {% url 'messages_compose_to' user_order.profile.user as compose_url %}
+	      {% url 'orders.details' order.pk as this_page %}
+	      <td>
+		{% bootstrap_icon_button 'pencil' title="update" style='info' size='xs' href=update_url %}
+		{% with compose_url|add:'?next='|add:this_page as compose_url_with_return %}
+		  {# Fixme: next is in GET, not in POST #}
+		  {% bootstrap_icon_button 'envelope' title="compose message" style='info' size='xs' href=compose_url_with_return %}
+		{% endwith %}
+	      </td>
             </tr>
           {% endfor %}
         </tbody>
