@@ -1,0 +1,89 @@
+#! /usr/bin/env python3
+# -*- Python -*-
+
+####################################################################################################
+# 
+# GroupedPurchaseOrder - A Django Application.
+# Copyright (C) 2014 Fabrice Salvaire
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU Affero General Public License as
+#  published by the Free Software Foundation, either version 3 of the
+#  License, or (at your option) any later version.
+# 
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU Affero General Public License for more details.
+# 
+#  You should have received a copy of the GNU Affero General Public License
+#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# 
+####################################################################################################
+
+####################################################################################################
+
+import argparse
+import json
+import os
+
+####################################################################################################
+#
+# Options
+#
+
+argument_parser = argparse.ArgumentParser(description='Format Fixture')
+
+argument_parser.add_argument('json_file', metavar='file.json',
+                             help='JSON input')
+
+args = argument_parser.parse_args()
+
+####################################################################################################
+
+def last_iterator(items):
+    last_item = len(items) -1
+    for i, item in enumerate(items):
+        yield item, i, i == last_item
+
+####################################################################################################
+
+# new_json = args.json
+# old_json = new_json + '~'
+# os.rename(new_json, old_json)
+
+old_json = args.json_file
+new_json = os.path.splitext(old_json)[0] + '-new.json'
+
+items = None
+with open(old_json, 'r') as f:
+    items = json.load(f)
+
+items.sort(key=lambda x: x['fields']['name'])
+
+with open(new_json, 'w') as f:
+
+    def write_key(key, value, comma=True):
+        if isinstance(value, str):
+            value = '"' + value + '"'
+        f.write('    "{}": {}{}\n'.format(key, value, ',' if comma else ''))
+
+    f.write('[\n')
+    for item, i, last_item in last_iterator(items):
+        f.write('  {\n')
+        write_key('model', item['model'])
+        write_key('pk', i+1)
+        f.write('    "fields": ')
+        lines = json.JSONEncoder(indent='  ', sort_keys=True).encode(item['fields']).splitlines()
+        f.write('\n    '.join(lines) + '\n')
+        if last_item:
+            f.write('  }\n')
+        else:
+            f.write('  },\n')
+    f.write(']\n')
+
+####################################################################################################
+# 
+# End
+# 
+####################################################################################################
