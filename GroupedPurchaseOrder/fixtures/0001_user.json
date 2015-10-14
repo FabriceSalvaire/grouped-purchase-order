@@ -1,0 +1,38 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "date_joined": "2014-01-01T12:00:00.00Z",
+      "email": "fabrice.salvaire@orange.fr",
+      "first_name": "fabrice",
+      "groups": [],
+      "is_active": true,
+      "is_staff": true,
+      "is_superuser": true,
+      "last_login": "2014-01-01T12:00:00.00Z",
+      "last_name": "salvaire",
+      "password": "pbkdf2_sha256$12000$JfC4aU63McMu$Susfrglwq8DMqiWjPuG3xUQmnGJnnYMV76jQiV2t2Pg=",
+      "user_permissions": [],
+      "username": "fabrice"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "auth.user",
+    "fields": {
+      "date_joined": "2014-01-01T12:00:00.00Z",
+      "email": "jean.dupont@foo.fr",
+      "first_name": "jean",
+      "groups": [],
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "last_login": "2014-01-01T12:00:00.00Z",
+      "last_name": "dupont",
+      "password": "pbkdf2_sha256$12000$u7JKgBWt3cW1$iSHBUPupe4yBGngvkN2nIUtLxgWq1RjbH5EiAA8raZE=",
+      "user_permissions": [],
+      "username": "jean"
+    }
+  }
+]
