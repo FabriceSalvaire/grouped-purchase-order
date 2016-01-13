@@ -71,7 +71,7 @@ angular.module('order_details').controller('UpdateModalInstanceController',
     // $log.info('Value ' + quantity);
     $modalInstance.close(quantity);
   };
-					     
+
   $scope.cancel = function () {
     $modalInstance.dismiss('cancel');
   };

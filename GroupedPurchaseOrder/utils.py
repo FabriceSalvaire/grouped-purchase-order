@@ -40,7 +40,7 @@ logger = logging.getLogger('gpo.utils')
 class Localize(object):
 
     ##############################################
-    
+
     def __init__(self, language, timezone):
 
         self._language = language
@@ -81,7 +81,7 @@ def send_localized_mail(user, subject, template_name, ctx):
         send_mail_help(user, subject, template_name, ctx)
 
 ####################################################################################################
-# 
+#
 # End
-# 
+#
 ####################################################################################################

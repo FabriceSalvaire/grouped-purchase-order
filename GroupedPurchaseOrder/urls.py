@@ -164,12 +164,12 @@ urlpatterns += patterns('',
         messages_views.inbox,
         {'template_name': 'GroupedPurchaseOrder/messages/inbox.html',},
         name='messages_inbox'),
-                        
+
     url(r'^messages/outbox/$',
         messages_views.outbox,
         {'template_name': 'GroupedPurchaseOrder/messages/outbox.html',},
         name='messages_outbox'),
-                        
+
     url(r'^messages/compose/$',
         messages_views.compose,
         {'template_name': 'GroupedPurchaseOrder/messages/compose.html',},
@@ -432,7 +432,7 @@ urlpatterns += patterns('',
 # )
 
 ####################################################################################################
-# 
+#
 # End
-# 
+#
 ####################################################################################################
