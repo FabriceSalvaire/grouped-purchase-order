@@ -20,7 +20,7 @@
 
 ####################################################################################################
 
-from django.conf.urls import patterns, url, include
+from django.conf.urls import url, include
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import TemplateView, RedirectView
@@ -50,39 +50,41 @@ from .views.user_order import (UserOrderListView)
 
 # Fixme: name: a.b or a_b ?
 
-urlpatterns = patterns('',
-   # url(r'^$', MainView.as_view(), name='index'),
+urlpatterns = [
+    # url(r'^$', MainView.as_view(), name='index'),
     url(r'^$',
         TemplateView.as_view(template_name='GroupedPurchaseOrder/main/index.html'),
         name='index'),
-)
+]
 
 ####################################################################################################
 #
 # Authentication
 #
 
-urlpatterns += patterns('django.contrib.auth.views',
+import django.contrib.auth.views as auth_views
+
+urlpatterns += [
    url(r'^accounts/login/$',
-       'login',
+       auth_views.login,
        {'template_name': 'GroupedPurchaseOrder/account/login.html',
         'authentication_form': AuthenticationForm},
        name='accounts.login'),
 
     url(r'^accounts/logout/$',
-        'logout',
+        auth_views.logout,
         {'template_name': 'GroupedPurchaseOrder/account/logged_out.html'},
         name='accounts.logout'),
 
     url(r'^accounts/password/change/$',
-        'password_change',
+        auth_views.password_change,
         {'template_name': 'GroupedPurchaseOrder/account/password_change.html',
          'password_change_form': PasswordChangeForm,
          'post_change_redirect': reverse_lazy('accounts.password_change_done')},
         name='accounts.password_change'),
 
     url(r'^accounts/password/reset/$',
-        'password_reset',
+        auth_views.password_reset,
         {'template_name': 'GroupedPurchaseOrder/account/password_reset.html',
          'email_template_name': 'GroupedPurchaseOrder/account/password_reset_email.txt',
          'password_reset_form': PasswordResetForm,
@@ -90,63 +92,65 @@ urlpatterns += patterns('django.contrib.auth.views',
         name='accounts.password_reset'),
 
     url(r'^accounts/password/reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$',
-        'password_reset_confirm',
+        auth_views.password_reset_confirm,
         {'template_name': 'GroupedPurchaseOrder/account/password_reset_confirm.html',
          'set_password_form': SetPasswordForm},
         name='accounts.password_reset_confirm'),
 
     url(r'^accounts/password/reset/complete/$',
-        'password_reset_complete',
+        auth_views.password_reset_complete,
         {'template_name': 'GroupedPurchaseOrder/account/password_reset_complete.html'},
         name='password_reset_complete'),
-)
+]
 
 ####################################################################################################
 #
 # Profile
 #
 
-urlpatterns += patterns('GroupedPurchaseOrder.views.account',
+import GroupedPurchaseOrder.views.account as account_views
+
+urlpatterns += [
     url(r'^accounts/register/$',
-        'register',
+        account_views.register,
         name='accounts.register'),
 
     url(r'^accounts/register/(?P<user_id>\d+)/confirm/(?P<user_hash>\w+)/$',
-        'register_confirm',
+        account_views.register_confirm,
         name='accounts.register.confirm'),
 
     url(r'^accounts/profile/$',
-        'profile',
+        account_views.profile,
         name='accounts.profile'),
 
     url(r'^accounts/profile/update/$',
-        'update',
+        account_views.update,
         name='accounts.profile.update'),
 
     url(r'^accounts/password/change/done/$',
-        'password_change_done',
+        account_views.password_change_done,
         name='accounts.password_change_done'),
 
     url(r'^accounts/password/reset/done/$',
-        'password_reset_done',
+        account_views.password_reset_done,
         name='accounts.password_reset_done'),
 
     url(r'^accounts/delete/$',
-        'delete',
+        account_views.delete,
         name='accounts.delete'),
-)
+]
 
 ####################################################################################################
 #
 # Notification
 #
 
-urlpatterns += patterns('',
+urlpatterns += [
     url(r"^settings/$",
         notice_settings,
         # {'template_name': 'GroupedPurchaseOrder/notification/notice_settings.html',},
         name="notification_notice_settings"),
-)
+]
 
 ####################################################################################################
 #
@@ -155,7 +159,7 @@ urlpatterns += patterns('',
 
 # url(r'^messages/', include('django_messages.urls')),
 
-urlpatterns += patterns('',
+urlpatterns += [
     url(r'^messages/$',
         RedirectView.as_view(url='inbox/'),
         name='messages_redirect'),
@@ -202,20 +206,22 @@ urlpatterns += patterns('',
         messages_views.trash,
         {'template_name': 'GroupedPurchaseOrder/messages/trash.html',},
         name='messages_trash'),
-)
+]
 
 ####################################################################################################
 #
 # Manufacturer
 #
 
-urlpatterns += patterns('GroupedPurchaseOrder.views.manufacturer',
+import GroupedPurchaseOrder.views.manufacturer as manufacturer_views
+
+urlpatterns += [
     url(r'^manufacturers/$',
         login_required(ManufacturerListView.as_view()),
         name='manufacturers.index'),
 
     url(r'^manufacturers/create/$',
-        'create',
+        manufacturer_views.create,
         name='manufacturers.create'),
 
     url(r'^manufacturers/(?P<manufacturer_id>\d+)/$',
@@ -224,177 +230,189 @@ urlpatterns += patterns('GroupedPurchaseOrder.views.manufacturer',
         name='manufacturers.details'),
 
     url(r'^manufacturers/(?P<manufacturer_id>\d+)/update/$',
-        'update',
+        manufacturer_views.update,
         name='manufacturers.update'),
 
     url(r'^manufacturers/(?P<manufacturer_id>\d+)/delete/$',
-        'delete',
+        manufacturer_views.delete,
         name='manufacturers.delete'),
-)
+]
 
 ####################################################################################################
 #
 # Product
 #
 
-urlpatterns += patterns('GroupedPurchaseOrder.views.product',
+import GroupedPurchaseOrder.views.product as product_views
+
+urlpatterns += [
     url(r'^products/(?P<manufacturer_id>\d+)/create/$',
-        'create',
+        product_views.create,
         name='products.create'),
 
     url(r'^products/(?P<product_id>\d+)/$',
-        'details',
+        product_views.details,
         name='products.details'),
 
     url(r'^products/(?P<product_id>\d+)/update/$',
-        'update',
+        product_views.update,
         name='products.update'),
 
     url(r'^products/(?P<product_id>\d+)/delete/$',
-        'delete',
+        product_views.delete,
         name='products.delete'),
-)
+]
 
 ####################################################################################################
 #
 # Supplier
 #
 
-urlpatterns += patterns('GroupedPurchaseOrder.views.supplier',
+import GroupedPurchaseOrder.views.supplier as supplier_views
+
+urlpatterns += [
     url(r'^suppliers/$',
         login_required(SupplierListView.as_view()),
         name='suppliers.index'),
 
     url(r'^suppliers/create/$',
-        'create',
+        supplier_views.create,
         name='suppliers.create'),
 
     url(r'^suppliers/(?P<supplier_id>\d+)/$',
-        'details',
+        supplier_views.details,
         name='suppliers.details'),
 
     url(r'^suppliers/(?P<supplier_id>\d+)/update/$',
-        'update',
+        supplier_views.update,
         name='suppliers.update'),
 
     url(r'^suppliers/(?P<supplier_id>\d+)/delete/$',
-        'delete',
+        supplier_views.delete,
         name='suppliers.delete'),
 
     url(r'^suppliers/(?P<supplier_id>\d+)/catalog/$',
-        'catalog',
+        supplier_views.catalog,
         name='suppliers.catalog'),
-)
+]
 
 ####################################################################################################
 #
 # Supplier Product
 #
 
-urlpatterns += patterns('GroupedPurchaseOrder.views.supplier_product',
+import GroupedPurchaseOrder.views.supplier_product as supplier_product_views
+
+urlpatterns += [
     url(r'^supplier_products/(?P<product_id>\d+)/create/$',
-        'create',
+        supplier_product_views.create,
         name='supplier_products.create'),
 
     url(r'^supplier_products/(?P<supplier_product_id>\d+)/update/$',
-        'update',
+        supplier_product_views.update,
         name='supplier_products.update'),
 
     url(r'^supplier_products/(?P<supplier_product_id>\d+)/delete/$',
-        'delete',
+        supplier_product_views.delete,
         name='supplier_products.delete'),
-)
+]
 
 ####################################################################################################
 #
 # Order
 #
 
-urlpatterns += patterns('GroupedPurchaseOrder.views.order',
+import GroupedPurchaseOrder.views.order as order_views
+
+urlpatterns += [
     url(r'^orders/$',
         login_required(OrderListView.as_view()),
         name='orders.index'),
 
     url(r'^orders/create/$',
-        'create',
+        order_views.create,
         name='orders.create'),
 
     url(r'^orders/(?P<order_id>\d+)/$',
-        'details',
+        order_views.details,
         name='orders.details'),
 
     url(r'^orders/(?P<order_id>\d+)/csv/$',
-        'upload_csv',
+        order_views.upload_csv,
         name='orders.csv'),
 
     url(r'^orders/(?P<order_id>\d+)/update/$',
-        'update',
+        order_views.update,
         name='orders.update'),
 
     url(r'^orders/(?P<order_id>\d+)/delete/$',
-        'delete',
+        order_views.delete,
         name='orders.delete'),
-)
+]
 
 ####################################################################################################
 #
 # User Order
 #
 
-urlpatterns += patterns('GroupedPurchaseOrder.views.user_order',
+import GroupedPurchaseOrder.views.user_order as user_order_views
+
+urlpatterns += [
     url(r'^user_orders/$',
         login_required(UserOrderListView.as_view()),
         name='user_orders.index'),
 
     # url(r'^user_orders/(?P<user_order_id>\d+)/$',
-    #     'details',
+    #     user_order_views.details,
     #     name='user_orders.details'),
 
     url(r'^user_orders/(?P<user_order_id>\d+)/update/$',
-        'update',
+        user_order_views.update,
         name='user_orders.update'),
 
     # url(r'^user_orders/(?P<user_order_id>\d+)/delete/$',
-    #     'delete',
+    #     user_order_views.delete,
     #     name='user_orders.delete'),
-)
+]
 
 ####################################################################################################
 #
 # Product Order
 #
 
-urlpatterns += patterns('GroupedPurchaseOrder.views.product_order',
+import GroupedPurchaseOrder.views.product_order as product_order_views
+
+urlpatterns += [
     url(r'^product_orders/create/(?P<supplier_product_id>\d+)/$',
-        'create',
+        product_order_views.create,
         name='product_orders.create'),
 
     url(r'^product_orders/create_xhr/(?P<supplier_product_id>\d+)/$',
-        'create_xhr',
+        product_order_views.create_xhr,
         name='product_orders.create_xhr'),
 
     url(r'^product_orders/(?P<product_order_id>\d+)/$',
-        'details',
+        product_order_views.details,
         name='product_orders.details'),
 
     url(r'^product_orders/(?P<product_order_id>\d+)/update/$',
-        'update',
+        product_order_views.update,
         name='product_orders.update'),
 
     url(r'^product_orders/(?P<product_order_id>\d+)/update_xhr/$',
-        'update_xhr',
+        product_order_views.update_xhr,
         name='product_orders.update_xhr'),
 
     url(r'^product_orders/(?P<product_order_id>\d+)/delete/$',
-        'delete',
+        product_order_views.delete,
         name='product_orders.delete'),
-)
+]
 
 ####################################################################################################
 
 # django-angular test
 
-urlpatterns += patterns('',
+urlpatterns += [
   # http://127.0.0.1:8000/crud/orders/
   # http://127.0.0.1:8000/crud/orders/?pk=1
   url(r'^crud/orders/?$', CrudOrderView.as_view(), name='crud_orders_view'),
@@ -402,7 +420,7 @@ urlpatterns += patterns('',
   url(r'^angular_test/$',
       TemplateView.as_view(template_name='GroupedPurchaseOrder/angular_test/page.html'),
       name='angular_test'),
-)
+]
 
 ####################################################################################################
 
@@ -412,11 +430,11 @@ v1_api = Api(api_name='v1')
 v1_api.register(SupplierResource())
 v1_api.register(OrderResource())
 
-urlpatterns += patterns('',
+urlpatterns += [
     # http://127.0.0.1:8000/api/v1/order/?format=json
     # http://127.0.0.1:8000/api/v1/order/1/?format=json
-    (r'^api/', include(v1_api.urls)),
-)
+    url(r'^api/', include(v1_api.urls)),
+]
 
 ####################################################################################################
 
