@@ -1,18 +1,20 @@
 [
   {
-    "model": "tastypie.apikey"
+    "model": "tastypie.apikey",
     "pk": 1,
     "fields": {
       "created": "2014-01-01T12:00:00.00Z",
       "user": 1,
-      "key": "4b4e5dbb7a8da0513b4f2021a203afdde97d2e77"},
+      "key": "4b4e5dbb7a8da0513b4f2021a203afdde97d2e77"
+    }
   },
   {
     "pk": 2,
-    "model": "tastypie.apikey"
+    "model": "tastypie.apikey",
     "fields": {
       "created": "2014-01-01T12:00:00.00Z",
       "user": 2,
-      "key": "f898117ee214c755c1e70b0719a71711aa81e174"},
+      "key": "f898117ee214c755c1e70b0719a71711aa81e174"
+    }
   }
 ]

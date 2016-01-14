@@ -3,7 +3,7 @@
     "model": "GroupedPurchaseOrder.manufacturer",
     "pk": 1,
     "fields": {
-      "created": "2014-01-01T12:00:00.00Z",
+      "creation_date": "2014-01-01T12:00:00.00Z",
       "name": "NXP",
       "url": "http://www.nxp.com/"
     }
@@ -12,7 +12,7 @@
     "model": "GroupedPurchaseOrder.manufacturer",
     "pk": 2,
     "fields": {
-      "created": "2014-01-01T12:00:00.00Z",
+      "creation_date": "2014-01-01T12:00:00.00Z",
       "name": "On Semiconductor",
       "url": "http://www.onsemi.com/"
     }
@@ -21,7 +21,7 @@
     "model": "GroupedPurchaseOrder.manufacturer",
     "pk": 3,
     "fields": {
-      "created": "2014-01-01T12:00:00.00Z",
+      "creation_date": "2014-01-01T12:00:00.00Z",
       "name": "Atmel",
       "url": ""
     }
@@ -30,7 +30,7 @@
     "model": "GroupedPurchaseOrder.manufacturer",
     "pk": 4,
     "fields": {
-      "created": "2014-01-01T12:00:00.00Z",
+      "creation_date": "2014-01-01T12:00:00.00Z",
       "name": "Texas Instruments",
       "url": ""
     }
@@ -39,7 +39,7 @@
     "model": "GroupedPurchaseOrder.manufacturer",
     "pk": 5,
     "fields": {
-      "created": "2014-01-01T12:00:00.00Z",
+      "creation_date": "2014-01-01T12:00:00.00Z",
       "name": "Freescale",
       "url": ""
     }
@@ -48,7 +48,7 @@
     "model": "GroupedPurchaseOrder.manufacturer",
     "pk": 6,
     "fields": {
-      "created": "2014-01-01T12:00:00.00Z",
+      "creation_date": "2014-01-01T12:00:00.00Z",
       "name": "Murata",
       "url": ""
     }
@@ -57,7 +57,7 @@
     "model": "GroupedPurchaseOrder.manufacturer",
     "pk": 7,
     "fields": {
-      "created": "2014-01-01T12:00:00.00Z",
+      "creation_date": "2014-01-01T12:00:00.00Z",
       "name": "Bosh",
       "url": ""
     }
@@ -66,7 +66,7 @@
     "model": "GroupedPurchaseOrder.manufacturer",
     "pk": 8,
     "fields": {
-      "created": "2014-01-01T12:00:00.00Z",
+      "creation_date": "2014-01-01T12:00:00.00Z",
       "name": "Honeywell",
       "url": ""
     }
@@ -75,7 +75,7 @@
     "model": "GroupedPurchaseOrder.manufacturer",
     "pk": 9,
     "fields": {
-      "created": "2014-01-01T12:00:00.00Z",
+      "creation_date": "2014-01-01T12:00:00.00Z",
       "name": "Xilinx",
       "url": ""
     }
@@ -84,7 +84,7 @@
     "model": "GroupedPurchaseOrder.manufacturer",
     "pk": 10,
     "fields": {
-      "created": "2014-01-01T12:00:00.00Z",
+      "creation_date": "2014-01-01T12:00:00.00Z",
       "name": "Altera",
       "url": ""
     }
@@ -93,7 +93,7 @@
     "model": "GroupedPurchaseOrder.manufacturer",
     "pk": 11,
     "fields": {
-      "created": "2014-01-01T12:00:00.00Z",
+      "creation_date": "2014-01-01T12:00:00.00Z",
       "name": "Micron",
       "url": ""
     }
@@ -102,7 +102,7 @@
     "model": "GroupedPurchaseOrder.manufacturer",
     "pk": 12,
     "fields": {
-      "created": "2014-01-01T12:00:00.00Z",
+      "creation_date": "2014-01-01T12:00:00.00Z",
       "name": "Maxim",
       "url": ""
     }
@@ -111,7 +111,7 @@
     "model": "GroupedPurchaseOrder.manufacturer",
     "pk": 13,
     "fields": {
-      "created": "2014-01-01T12:00:00.00Z",
+      "creation_date": "2014-01-01T12:00:00.00Z",
       "name": "Analog Devices",
       "url": ""
     }
@@ -120,7 +120,7 @@
     "model": "GroupedPurchaseOrder.manufacturer",
     "pk": 14,
     "fields": {
-      "created": "2014-01-01T12:00:00.00Z",
+      "creation_date": "2014-01-01T12:00:00.00Z",
       "name": "Infineon",
       "url": ""
     }
@@ -129,7 +129,7 @@
     "model": "GroupedPurchaseOrder.manufacturer",
     "pk": 15,
     "fields": {
-      "created": "2014-01-01T12:00:00.00Z",
+      "creation_date": "2014-01-01T12:00:00.00Z",
       "name": "IRF",
       "url": ""
     }
@@ -138,7 +138,7 @@
     "model": "GroupedPurchaseOrder.manufacturer",
     "pk": 16,
     "fields": {
-      "created": "2014-01-01T12:00:00.00Z",
+      "creation_date": "2014-01-01T12:00:00.00Z",
       "name": "Linear Technology",
       "url": ""
     }
@@ -147,7 +147,7 @@
     "model": "GroupedPurchaseOrder.manufacturer",
     "pk": 17,
     "fields": {
-      "created": "2014-01-01T12:00:00.00Z",
+      "creation_date": "2014-01-01T12:00:00.00Z",
       "name": "Microchip",
       "url": ""
     }
@@ -156,7 +156,7 @@
     "model": "GroupedPurchaseOrder.manufacturer",
     "pk": 18,
     "fields": {
-      "created": "2014-01-01T12:00:00.00Z",
+      "creation_date": "2014-01-01T12:00:00.00Z",
       "name": "STM",
       "url": ""
     }
@@ -165,7 +165,7 @@
     "model": "GroupedPurchaseOrder.manufacturer",
     "pk": 19,
     "fields": {
-      "created": "2014-01-01T12:00:00.00Z",
+      "creation_date": "2014-01-01T12:00:00.00Z",
       "name": "Weller",
       "url": ""
     }
@@ -174,7 +174,7 @@
     "model": "GroupedPurchaseOrder.manufacturer",
     "pk": 20,
     "fields": {
-      "created": "2014-01-01T12:00:00.00Z",
+      "creation_date": "2014-01-01T12:00:00.00Z",
       "name": "Facom",
       "url": ""
     }
@@ -183,7 +183,7 @@
     "model": "GroupedPurchaseOrder.manufacturer",
     "pk": 21,
     "fields": {
-      "created": "2014-01-01T12:00:00.00Z",
+      "creation_date": "2014-01-01T12:00:00.00Z",
       "name": "UBlox",
       "url": ""
     }
@@ -192,7 +192,7 @@
     "model": "GroupedPurchaseOrder.manufacturer",
     "pk": 22,
     "fields": {
-      "created": "2014-01-01T12:00:00.00Z",
+      "creation_date": "2014-01-01T12:00:00.00Z",
       "name": "\u00c9lectronique Shop",
       "url": ""
     }

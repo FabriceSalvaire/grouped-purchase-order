@@ -6,8 +6,8 @@
       "hash_id": "4b8bce26d2e0f2955b20d5f653cc0b",
       "language": "en",
       "phone_number": "0601020304",
-      "timezone": "Europe/Paris"
-      "user": 1,
+      "timezone": "Europe/Paris",
+      "user": 1
     }
   },
   {
@@ -17,8 +17,8 @@
       "hash_id": "a3275dfeb40b93d82ee06ce0a7569f",
       "language": "en",
       "phone_number": "0601020304",
-      "timezone": "Europe/Paris"
-      "user": 2,
+      "timezone": "Europe/Paris",
+      "user": 2
     }
   }
 ]
