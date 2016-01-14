@@ -73,9 +73,9 @@ DEFAULT_FROM_EMAIL = 'fabrice.salvaire@orange.fr'
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '&z*c()=5e#jjkml#n%wx^))lkz16kwluu@tnqi5f(2!5e!vq^f'
 
-TEMPLATE_CONTEXT_PROCESSORS = TCP + (
+TEMPLATE_CONTEXT_PROCESSORS = TCP + [
     'django.core.context_processors.request',
-)
+]
 
 FIXTURE_DIR = 'fixtures'
 # python manage.py collectstatic
@@ -120,7 +120,7 @@ INSTALLED_APPS = (
     # 'django_bootstrap_breadcrumbs',
     'tastypie',
     'django_ajax',
-    'djangular',
+    # 'djangular', # incompatibility
     'notification',
     'django_messages',
     'GroupedPurchaseOrder',
