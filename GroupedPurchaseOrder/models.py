@@ -245,7 +245,7 @@ class Order(models.Model):
     delivery_date = models.DateTimeField(null=True, blank=True)
     manager = models.ForeignKey(Profile, null=True, blank=True) # Fixme: -> User
     status = models.IntegerField(choices=OrderStatus.to_list(), default=OrderStatus.new.value)
-    total = CurrencyField(default=0, help_text='Please fill the total excluding taxes') # HT ?
+    #? total = CurrencyField(default=0, help_text='Please fill the total excluding taxes') # HT ?
     duty_tax = CurrencyField(default=0, help_text='Please fill any duty tax') # HT ?
     shipping_rate = CurrencyField(default=0, help_text='Please fill the amount ex VAT') # HT ?
     vat_tax = CurrencyField(default=0) # HT ?
